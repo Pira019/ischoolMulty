@@ -25,10 +25,10 @@ Route::middleware('tenant')->group(function() {
 });
 
 
-/*Route::get('/dashboard', function () {
+Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
-*/
+
 require __DIR__.'/auth.php';
 
 Auth::routes();
@@ -54,7 +54,7 @@ Route::group(['middleware' => 'auth'], function () {
 
  
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Auth::routes();
+ 
 
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home')->middleware('auth');
  
