@@ -18,10 +18,12 @@ class CreateAbsencesTable extends Migration
             $table->timestamps();
             $table->string('code_seance');
             $table->integer('code_etudiant');
+
             $table->dateTime('date_jour');
             $table->integer('professeur')->nullable();
             $table->string('code_filiere')->nullable();
             $table->string('code_classe')->nullable();
+
             $table->tinyInteger('Justifie')->nullable();
             $table->tinyInteger('retard')->nullable();
             $table->longText('remarques')->nullable();
@@ -37,6 +39,8 @@ class CreateAbsencesTable extends Migration
             $table->tinyInteger('smsEnvoye')->nullable();
             $table->date('dateEnvoiSms')->nullable();
             $table->integer('groupe')->nullable();
+
+             
         });
     }
 
@@ -47,6 +51,6 @@ class CreateAbsencesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('absences');
+        
     }
 }
