@@ -14,13 +14,29 @@
 
                             @include('alerts.success')
 
-                            <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
+                            <div class="form-inline">
+
+                            <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }} ">
+                                <div class="col-md-3">
                                 <label>{{ __('Name') }}</label>
                                 <input type="text" name="name" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Name') }}" value="{{ old('name', auth()->user()->name) }}">
                                 @include('alerts.feedback', ['field' => 'name'])
+                                </div>
                             </div>
 
-                            <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
+                            <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }} ">
+                                <div class="col-md-3">
+                                <label>{{ __('Name') }}</label>
+                                <input type="text" name="name" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Name') }}" value="{{ old('name', auth()->user()->name) }}">
+                                @include('alerts.feedback', ['field' => 'name'])
+                                </div>
+                            </div>
+
+
+
+                         </div>
+
+                            <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }}  col-md-3">
                                 <label>{{ __('Email address') }}</label>
                                 <input type="email" name="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Email address') }}" value="{{ old('email', auth()->user()->email) }}">
                                 @include('alerts.feedback', ['field' => 'email'])
