@@ -17,19 +17,16 @@
                             <div class="form-inline">
 
                             <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }} ">
-                                <div class="col-md-3">
                                 <label>{{ __('Name') }}</label>
                                 <input type="text" name="name" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Name') }}" value="{{ old('name', auth()->user()->name) }}">
                                 @include('alerts.feedback', ['field' => 'name'])
-                                </div>
                             </div>
 
                             <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }} ">
-                                <div class="col-md-3">
                                 <label>{{ __('Name') }}</label>
                                 <input type="text" name="name" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Name') }}" value="{{ old('name', auth()->user()->name) }}">
                                 @include('alerts.feedback', ['field' => 'name'])
-                                </div>
+
                             </div>
 
 
