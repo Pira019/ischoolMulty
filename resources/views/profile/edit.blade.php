@@ -303,23 +303,25 @@
                         <table class="table tablesorter " id="">
                             <thead class=" text-primary">
                                 <tr>
-                                <th scope="col">Name</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Creation Date</th>
+                                <th scope="col">{{ __('Nom') }}</th>
+                                <th scope="col">{{ __('Prénom') }}</th>
+                                <th scope="col">{{ __('Nationalité') }}</th>
 
-                                <th scope="col">Name</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Creation Date</th>
+                                <th scope="col">{{ __('Ville') }}</th>
+                                <th scope="col">{{ __('Date de naissance') }}</th>
+                                <th scope="col">{{ __('Tél') }}</th>
 
-                                <th scope="col">Name</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Creation Date</th>
-
+                                <th scope="col">{{ __('Tél parent') }}</th>
+                                <th scope="col">{{ __('Action') }}</th>
 
                                 <th scope="col"></th>
                             </tr></thead>
                             <tbody>
                                                                     <tr>
+                                        <td>Admin Admin</td>
+                                        <td>Admin Admin</td>
+                                        <td>Admin Admin</td>
+                                        <td>Admin Admin</td>
                                         <td>Admin Admin</td>
                                         <td>
                                             <a href="mailto:admin@black.com">admin@black.com</a>
