@@ -1,6 +1,6 @@
 <?php
 
-namespace undefined;
+namespace App\Repositories;
 
 use App\Models\Etudiants;
 
@@ -11,17 +11,15 @@ class EtudiantRepository
 
    public function __constructor(Etudiants $etudiant) {
 
-    $this->etudiant = etudiant;
+    $this->etudiant = $etudiant;
 	}
 
 
-    private function save(Etudiants $etudiant, Array $inputs){
 
 
-        Etudiants::created($inputs->all);
-
-
-    /*    $etudiant->code_etudiant = $inputs['code_etudiant'];
+    private function save(Etudiants $etudiant ,Array $inputs){
+ 
+        $etudiant->code_etudiant = $inputs['code_etudiant'];
 	    $etudiant->Nom_etudiant = $inputs['Nom_etudiant'];
         $etudiant->prenom_etudiant = $inputs['prenom_etudiant'];
         $etudiant->Nom_pere = $inputs['Nom_pere'];
@@ -64,11 +62,22 @@ class EtudiantRepository
         $etudiant->cin_etudiant = $inputs['cin_etudiant'];
         $etudiant->cin_etudiant = $inputs['cin_etudiant'];
         $etudiant->cin_etudiant = $inputs['cin_etudiant'];
-        $etudiant->cin_etudiant = $inputs['cin_etudiant']; */
+        $etudiant->cin_etudiant = $inputs['cin_etudiant'];
 
 
-
+        $etudiant->save();
 
     }
+
+    public function store(Array $inputs)
+	{
+		$etudiant = new $this->etudiant;
+
+		$this->save($etudiant,$inputs);
+
+        return $etudiant;
+
+
+	}
 
 }

@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\DossierEtudiant;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Repositories\EtudiantRepository;
 
 class EtudiantController extends Controller
 {
@@ -18,9 +19,14 @@ class EtudiantController extends Controller
      *
      * @return void
      */
-    public function __construct()
+
+    protected $etudiantRepository;
+
+
+    public function __construct(EtudiantRepository $etudiantRepository)
     {
         $this->middleware('auth');
+        $this->etudiantRepository = $etudiantRepository;
     }
 
 
@@ -49,7 +55,10 @@ class EtudiantController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $etudiant = $this->etudiantRepository ->store($request->all());
+
+		return redirect('home')->withOk("L'utilisateur a été créé.");
+
     }
 
     /**
@@ -60,7 +69,7 @@ class EtudiantController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**

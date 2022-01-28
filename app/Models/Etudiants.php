@@ -9,5 +9,6 @@ class Etudiants extends Model
 {
     use HasFactory;
 
-    $guarded = ['actif'];
+
+
 }
