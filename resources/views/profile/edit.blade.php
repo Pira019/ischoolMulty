@@ -21,55 +21,63 @@
                                         <legend class="title">  {{ __('Information de base') }}</legend>
                                      <div class="form-row">
                                         <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }} col-md-4 mb-3 ">
-                                            <label>{{ __('Name') }}</label>
+                                            <label>{{ __('Nom de l\'étudiant') }}</label>
                                             <input type="text" name="name" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Name') }}" value="{{ old('name', auth()->user()->name) }}">
                                             @include('alerts.feedback', ['field' => 'name'])
                                         </div>
 
                                         <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }} col-md-4 mb-3 ">
-                                            <label>{{ __('Name') }}</label>
+                                            <label>{{ __('Prénom') }}</label>
                                             <input type="text" name="name" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Name') }}" value="{{ old('name', auth()->user()->name) }}">
                                             @include('alerts.feedback', ['field' => 'name'])
                                         </div>
                                         <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }} col-md-4 mb-3 ">
-                                            <label>{{ __('Name') }}</label>
-                                            <input type="text" name="name" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Name') }}" value="{{ old('name', auth()->user()->name) }}">
-                                            @include('alerts.feedback', ['field' => 'name'])
+                                            <label for="filliere">{{ __('Fillière') }}</label>
+                                            <select name="name" id="filliere" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Name') }}"  >
+                                                <option value="volvo">Volvo</option>
+                                                <option value="saab">Saab</option>
+                                                <option value="mercedes">Mercedes</option>
+                                            </select>
+                                              @include('alerts.feedback', ['field' => 'name'])
                                         </div>
                                      </div>
                                      <div class="form-row">
                                         <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }} col-md-4 mb-3 ">
-                                            <label>{{ __('Name') }}</label>
-                                            <input type="text" name="name" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Name') }}" value="{{ old('name', auth()->user()->name) }}">
-                                            @include('alerts.feedback', ['field' => 'name'])
+                                            <label for="filliere">{{ __('Classe') }}</label>
+                                            <select name="name" id="filliere" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Name') }}"  >
+                                                <option value="volvo">Volvo</option>
+                                                <option value="saab">Saab</option>
+                                                <option value="mercedes">Mercedes</option>
+                                            </select>
+                                              @include('alerts.feedback', ['field' => 'name'])
                                         </div>
 
                                       <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }} col-md-4 mb-3 ">
-                                            <label>{{ __('Name') }}</label>
+                                            <label>{{ __('CIN') }}</label>
                                             <input type="text" name="name" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Name') }}" value="{{ old('name', auth()->user()->name) }}">
                                             @include('alerts.feedback', ['field' => 'name'])
                                         </div>
 
                                         <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }} col-md-4 mb-3 ">
-                                            <label>{{ __('Name') }}</label>
+                                            <label>{{ __('Gsm étudiant') }}</label>
                                             <input type="text" name="name" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Name') }}" value="{{ old('name', auth()->user()->name) }}">
                                             @include('alerts.feedback', ['field' => 'name'])
                                         </div>
                                      </div>
                                      <div class="form-row">
                                         <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }} col-md-4 mb-3 ">
-                                            <label>{{ __('Name') }}</label>
+                                            <label>{{ __('Groupe') }}</label>
                                             <input type="text" name="name" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Name') }}" value="{{ old('name', auth()->user()->name) }}">
                                             @include('alerts.feedback', ['field' => 'name'])
                                         </div>
 
                                         <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }} col-md-4 mb-3 ">
-                                            <label>{{ __('Name') }}</label>
+                                            <label>{{ __('Email personnel') }}</label>
                                             <input type="text" name="name" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Name') }}" value="{{ old('name', auth()->user()->name) }}">
                                             @include('alerts.feedback', ['field' => 'name'])
                                         </div>
                                         <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }} col-md-4 mb-3 ">
-                                            <label>{{ __('Name') }}</label>
+                                            <label>{{ __('Email école') }}</label>
                                             <input type="text" name="name" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Name') }}" value="{{ old('name', auth()->user()->name) }}">
                                             @include('alerts.feedback', ['field' => 'name'])
                                         </div>
@@ -77,38 +85,43 @@
 
                                      <div class="form-row">
                                         <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }} col-md-4 mb-3 ">
-                                            <label>{{ __('Name') }}</label>
-                                            <input type="text" name="name" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Name') }}" value="{{ old('name', auth()->user()->name) }}">
+                                            <label>{{ __('Adresse étudiant') }}</label>
+                                            <textarea type="text" name="name" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}">
+                                            </textarea>
                                             @include('alerts.feedback', ['field' => 'name'])
                                         </div>
 
                                         <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }} col-md-4 mb-3 ">
-                                            <label>{{ __('Name') }}</label>
-                                            <input type="text" name="name" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Name') }}" value="{{ old('name', auth()->user()->name) }}">
+                                            <label>{{ __('Date de naissance') }}</label>
+                                            <input type="date" name="name" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Name') }}" value="{{ old('name', auth()->user()->name) }}">
                                             @include('alerts.feedback', ['field' => 'name'])
                                         </div>
                                         <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }} col-md-4 mb-3 ">
-                                            <label>{{ __('Name') }}</label>
+                                            <label>{{ __('Ville de naissance') }}</label>
                                             <input type="text" name="name" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Name') }}" value="{{ old('name', auth()->user()->name) }}">
                                             @include('alerts.feedback', ['field' => 'name'])
                                         </div>
                                      </div>
                                      <div class="form-row">
                                         <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }} col-md-4 mb-3 ">
-                                            <label>{{ __('Name') }}</label>
+                                            <label>{{ __('Ville') }}</label>
                                             <input type="text" name="name" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Name') }}" value="{{ old('name', auth()->user()->name) }}">
                                             @include('alerts.feedback', ['field' => 'name'])
                                         </div>
 
                                         <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }} col-md-4 mb-3 ">
-                                            <label>{{ __('Name') }}</label>
+                                            <label>{{ __('Nationalité') }}</label>
                                             <input type="text" name="name" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Name') }}" value="{{ old('name', auth()->user()->name) }}">
                                             @include('alerts.feedback', ['field' => 'name'])
                                         </div>
                                         <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }} col-md-4 mb-3 ">
-                                            <label>{{ __('Name') }}</label>
-                                            <input type="text" name="name" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Name') }}" value="{{ old('name', auth()->user()->name) }}">
-                                            @include('alerts.feedback', ['field' => 'name'])
+                                            <label for="Sexe">{{ __('Sexe') }}</label>
+                                            <select name="name" id="Sexe" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Name') }}"  >
+                                                <option value="Masculin">{{ __('Masculin') }}</option>
+                                                <option value="Féminn">{{ __('Féminn') }}</option>
+                                                <option value="Autre">{{ __('Autre') }}</option>
+                                            </select>
+                                              @include('alerts.feedback', ['field' => 'name'])
                                         </div>
                                      </div>
                                     </fieldset>
@@ -117,9 +130,10 @@
 
                                         <legend class="title">  {{ __('Autres') }}</legend>
                                         <div class="form-row">
-                                        <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }} col-md-4 mb-3 ">
-                                            <label>{{ __('Name') }}</label>
-                                            <input type="text" name="name" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Name') }}" value="{{ old('name', auth()->user()->name) }}">
+                                        <div class="form-group {{ $errors->has('name') ? ' has-danger' : '' }} col-md-4 mb-3 ">
+
+                                            <label class="form-check-label">{{ __('Actif') }}</label>
+                                            <input type="checkbox" name="name" class="form-check-input p-3 {{ $errors->has('name') ? ' is-invalid' : '' }}"  >
                                             @include('alerts.feedback', ['field' => 'name'])
                                         </div>
 

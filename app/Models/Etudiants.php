@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Etudiants extends Model
 {
     use HasFactory;
+
+    $guarded = ['actif'];
 }
