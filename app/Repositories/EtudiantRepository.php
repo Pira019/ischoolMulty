@@ -26,6 +26,7 @@ class EtudiantRepository extends ResourceRepository
         $etudiant->Situation_bloquee=false;
 
         $etudiant->prenom_etudiant = $inputs['prenom_etudiant'];
+        $etudiant->Nom_etudiant = $inputs['Nom_etudiant'];
         $etudiant->Nom_pere = $inputs['Nom_pere'];
         $etudiant->Nom_mere = $inputs['Nom_mere'];
         $etudiant->Adresse_permanante = $inputs['Adresse_permanante'];
@@ -41,14 +42,14 @@ class EtudiantRepository extends ResourceRepository
         $etudiant->remarques = $inputs['remarques'];
         $etudiant->Filiere = $inputs['Filiere'];
         $etudiant->classe_actuelle = $inputs['classe_actuelle'];
-        $etudiant->boursier = $inputs['boursier'];
+       // $etudiant->boursier = $inputs['boursier'];
         $etudiant->ville_naissance = $inputs['ville_naissance'];
         $etudiant->tuteur = $inputs['tuteur'];
         $etudiant->telephone_tuteur = $inputs['telephone_tuteur'];
 
         $etudiant->Compte_bancaire = $inputs['Compte_bancaire'];
         $etudiant->etablissement_precedent = $inputs['etablissement_precedent'];
-        $etudiant->Groupe_sanguin = $inputs['Groupe_sanguin'];
+        //$etudiant->Groupe_sanguin = $inputs['Groupe_sanguin'];
         //$etudiant->Maladies_chronique = $inputs['Maladies_chronique'];
 
         $etudiant->handicape = $inputs['handicape'];
