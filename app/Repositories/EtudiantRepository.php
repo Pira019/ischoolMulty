@@ -49,12 +49,12 @@ class EtudiantRepository extends ResourceRepository
         $etudiant->Compte_bancaire = $inputs['Compte_bancaire'];
         $etudiant->etablissement_precedent = $inputs['etablissement_precedent'];
         $etudiant->Groupe_sanguin = $inputs['Groupe_sanguin'];
-        $etudiant->Maladies_chronique = $inputs['Maladies_chronique'];
+        //$etudiant->Maladies_chronique = $inputs['Maladies_chronique'];
 
         $etudiant->handicape = $inputs['handicape'];
         $etudiant->religion = $inputs['religion'];
-        $etudiant->photo_etudiant = $inputs['photo_etudiant'];
-        $etudiant->cin_etudiant = $inputs['cin_etudiant'];
+       // $etudiant->photo_etudiant = $inputs['photo_etudiant'];
+       // $etudiant->cin_etudiant = $inputs['cin_etudiant'];
 
         $etudiant->cin_etudiant = $inputs['cin_etudiant'];
        /* $etudiant->cin_etudiant = $inputs['cin_etudiant'];
