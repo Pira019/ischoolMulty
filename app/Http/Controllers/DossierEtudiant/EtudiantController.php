@@ -4,6 +4,7 @@ namespace App\Http\Controllers\DossierEtudiant;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreEtudiantRequest;
 use App\Repositories\EtudiantRepository;
 
 class EtudiantController extends Controller
@@ -22,6 +23,8 @@ class EtudiantController extends Controller
 
     protected $etudiantRepository;
 
+    protected $nbrPerPage = 4;
+
 
     public function __construct(EtudiantRepository $etudiantRepository)
     {
@@ -34,7 +37,11 @@ class EtudiantController extends Controller
 
     public function index()
     {
-        return view('profile.edit');
+        $students = $this->etudiantRepository->getPaginate($this->nbrPerPage);
+        $links = $students->render();
+
+
+        return view('profile.edit', compact('students','links'));
     }
 
     /**
@@ -53,9 +60,9 @@ class EtudiantController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreEtudiantRequest $request)
     {
-        $etudiant = $this->etudiantRepository ->store($request->all());
+         $this->etudiantRepository ->store($request->all());
 
 		return redirect('home')->withOk("L'utilisateur a été créé.");
 

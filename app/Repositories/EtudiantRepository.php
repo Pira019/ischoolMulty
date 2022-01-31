@@ -4,23 +4,30 @@ namespace App\Repositories;
 
 use App\Models\Etudiants;
 
-class EtudiantRepository
+class EtudiantRepository extends ResourceRepository
 {
 
-    protected $etudiant;
+
 
    public function __constructor(Etudiants $etudiant) {
 
-    $this->etudiant = $etudiant;
+    $this->model = $etudiant;
+
+
 	}
 
 
 
 
     private function save(Etudiants $etudiant ,Array $inputs){
- 
-        $etudiant->code_etudiant = $inputs['code_etudiant'];
-	    $etudiant->Nom_etudiant = $inputs['Nom_etudiant'];
+
+      //  $etudiant->code_etudiant = $inputs['code_etudiant'];
+
+
+        $etudiant->code_etudiant =25;
+        $etudiant->actif =true;
+        $etudiant->Situation_bloquee=false;
+
         $etudiant->prenom_etudiant = $inputs['prenom_etudiant'];
         $etudiant->Nom_pere = $inputs['Nom_pere'];
         $etudiant->Nom_mere = $inputs['Nom_mere'];
@@ -62,7 +69,7 @@ class EtudiantRepository
         $etudiant->cin_etudiant = $inputs['cin_etudiant'];
         $etudiant->cin_etudiant = $inputs['cin_etudiant'];
         $etudiant->cin_etudiant = $inputs['cin_etudiant'];
-        $etudiant->cin_etudiant = $inputs['cin_etudiant'];
+
 
 
         $etudiant->save();
@@ -71,9 +78,10 @@ class EtudiantRepository
 
     public function store(Array $inputs)
 	{
-		$etudiant = new $this->etudiant;
 
-		$this->save($etudiant,$inputs);
+        $etudiant = new Etudiants;
+
+		$this->save($etudiant ,$inputs);
 
         return $etudiant;
 

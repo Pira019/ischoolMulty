@@ -35,6 +35,7 @@ return [
     'switch_tenant_tasks' => [
         // add tasks here
         Spatie\Multitenancy\Tasks\SwitchTenantDatabaseTask::class,
+
     ],
 
     /*
