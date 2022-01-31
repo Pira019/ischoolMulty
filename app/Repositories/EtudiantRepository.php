@@ -16,9 +16,6 @@ class EtudiantRepository extends ResourceRepository
 
 	}
 
-
-
-
     private function save(Etudiants $etudiant ,Array $inputs){
 
       //  $etudiant->code_etudiant = $inputs['code_etudiant'];
@@ -60,6 +57,7 @@ class EtudiantRepository extends ResourceRepository
         $etudiant->cin_etudiant = $inputs['cin_etudiant'];
 
         $etudiant->cin_etudiant = $inputs['cin_etudiant'];
+       /* $etudiant->cin_etudiant = $inputs['cin_etudiant'];
         $etudiant->cin_etudiant = $inputs['cin_etudiant'];
         $etudiant->cin_etudiant = $inputs['cin_etudiant'];
         $etudiant->cin_etudiant = $inputs['cin_etudiant'];
@@ -67,8 +65,7 @@ class EtudiantRepository extends ResourceRepository
         $etudiant->cin_etudiant = $inputs['cin_etudiant'];
         $etudiant->cin_etudiant = $inputs['cin_etudiant'];
         $etudiant->cin_etudiant = $inputs['cin_etudiant'];
-        $etudiant->cin_etudiant = $inputs['cin_etudiant'];
-        $etudiant->cin_etudiant = $inputs['cin_etudiant'];
+        $etudiant->cin_etudiant = $inputs['cin_etudiant'];*/
 
 
 
@@ -87,5 +84,7 @@ class EtudiantRepository extends ResourceRepository
 
 
 	}
+
+
 
 }

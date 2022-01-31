@@ -123,7 +123,7 @@
                                             <label>{{ __('Adresse étudiant') }}</label>
                                             <textarea type="text" name="name"
                                                 class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}">
-                                                            </textarea>
+                                                                                                        </textarea>
                                             @include('alerts.feedback', ['field' => 'name'])
                                         </div>
 
@@ -314,20 +314,20 @@
 
                             </div>
                             <!--  <div class="card-footer">
-                                    <div class="button-container">
-                                        <button class="btn btn-icon btn-round btn-facebook">
-                                            <i class="fab fa-facebook"></i>
-                                        </button>
-                                        <button class="btn btn-icon btn-round btn-twitter">
-                                            <i class="fab fa-twitter"></i>
-                                        </button>
-                                        <button class="btn btn-icon btn-round btn-google">
-                                            <i class="fab fa-google-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>!-->
+                                                                                <div class="button-container">
+                                                                                    <button class="btn btn-icon btn-round btn-facebook">
+                                                                                        <i class="fab fa-facebook"></i>
+                                                                                    </button>
+                                                                                    <button class="btn btn-icon btn-round btn-twitter">
+                                                                                        <i class="fab fa-twitter"></i>
+                                                                                    </button>
+                                                                                    <button class="btn btn-icon btn-round btn-google">
+                                                                                        <i class="fab fa-google-plus"></i>
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>!-->
 
 
                         </div>
@@ -418,9 +418,10 @@
                     <div class="">
                         <table class="table tablesorter " id="">
                             <thead class=" text-primary">
+
+
                                 <tr>
-                                    <th scope="col">{{ __('Nom') }}</th>
-                                    <th scope="col">{{ __('Prénom') }}</th>
+                                    <th scope="col">{{ __('Noms') }}</th>
                                     <th scope="col">{{ __('Nationalité') }}</th>
 
                                     <th scope="col">{{ __('Ville') }}</th>
@@ -432,30 +433,36 @@
 
                                     <th scope="col"></th>
                                 </tr>
+
+
+
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>Admin Admin</td>
-                                    <td>Admin Admin</td>
-                                    <td>Admin Admin</td>
-                                    <td>Admin Admin</td>
-                                    <td>Admin Admin</td>
-                                    <td>
-                                        <a href="mailto:admin@black.com">admin@black.com</a>
-                                    </td>
-                                    <td>24/02/2020 16:47</td>
-                                    <td class="text-right">
-                                        <div class="dropdown">
-                                            <a class="btn btn-sm btn-icon-only text-light" href="#" role="button"
-                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fas fa-ellipsis-v"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                <a class="dropdown-item" href="#">Edit</a>
+
+                                @foreach ($students as $student)
+                                    <tr>
+                                        <td>{!! $student->Nom_etudiant !!} {!! $student->prenom_etudiant !!} </td>
+                                        <td>{!! $student->Nationalité !!}</td>
+                                        <td>{!! $student->ville !!}</td>
+                                        <td>{!! $student->Date_naissance !!}</td>
+                                        <td>{!! $student->Telephone_personnel !!}</td>
+                                        <td>{!! $student->Telephone_pere !!}</td>
+                                        <td>
+                                            <a href="mailto:admin@black.com">{!! $student->email_ecole !!}</a>
+                                        </td>
+                                        <td class="text-right">
+                                            <div class="dropdown">
+                                                <a class="btn btn-sm btn-icon-only text-light" href="#" role="button"
+                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fas fa-ellipsis-v"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                                    <a class="dropdown-item" href="#">Edit</a>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -467,38 +474,38 @@
                 </div>
             </div>
             <!-- <div class="card">
-                                <div class="card-header">
-                                    <h5 class="title">{{ __('Password') }}</h5>
-                                </div>
-                                <form method="post" action="{{ route('profile.password') }}" autocomplete="off">
-                                    <div class="card-body">
-                                        @csrf
-                                        @method('put')
+                                                                            <div class="card-header">
+                                                                                <h5 class="title">{{ __('Password') }}</h5>
+                                                                            </div>
+                                                                            <form method="post" action="{{ route('profile.password') }}" autocomplete="off">
+                                                                                <div class="card-body">
+                                                                                    @csrf
+                                                                                    @method('put')
 
-                                        @include('alerts.success', ['key' => 'password_status'])
+                                                                                    @include('alerts.success', ['key' => 'password_status'])
 
-                                        <div class="form-group{{ $errors->has('old_password') ? ' has-danger' : '' }}">
-                                            <label>{{ __('Current Password') }}</label>
-                                            <input type="password" name="old_password" class="form-control{{ $errors->has('old_password') ? ' is-invalid' : '' }}" placeholder="{{ __('Current Password') }}" value="" required>
-                                            @include('alerts.feedback', ['field' => 'old_password'])
-                                        </div>
+                                                                                    <div class="form-group{{ $errors->has('old_password') ? ' has-danger' : '' }}">
+                                                                                        <label>{{ __('Current Password') }}</label>
+                                                                                        <input type="password" name="old_password" class="form-control{{ $errors->has('old_password') ? ' is-invalid' : '' }}" placeholder="{{ __('Current Password') }}" value="" required>
+                                                                                        @include('alerts.feedback', ['field' => 'old_password'])
+                                                                                    </div>
 
-                                        <div class="form-group{{ $errors->has('password') ? ' has-danger' : '' }}">
-                                            <label>{{ __('New Password') }}</label>
-                                            <input type="password" name="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="{{ __('New Password') }}" value="" required>
-                                            @include('alerts.feedback', ['field' => 'password'])
-                                        </div>
-                                        <div class="form-group">
-                                            <label>{{ __('Confirm New Password') }}</label>
-                                            <input type="password" name="password_confirmation" class="form-control" placeholder="{{ __('Confirm New Password') }}" value="" required>
-                                        </div>
-                                    </div>
-                                    <div class="card-footer">
-                                        <button type="submit" class="btn btn-fill btn-primary">{{ __('Change password') }}</button>
-                                    </div>
-                                </form>
-                            </div>--!>
-                        </div>
+                                                                                    <div class="form-group{{ $errors->has('password') ? ' has-danger' : '' }}">
+                                                                                        <label>{{ __('New Password') }}</label>
+                                                                                        <input type="password" name="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="{{ __('New Password') }}" value="" required>
+                                                                                        @include('alerts.feedback', ['field' => 'password'])
+                                                                                    </div>
+                                                                                    <div class="form-group">
+                                                                                        <label>{{ __('Confirm New Password') }}</label>
+                                                                                        <input type="password" name="password_confirmation" class="form-control" placeholder="{{ __('Confirm New Password') }}" value="" required>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="card-footer">
+                                                                                    <button type="submit" class="btn btn-fill btn-primary">{{ __('Change password') }}</button>
+                                                                                </div>
+                                                                            </form>
+                                                                        </div>--!>
+                                                                    </div>
 
-                    </div>
+                                                                </div>
 @endsection

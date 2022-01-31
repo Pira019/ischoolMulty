@@ -5,6 +5,7 @@ namespace App\Http\Controllers\DossierEtudiant;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreEtudiantRequest;
+use App\Models\Etudiants;
 use App\Repositories\EtudiantRepository;
 
 class EtudiantController extends Controller
@@ -30,6 +31,8 @@ class EtudiantController extends Controller
     {
         $this->middleware('auth');
         $this->etudiantRepository = $etudiantRepository;
+
+
     }
 
 
@@ -37,7 +40,7 @@ class EtudiantController extends Controller
 
     public function index()
     {
-        $students = $this->etudiantRepository->getPaginate($this->nbrPerPage);
+        $students = Etudiants::paginate(5);
         $links = $students->render();
 
 
