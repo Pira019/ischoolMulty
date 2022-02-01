@@ -1,4 +1,4 @@
- @extends('layouts.app', ['page' => __('ISCHOOL'), 'pageSlug' => 'assiduite'])
+ @extends('layouts.app', ['page' => __('ISCHOOL'), 'pageSlug' => '/'])
 
  @section('content')
      <div class="header py-7 py-lg-8">
