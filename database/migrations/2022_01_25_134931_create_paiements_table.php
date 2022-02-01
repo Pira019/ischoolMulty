@@ -29,7 +29,7 @@ class CreatePaiementsTable extends Migration
             $table->string('remarque')->nullable();
             $table->string('anneeUniversitaire')->nullable();
             $table->string('typePaiement')->nullable();
-            
+
             $table->timestamps();
         });
     }
