@@ -90,7 +90,7 @@ class CreateEtudiantsTable extends Migration
             $table->tinyInteger('RégimeSpéciale')->nullable();
             $table->tinyInteger('Lauréat')->nullable();
             $table->integer('rang')->nullable();
-            
+
             $table->timestamps();
         });
     }

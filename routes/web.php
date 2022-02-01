@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DossierEtudiant\AbscencesController;
 use App\Http\Controllers\DossierEtudiant\EtudiantController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,21 +24,15 @@ Route::get('/', function () {
 Route::middleware('tenant')->group(function() {
     // routes
     Route::resource('etudiant', EtudiantController::class);
+    Route::resource('assiduite', AbscencesController::class);
+
+
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->middleware(['auth'])->name('dashboard');
 
-});
 
-
-
-require __DIR__.'/auth.php';
-
-Auth::routes();
-
-Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home')->middleware('auth');
-
-Route::group(['middleware' => 'auth'], function () {
+    Route::group(['middleware' => 'auth'], function () {
 		Route::get('icons', ['as' => 'pages.icons', 'uses' => 'App\Http\Controllers\PageController@icons']);
 		Route::get('maps', ['as' => 'pages.maps', 'uses' => 'App\Http\Controllers\PageController@maps']);
 		Route::get('notifications', ['as' => 'pages.notifications', 'uses' => 'App\Http\Controllers\PageController@notifications']);
@@ -54,11 +49,18 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 });
 
+require __DIR__.'/auth.php';
+
+Auth::routes();
+
+Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home')->middleware('auth');
+
+
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home')->middleware('auth');
 
-
-
+});

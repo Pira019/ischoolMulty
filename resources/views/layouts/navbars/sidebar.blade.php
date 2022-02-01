@@ -11,7 +11,7 @@
                     <p>{{ __('Dashboard') }}</p>
                 </a>
             </li>
-           <!--   <li>
+            <!--   <li>
               <a data-toggle="collapse" href="#laravel-examples" aria-expanded="true">
                     <i class="fab fa-laravel" ></i>
                     <span class="nav-link-text" >{{ __('Laravel Examples') }}</span>
@@ -20,22 +20,22 @@
 
                 <div class="collapse show" id="laravel-examples">
                     <ul class="nav pl-4">!-->
-                        <li @if ($pageSlug == 'profile') class="active " @endif>
-                            <a href="{{ route('etudiant.index')  }}">
-                                <i class="tim-icons icon-single-02"></i>
-                                <p>{{ __('Dosier étudiants') }}</p>
-                            </a>
-                        </li>
-                        <li @if ($pageSlug == 'users') class="active " @endif>
-                            <a href="{{ route('user.index')  }}">
-                                <i class="tim-icons icon-bullet-list-67"></i>
-                                <p>{{ __('Assiduité') }}</p>
-                            </a>
-                        </li>
-                 <!--   </ul>
+            <li @if ($pageSlug == 'profile') class="active " @endif>
+                <a href="{{ route('etudiant.index') }}">
+                    <i class="tim-icons icon-single-02"></i>
+                    <p>{{ __('Dosier étudiants') }}</p>
+                </a>
+            </li>
+            <li @if ($pageSlug == 'assiduite') class="active " @endif>
+                <a href="{{ route('assiduite.index') }}">
+                    <i class="tim-icons icon-bullet-list-67"></i>
+                    <p>{{ __('Assiduité') }}</p>
+                </a>
+            </li>
+            <!--   </ul>
                  </div>
             </li>!-->
-         <!--   <li @if ($pageSlug == 'icons') class="active " @endif>
+            <!--   <li @if ($pageSlug == 'icons') class="active " @endif>
                 <a href="{{ route('pages.icons') }}">
                     <i class="tim-icons icon-atom"></i>
                     <p>{{ __('Icons') }}</p>
