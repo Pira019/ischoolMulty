@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFilieresTable extends Migration
+class CreateFiliereTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,20 +13,16 @@ class CreateFilieresTable extends Migration
      */
     public function up()
     {
-        Schema::create('filieres', function (Blueprint $table) {
-            $table->id();
-
-            $table->string('code_filiere');
-            $table->string('Nom_filiere')->nullable();
+        Schema::create('filiere', function (Blueprint $table) {
+            $table->string('code_filiere', 10)->primary();
+            $table->string('Nom_filiere', 50)->nullable();
             $table->tinyInteger('estSupprimer')->nullable();
             $table->integer('responsableFiliere')->nullable();
             $table->date('annee_creationfiliere')->nullable();
-            $table->string('NumAutoFilier')->nullable();
-            $table->string('NiveauDeFormation')->nullable();
-            $table->string('NvDiplomeSanctionant')->nullable();
+            $table->string('NumAutoFilier', 25)->nullable();
+            $table->string('NiveauDeFormation', 250)->nullable();
+            $table->string('NvDiplomeSanctionant', 25)->nullable();
             $table->integer('nbAnneeFormation')->nullable();
-            
-            $table->timestamps();
         });
     }
 
@@ -37,6 +33,6 @@ class CreateFilieresTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('filieres');
+        Schema::dropIfExists('filiere');
     }
 }

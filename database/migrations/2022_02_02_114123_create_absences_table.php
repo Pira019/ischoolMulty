@@ -14,33 +14,30 @@ class CreateAbsencesTable extends Migration
     public function up()
     {
         Schema::create('absences', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-            $table->string('code_seance');
+            $table->string('code_seance', 10);
             $table->integer('code_etudiant');
-
-            $table->dateTime('date_jour');
+            $table->dateTime('date_jour', 3);
             $table->integer('professeur')->nullable();
-            $table->string('code_filiere')->nullable();
-            $table->string('code_classe')->nullable();
-
+            $table->string('code_filiere', 10)->nullable();
+            $table->string('code_classe', 10)->nullable();
             $table->tinyInteger('Justifie')->nullable();
             $table->tinyInteger('retard')->nullable();
-            $table->longText('remarques')->nullable();
-            $table->string('mois')->nullable();
-            $table->string('anneeScolaire')->nullable();
-            $table->tinyInteger('AbscenceActive')->nullable();
+            $table->longText('remarques');
+            $table->string('mois', 10)->nullable();
+            $table->string('anneeScolaire', 10)->nullable();
+            $table->boolean('AbscenceActive')->default(1);
             $table->tinyInteger('estSupprimer')->nullable();
             $table->integer('semestre')->nullable();
-            $table->double('nbr_heures')->nullable();
+            $table->double('nbr_heures')->default(2);
             $table->integer('code_module')->nullable();
-            $table->tinyInteger('emailEnvoye')->nullable();
+            $table->boolean('emailEnvoye')->default(0);
             $table->date('dateEnvoiEmail')->nullable();
-            $table->tinyInteger('smsEnvoye')->nullable();
+            $table->boolean('smsEnvoye')->default(0);
             $table->date('dateEnvoiSms')->nullable();
             $table->integer('groupe')->nullable();
-
-             
+            
+            $table->primary(['code_seance', 'code_etudiant', 'date_jour']);
+            $table->foreign('anneeScolaire', 'FK_absences_Annee')->references('annee_scolaire')->on('annee');
         });
     }
 
@@ -51,6 +48,6 @@ class CreateAbsencesTable extends Migration
      */
     public function down()
     {
-        
+        Schema::dropIfExists('absences');
     }
 }

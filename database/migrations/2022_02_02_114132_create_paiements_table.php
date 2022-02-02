@@ -14,23 +14,19 @@ class CreatePaiementsTable extends Migration
     public function up()
     {
         Schema::create('paiements', function (Blueprint $table) {
-            $table->id();
-
-            $table->integer('num_bon');
+            $table->integer('num_bon')->primary();
             $table->integer('code_etudiant')->nullable();
             $table->string('nom_prenom_etudiant')->nullable();
             $table->date('date_paiement')->nullable();
-            $table->string('classe')->nullable();
-            $table->decimal('montant_paye')->nullable();
-            $table->string('mois')->nullable();
+            $table->string('classe', 50)->nullable();
+            $table->decimal('montant_paye', 15, 4)->nullable();
+            $table->string('mois', 10)->nullable();
             $table->tinyInteger('espece')->nullable();
-            $table->string('cheque')->nullable();
-            $table->decimal('solde')->nullable();
+            $table->string('cheque', 50)->nullable();
+            $table->decimal('solde', 18, 0)->nullable();
             $table->string('remarque')->nullable();
-            $table->string('anneeUniversitaire')->nullable();
-            $table->string('typePaiement')->nullable();
-
-            $table->timestamps();
+            $table->string('anneeUniversitaire', 10)->nullable();
+            $table->string('typePaiement', 10)->nullable();
         });
     }
 

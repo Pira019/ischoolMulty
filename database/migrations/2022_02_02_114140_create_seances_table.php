@@ -14,15 +14,11 @@ class CreateSeancesTable extends Migration
     public function up()
     {
         Schema::create('seances', function (Blueprint $table) {
-            $table->id();
-
-            $table->string('code_seance');
-            $table->string('heureDebut')->nullable();
-            $table->string('heureFin')->nullable();
+            $table->string('code_seance', 10)->primary();
+            $table->string('heureDebut', 50)->nullable();
+            $table->string('heureFin', 5)->nullable();
             $table->tinyInteger('estSupprimer')->nullable();
             $table->integer('NbrHeures')->nullable();
-            
-            $table->timestamps();
         });
     }
 

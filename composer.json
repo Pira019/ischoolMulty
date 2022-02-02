@@ -17,8 +17,10 @@
         "spatie/laravel-multitenancy": "2.0"
     },
     "require-dev": {
+        "bennett-treptow/laravel-migration-generator": "^4.1",
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
+        "kitloong/laravel-migrations-generator": "^5.1",
         "laravel-lang/lang": "^10.4",
         "laravel/breeze": "^1.7",
         "laravel/sail": "^1.0.1",

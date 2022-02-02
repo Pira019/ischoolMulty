@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateParametreCalculModulesTable extends Migration
+class CreateParametrecalculmodulesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,12 @@ class CreateParametreCalculModulesTable extends Migration
      */
     public function up()
     {
-        Schema::create('parametre_calcul_modules', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-
-            $table->integer('id_ParametreCalculModules');
+        Schema::create('parametrecalculmodules', function (Blueprint $table) {
+            $table->integer('id_ParametreCalculModules')->primary();
             $table->integer('code_module')->nullable();
-            $table->string('code_classe')->nullable();
-            $table->string('semestre')->nullable();
-            $table->string('anneeUniversitaire')->nullable();
+            $table->string('code_classe', 10)->nullable();
+            $table->string('semestre', 10)->nullable();
+            $table->string('anneeUniversitaire', 10)->nullable();
             $table->double('cc1')->nullable();
             $table->double('cc2')->nullable();
             $table->double('cc3')->nullable();
@@ -29,7 +26,6 @@ class CreateParametreCalculModulesTable extends Migration
             $table->double('efm1')->nullable();
             $table->double('efm2')->nullable();
             $table->double('soutenance')->nullable();
-            
         });
     }
 
@@ -40,6 +36,6 @@ class CreateParametreCalculModulesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('parametre_calcul_modules');
+        Schema::dropIfExists('parametrecalculmodules');
     }
 }
