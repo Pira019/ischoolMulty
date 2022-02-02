@@ -10,4 +10,11 @@ class Evaluation extends Model
     use HasFactory;
 
     protected $table = 'evaluations';
+
+
+    public function filliere(){
+
+        return $this->belongsTo(Filiere::class,'code_filiere');
+    }
+
 }

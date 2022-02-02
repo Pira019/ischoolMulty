@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Classe extends Model
 {
     use HasFactory;
+
+    public function class_mod_prof(){
+
+        return $this->hasMany(class_mod_prof::class,'codeClasse');
+    }
 }

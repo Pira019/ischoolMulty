@@ -9,5 +9,10 @@ class annee extends Model
 {
     use HasFactory;
 
-    
+
+
+    public function abscences(){
+
+        return $this->hasMany(abscences::class,'anneeScolaire');
+    }
 }

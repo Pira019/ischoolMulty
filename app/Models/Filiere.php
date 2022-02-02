@@ -9,5 +9,10 @@ class Filiere extends Model
 {
     use HasFactory;
 
-    protected $table = 'filieres';    
+    protected $table = 'filieres';
+
+    public function evaluations(){
+
+        return $this->hasMany(Evaluation::class,'codeFiliere');
+    }
 }

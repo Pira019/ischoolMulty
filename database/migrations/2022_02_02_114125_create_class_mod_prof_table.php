@@ -29,7 +29,7 @@ class CreateClassModProfTable extends Migration
             $table->integer('nbControles')->default(2);
             $table->integer('Nb_heures')->nullable();
             $table->tinyInteger('note_unique')->nullable();
-            
+
             $table->primary(['codeClasse', 'codeModule', 'codeProfesseur']);
             $table->foreign('codeClasse', 'FK_Class_mod_prof_classe')->references('code_classe')->on('classe');
         });
