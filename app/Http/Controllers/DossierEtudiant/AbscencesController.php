@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\DossierEtudiant;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\AbscencesRepository;
 use Illuminate\Http\Request;
 
 class AbscencesController extends Controller
@@ -15,13 +16,26 @@ class AbscencesController extends Controller
 
      private $title ='Gestion d\'abscence';
 
+     protected $abscenceRepository;
+
+     public function __construct(AbscencesRepository $abscenceRepository)
+    {
+        $this->middleware('auth');
+        $this->abscenceRepository = $abscenceRepository;
+
+
+    }
+
+
     public function index()
     {
         //
 
+        //get année scolaire, seance, nbr heure
+        $getclassModuleProf = $this->abscenceRepository->getClassModule();
 
-
-        return view('profile.create',['title' => $this->title] );
+       //return $getclassModuleProf;
+        return view('profile.create',['title' => $this->title], compact('getclassModuleProf') );
 
     }
 

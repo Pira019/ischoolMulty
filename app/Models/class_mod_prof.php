@@ -9,6 +9,8 @@ class class_mod_prof extends Model
 {
     use HasFactory;
 
+    protected $table ="class_mod_prof";
+    protected $primaryKey = 'codeClasse';
 
     public function classe(){
 
