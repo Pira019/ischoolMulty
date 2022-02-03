@@ -11,6 +11,5 @@ class Etudiants extends Model
 
 
 
-     protected $guarded = ['actif','code_etudiant','Situation_bloquee'];
 
 }

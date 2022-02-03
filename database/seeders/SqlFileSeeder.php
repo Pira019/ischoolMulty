@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class SqlFileSeeder extends Seeder
 {
@@ -15,7 +16,7 @@ class SqlFileSeeder extends Seeder
     {
         //
 
-        $path = public_path('sql/File.sql');
+        $path = public_path('sql.sql');
         $sql = file_get_contents($path);
         DB::unprepared($sql);
 

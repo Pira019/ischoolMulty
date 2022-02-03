@@ -14,7 +14,9 @@ class CreateEtudiantsTable extends Migration
     public function up()
     {
         Schema::create('etudiants', function (Blueprint $table) {
-            $table->integer('code_etudiant')->primary();
+
+
+            $table->increments('code_etudiant')->from(1000);
             $table->string('Nom_etudiant')->nullable();
             $table->string('prenom_etudiant')->nullable();
             $table->string('Nom_pere')->nullable();
@@ -88,6 +90,10 @@ class CreateEtudiantsTable extends Migration
             $table->boolean('RégimeSpéciale')->default(0);
             $table->boolean('Lauréat')->default(0);
             $table->integer('rang')->nullable();
+
+
+
+
         });
     }
 
