@@ -9,7 +9,10 @@ class Classe extends Model
 {
     use HasFactory;
 
-    public function class_mod_prof(){
+    protected $table ="classe";
+    protected $primaryKey="code_classe";
+
+    public function class_mod_profs(){
 
         return $this->hasMany(class_mod_prof::class,'codeClasse');
     }

@@ -34,19 +34,26 @@ class AbscencesController extends Controller
         //get année scolaire, seance, nbr heure
         $getclassModuleProf = $this->abscenceRepository->getClassModule();
 
-       //return $getclassModuleProf;
+       //return $getclassModuleProf->classe()->get();
         return view('profile.create',['title' => $this->title], compact('getclassModuleProf') );
 
     }
+
+
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         //
+
+        $getclassModuleProf = $this->abscenceRepository->getClassModule();
+
+
+        return view('profile.create',['title' => $this->title],compact('getclassModuleProf')  );
     }
 
     /**
