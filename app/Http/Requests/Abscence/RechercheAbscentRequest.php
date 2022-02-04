@@ -29,8 +29,6 @@ class RechercheAbscentRequest extends FormRequest
             'date' => 'required|before_or_equal:date',
             'fil' => 'required|',
             'cls' => 'required|',
-            'seance' => 'required|',
-
         ];
     }
 }

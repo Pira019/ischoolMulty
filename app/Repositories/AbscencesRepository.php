@@ -3,6 +3,8 @@
 namespace App\Repositories;
 
 use App\Models\class_mod_prof;
+use Illuminate\Support\Facades\DB;
+use PhpParser\Node\Expr\Cast\Array_;
 
 class AbscencesRepository
 {
@@ -13,14 +15,36 @@ class AbscencesRepository
 
     */
 
+    private $inputs;
 
     public function getClassModule(){
 
         //classe module data base
 
-        $classModuleProf = class_mod_prof::lazy();
+        $classModuleProf = DB::table('class_mod_prof')
+        ->Join('classe', 'class_mod_prof.codeClasse','=','classe.code_classe')->get();
 
         return $classModuleProf;
     }
+
+
+    //etudiants prensents
+    public function getPresentStudent(Array $datafilter){
+
+        $this->inputs = $datafilter;
+
+        $getEtudiantPresent = DB ::table('etudiants')
+        ->join('classe', function($join){
+            $join->on('etudiants.classe_actuelle','=','classe.niveauClasse')
+            ->where('etudiants.classe_actuelle','=', $this->inputs['cls'] )
+            ->where('etudiants.Filiere','=', $this->inputs['fil'] )
+            ->orderBy('etudiants.Nom_etudiant');
+;
+        }) ->select('etudiants.Nom_etudiant','etudiants.prenom_etudiant')
+        ->get();
+        return $getEtudiantPresent;
+
+
+   }
 
 }

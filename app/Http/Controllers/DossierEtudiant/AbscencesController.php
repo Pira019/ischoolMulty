@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\DossierEtudiant;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Abscence\RechercheAbscentRequest;
 use App\Repositories\AbscencesRepository;
 use Illuminate\Http\Request;
 
@@ -34,8 +35,8 @@ class AbscencesController extends Controller
         //get année scolaire, seance, nbr heure
         $getclassModuleProf = $this->abscenceRepository->getClassModule();
 
-       //return $getclassModuleProf->classe()->get();
-        return view('profile.create',['title' => $this->title], compact('getclassModuleProf') );
+       // return $getclassModuleProf ;
+       return view('profile.create',['title' => $this->title], compact('getclassModuleProf') );
 
     }
 
@@ -46,14 +47,18 @@ class AbscencesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create(RechercheAbscentRequest $inputs )
     {
         //
 
         $getclassModuleProf = $this->abscenceRepository->getClassModule();
+        $EtudiantPresent = $this->abscenceRepository->getPresentStudent($inputs->all());
 
-
-        return view('profile.create',['title' => $this->title],compact('getclassModuleProf')  );
+        // return $getclassModuleProf ;
+        return view('profile.create',['title' => $this->title,
+        'prensent' => $EtudiantPresent],
+         compact('getclassModuleProf'),
+       );
     }
 
     /**
