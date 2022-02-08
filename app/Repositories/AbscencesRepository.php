@@ -41,12 +41,21 @@ class AbscencesRepository
             ->where('etudiants.classe_actuelle','=', $this->inputs['cls'] )
             ->where('etudiants.Filiere','=', $this->inputs['fil'] );
 
-        })  ->select('etudiants.Nom_etudiant','etudiants.prenom_etudiant')
+        })
+
+        ->leftJoin('absences',function($join_){
+            $join_->on('etudiants.code_etudiant','=','absences.code_etudiant')
+            ->where('absences.AbscenceActive',false)
+            ->where('absences.date_jour','=',$this->inputs['anne']);
+        })
+
+        ->select('etudiants.Nom_etudiant','etudiants.prenom_etudiant')
 
         ->get();
         return $getEtudiantPresent;
 
 
    }
+
 
 }

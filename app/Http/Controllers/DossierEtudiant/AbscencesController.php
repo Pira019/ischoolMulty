@@ -56,7 +56,8 @@ class AbscencesController extends Controller
 
         // return $getclassModuleProf ;
         return view('profile.create',['title' => $this->title,
-        'prensent' => $EtudiantPresent],
+        'prensent' => $EtudiantPresent,
+        'data' => $inputs],
          compact('getclassModuleProf'),
        );
     }
