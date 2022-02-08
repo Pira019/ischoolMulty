@@ -34,13 +34,15 @@ class AbscencesRepository
         $this->inputs = $datafilter;
 
         $getEtudiantPresent = DB ::table('etudiants')
+        ->orderBy('etudiants.Nom_etudiant', 'asc')
+        ->groupBy('etudiants.code_etudiant')
         ->join('classe', function($join){
             $join->on('etudiants.classe_actuelle','=','classe.niveauClasse')
             ->where('etudiants.classe_actuelle','=', $this->inputs['cls'] )
-            ->where('etudiants.Filiere','=', $this->inputs['fil'] )
-            ->orderBy('etudiants.Nom_etudiant');
-;
-        }) ->select('etudiants.Nom_etudiant','etudiants.prenom_etudiant')
+            ->where('etudiants.Filiere','=', $this->inputs['fil'] );
+
+        })  ->select('etudiants.Nom_etudiant','etudiants.prenom_etudiant')
+
         ->get();
         return $getEtudiantPresent;
 
