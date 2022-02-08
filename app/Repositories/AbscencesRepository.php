@@ -2,11 +2,13 @@
 
 namespace App\Repositories;
 
-use App\Models\class_mod_prof;
-use Illuminate\Support\Facades\DB;
-use PhpParser\Node\Expr\Cast\Array_;
 
-class AbscencesRepository
+use App\Models\Models\absences;
+use Illuminate\Support\Facades\DB;
+
+
+class AbscencesRepository extends ResourceRepository
+
 {
 
 
@@ -16,6 +18,29 @@ class AbscencesRepository
     */
 
     private $inputs;
+
+
+
+    public function __constructor(absences $absence){
+
+        $this->model = $absence;
+    }
+
+
+    // save absences
+    public function save(Array $inputs){
+
+        foreach($inputs['code_etudiant'] as $list ){
+            
+            $this->model->code_etudiant = $inputs['code_etudiant'];
+
+            $this->store($this->model);
+        }
+
+
+
+    }
+
 
     public function getClassModule(){
 
@@ -49,7 +74,7 @@ class AbscencesRepository
             ->where('absences.date_jour','=',$this->inputs['anne']);
         })
 
-        ->select('etudiants.Nom_etudiant','etudiants.prenom_etudiant')
+        ->select('etudiants.Nom_etudiant','etudiants.prenom_etudiant','etudiants.code_etudiant')
 
         ->get();
         return $getEtudiantPresent;

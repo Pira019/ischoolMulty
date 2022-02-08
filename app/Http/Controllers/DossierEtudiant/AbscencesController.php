@@ -4,6 +4,7 @@ namespace App\Http\Controllers\DossierEtudiant;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Abscence\RechercheAbscentRequest;
+use App\Http\Requests\Abscence\SaveAbscentRequest;
 use App\Repositories\AbscencesRepository;
 use Illuminate\Http\Request;
 
@@ -36,7 +37,8 @@ class AbscencesController extends Controller
         $getclassModuleProf = $this->abscenceRepository->getClassModule();
 
        // return $getclassModuleProf ;
-       return view('profile.create',['title' => $this->title], compact('getclassModuleProf') );
+       return view('profile.create',['title' => $this->title,'dataRqt' => []]
+        ,compact('getclassModuleProf') );
 
     }
 
@@ -54,10 +56,14 @@ class AbscencesController extends Controller
         $getclassModuleProf = $this->abscenceRepository->getClassModule();
         $EtudiantPresent = $this->abscenceRepository->getPresentStudent($inputs->all());
 
-        // return $getclassModuleProf ;
-        return view('profile.create',['title' => $this->title,
+
+        $dataRqt= $inputs;
+
+        return view(
+        'profile.create',['title' => $this->title,
         'prensent' => $EtudiantPresent,
-        'data' => $inputs],
+        'dataRqt' => $inputs
+    ],
          compact('getclassModuleProf'),
        );
     }
@@ -68,9 +74,21 @@ class AbscencesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SaveAbscentRequest $request)
     {
-        //
+
+        $getclassModuleProf = $this->abscenceRepository->getClassModule();
+        $EtudiantPresent = $this->abscenceRepository->getPresentStudent($request->all());
+
+        $this->abscenceRepository->save($request->all());
+       return
+          view( 'profile.create',[
+           'dataRqt' => $request,
+           'title' => $this->title,
+        ]
+
+        );
+
     }
 
     /**

@@ -10,10 +10,14 @@ class absences extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'code_etudiant'
+    ];
 
     public function annee(){
 
         return $this->belongsTo(annee::class,'annee_scolaire');
-    }
+
+   }
 
 }
