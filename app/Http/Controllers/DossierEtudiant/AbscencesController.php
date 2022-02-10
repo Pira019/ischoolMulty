@@ -61,15 +61,17 @@ class AbscencesController extends Controller
         $getclassModuleProf = $this->abscenceRepository->getClassModule();
         $EtudiantPresent = $this->abscenceRepository->getPresentStudent($inputs->all());
 
+        $etudiantAbscents = $this->abscenceRepository->getAbscentsStudent($inputs->all());
 
-        $dataRqt= $inputs;
+
 
         return view(
         'profile.create',['title' => $this->title,
         'prensent' => $EtudiantPresent,
+         'absents' => $etudiantAbscents,
         'dataRqt' => $inputs
     ],
-         compact('getclassModuleProf'),
+         compact('getclassModuleProf')
        );
     }
 

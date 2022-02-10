@@ -73,28 +73,60 @@ class AbscencesRepository extends ResourceRepository
         ->orderBy('etudiants.Nom_etudiant', 'asc')
         ->groupBy('etudiants.code_etudiant')
 
-            ->leftJoin('classe', function($join){
+            ->Join('classe', function($join){
                 $join->on('etudiants.classe_actuelle','=','classe.niveauClasse')
                     ->where('etudiants.classe_actuelle','=', $this->inputs['cls'] )
                     ->where('etudiants.Filiere','=', $this->inputs['fil'] );
+            })
+
+            ->leftJoin('absences',function($join){
+                $join->on('etudiants.code_etudiant','=','absences.code_etudiant');
 
             })
 
-        ->Join('absences',function($join){
-            $join->on('etudiants.code_etudiant','=','absences.code_etudiant')
-            ->where('absences.AbscenceActive',false)
-            ->where('absences.anneeScolaire','=',$this->inputs['annee']);
-        })
+            ->where('AbscenceActive',false)
+            ->orWhere('AbscenceActive')
+            ->where('absences.date_jour','=', $this->inputs['annee'])
+            ->orWhere('absences.date_jour')
 
-
-
-        ->select('etudiants.Nom_etudiant','etudiants.prenom_etudiant','etudiants.code_etudiant')
+            ->select('etudiants.Nom_etudiant','etudiants.prenom_etudiant','etudiants.code_etudiant')
 
         ->get();
         return $getEtudiantPresent;
 
 
    }
+
+
+
+    //etudiants abscents
+    public function getAbscentsStudent(Array $datafilter){
+
+        $this->inputs = $datafilter;
+
+        $getEtudiants= DB ::table('etudiants')
+            ->orderBy('etudiants.Nom_etudiant', 'asc')
+            ->groupBy('etudiants.code_etudiant')
+
+            ->Join('classe', function($join){
+                $join->on('etudiants.classe_actuelle','=','classe.niveauClasse')
+                    ->where('etudiants.classe_actuelle','=', $this->inputs['cls'] )
+                    ->where('etudiants.Filiere','=', $this->inputs['fil'] )
+                   ->where('etudiants.annee_encours','=', $this->inputs['annee'] );
+            })
+
+            ->leftJoin('absences',function($join){
+                $join->on('etudiants.code_etudiant','=','absences.code_etudiant');
+            })->where('AbscenceActive',true)
+            ->where( 'absences.date_jour','=',$this->inputs['annee'])
+
+            ->select('etudiants.Nom_etudiant','etudiants.prenom_etudiant','etudiants.code_etudiant')
+
+            ->get();
+        return $getEtudiants;
+
+
+    }
 
 
 }

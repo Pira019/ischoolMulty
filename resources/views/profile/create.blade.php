@@ -237,13 +237,20 @@ if (isset($getclassModuleProf)) {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td><input type="checkbox"></td>
-                                                    <td>ff</td>
-                                                    <td><input type="checkbox"></td>
-                                                    <td><input type="checkbox"></td>
-                                                    <td><input type="checkbox"></td>
-                                                </tr>
+
+                                                @isset($absents)
+                                                    @foreach($absents as $list)
+                                                        <tr>
+                                                            <td><input type="checkbox"></td>
+                                                            <td>{{ $list->Nom_etudiant }}</td>
+                                                            <td><input type="checkbox"></td>
+                                                            <td><input type="checkbox"></td>
+                                                            <td><input type="checkbox"></td>
+                                                        </tr>
+                                                    @endforeach
+
+                                                @endisset
+
 
                                             </tbody>
                                         </table>
