@@ -31,17 +31,25 @@ class AbscencesRepository extends ResourceRepository
     // save absences
     public function save(Array $inputs){
 
-        $absence =new Absences;
-
+        $finalAray = array();
 
         foreach($inputs['code_etudiant'] as $list => $value) {
 
-            $absence['code_etudiant'] = $value;
-            $absence['date_jour'] = $inputs['date'];
+          array_push($finalAray , array(
 
-            $absence->save();
+            'code_etudiant' => $value,
+            'date_jour' => $inputs['date'],
+            'code_seance' => $inputs['seance'],
+            'anneeScolaire' => $inputs['annee'],
+            'remarques' => $inputs['annee'],
+            'AbscenceActive' => true,
+
+          ));
+
         }
 
+
+        Absences::insert($finalAray);
     }
 
 
@@ -64,18 +72,21 @@ class AbscencesRepository extends ResourceRepository
         $getEtudiantPresent = DB ::table('etudiants')
         ->orderBy('etudiants.Nom_etudiant', 'asc')
         ->groupBy('etudiants.code_etudiant')
-        ->join('classe', function($join){
-            $join->on('etudiants.classe_actuelle','=','classe.niveauClasse')
-            ->where('etudiants.classe_actuelle','=', $this->inputs['cls'] )
-            ->where('etudiants.Filiere','=', $this->inputs['fil'] );
 
-        })
+            ->leftJoin('classe', function($join){
+                $join->on('etudiants.classe_actuelle','=','classe.niveauClasse')
+                    ->where('etudiants.classe_actuelle','=', $this->inputs['cls'] )
+                    ->where('etudiants.Filiere','=', $this->inputs['fil'] );
 
-        ->leftJoin('absences',function($join_){
-            $join_->on('etudiants.code_etudiant','=','absences.code_etudiant')
+            })
+
+        ->Join('absences',function($join){
+            $join->on('etudiants.code_etudiant','=','absences.code_etudiant')
             ->where('absences.AbscenceActive',false)
-            ->where('absences.date_jour','=',$this->inputs['annee']);
+            ->where('absences.anneeScolaire','=',$this->inputs['annee']);
         })
+
+
 
         ->select('etudiants.Nom_etudiant','etudiants.prenom_etudiant','etudiants.code_etudiant')
 

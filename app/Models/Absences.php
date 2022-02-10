@@ -10,6 +10,7 @@ class Absences extends Model
 {
     use HasFactory;
 
+
     protected $fillable = [
         'code_etudiant'
     ];
@@ -17,6 +18,7 @@ class Absences extends Model
     protected $casts =[
         'date_jour' => 'datetime:d-m-Y'
     ];
+
 
     public function annee(){
 

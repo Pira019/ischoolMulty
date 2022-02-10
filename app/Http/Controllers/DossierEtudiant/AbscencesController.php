@@ -86,16 +86,16 @@ class AbscencesController extends Controller
 
 
 
-       $this->abscenceRepository->save($request->all());
+     return  $this->abscenceRepository->save($request->all());
 
 
-         return
+        /* return
              view( 'profile.create',[
               'dataRqt' => $request,
               'title' => $this->title,
            ]
 
-           );
+           );*/
 
     }
 

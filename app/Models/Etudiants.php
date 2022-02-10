@@ -12,4 +12,6 @@ class Etudiants extends Model
 
 
 
+
+
 }

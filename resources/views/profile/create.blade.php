@@ -214,9 +214,9 @@ if (isset($getclassModuleProf)) {
 
                                     <div class="row">
                                         <button type="submit"
-                                            class="btn btn-fill btn-primary">{{ __('Enregistrer') }}</button>
+                                            class="btn btn-fill btn-primary">{{ __('ABS') }}</button>
                                         <button type="submit"
-                                            class="btn btn-fill btn-primary">{{ __('Enregistrer') }}</button>
+                                            class="btn btn-fill btn-primary">{{ __('REC') }}</button>
                                     </div>
 
 
