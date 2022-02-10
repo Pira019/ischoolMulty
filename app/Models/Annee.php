@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class annee extends Model
+class Annee extends Model
 {
     use HasFactory;
 
@@ -13,6 +14,6 @@ class annee extends Model
 
     public function abscences(){
 
-        return $this->hasMany(abscences::class,'anneeScolaire');
+        return $this->hasMany(Absences::class,'anneeScolaire');
     }
 }

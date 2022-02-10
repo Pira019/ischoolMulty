@@ -45,7 +45,6 @@ if (isset($getclassModuleProf)) {
                                     @include('alerts.feedback', ['field' => 'sem'])
                                 </div>
 
-
                                 <div class="form-group{{ $errors->has('date') ? ' has-danger' : '' }} col-md-2 mb-3 ">
                                     <label>{{ __('Date') }}</label>
                                     <input type="date" id="date" name="date"
@@ -99,12 +98,12 @@ if (isset($getclassModuleProf)) {
 
                                 <div class="form-group{{ $errors->has('annee') ? ' has-danger' : '' }} col-md-2 mb-3 ">
                                     <label for="annee">{{ __('Année scolaire') }}</label>
-                                    <select id="annee" name="anne"
+                                    <select id="annee" name="annee"
                                         class="form-control{{ $errors->has('annee') ? ' is-invalid' : '' }}">
                                         @if ($data)
                                             @foreach ($getclassModuleProf->unique('anneeScolaire') as $anneeScolaire => $value)
                                                 <option value="{{ $value->anneeScolaire }}"
-                                                    {{ old('anne', isset($dataRqt) ? $dataRqt->anneeScolaire : '') == $value->anneeScolaire ? 'selected' : '' }}>
+                                                    {{ old('annee', isset($dataRqt) && !empty($dataRqt) ? $dataRqt['anneeScolaire'] : '') == $value->anneeScolaire ? 'selected' : '' }}>
                                                     {{ $value->anneeScolaire }}
                                                 </option>
                                             @endforeach
@@ -131,8 +130,10 @@ if (isset($getclassModuleProf)) {
                         @include('alerts.success')
 
 
-                        <input name="cls" type="hidden" value="{{ isset($dataRqt) ? $dataRqt['cls'] : '' }}">
-                        <input name="fil" type="text" value="{{ isset($dataRqt) ? $dataRqt['fil'] : '' }}">
+                        <input name="cls" type="hidden" value="{{ isset($dataRqt) && !empty($dataRqt)? $dataRqt['cls'] : '' }}">
+                        <input name="fil" type="hidden" value="{{ isset($dataRqt) && !empty($dataRqt) ? $dataRqt['fil'] : '' }}">
+                        <input name="annee" type="hidden" value="{{ isset($dataRqt) && !empty($dataRqt) ? $dataRqt['annee'] : '' }}">
+                        <input name="date" type="hidden" value="{{ isset($dataRqt) && !empty($dataRqt) ? $dataRqt['date'] : '' }}">
 
                         <div class="form-row">
                             <div class="form-group{{ $errors->has('seance') ? ' has-danger' : '' }} col-md-3 mb-3 ">
@@ -181,8 +182,6 @@ if (isset($getclassModuleProf)) {
                                     <div class="">
                                         <table class="table tablesorter " id="">
                                             <thead class=" text-primary">
-
-
                                                 <tr>
                                                     <th scope="col">{{ __('Noms') }}</th>
                                                     <th scope="col"> </th>
@@ -195,11 +194,12 @@ if (isset($getclassModuleProf)) {
                                                     @foreach ($prensent as $etudiant)
                                                         <tr>
                                                             <td>{{ $etudiant->Nom_etudiant }}
-                                                                {{ $etudiant->prenom_etudiant }}</td>
+                                                                {{ $etudiant->prenom_etudiant }}
+                                                            </td>
 
                                                             <td>
                                                                 <input type="checkbox" value="{{ $etudiant->code_etudiant }}"
-                                                                    name="code_etudiant" id="code_etudiant">
+                                                                    name="code_etudiant[]" id="code_etudiant">
                                                             </td>
                                                         </tr>
                                                     @endforeach

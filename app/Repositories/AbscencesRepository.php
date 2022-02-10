@@ -2,8 +2,7 @@
 
 namespace App\Repositories;
 
-
-use App\Models\Models\absences;
+use App\Models\Absences;
 use Illuminate\Support\Facades\DB;
 
 
@@ -21,23 +20,27 @@ class AbscencesRepository extends ResourceRepository
 
 
 
-    public function __constructor(absences $absence){
+    public function __constructor(Absences $absence){
 
         $this->model = $absence;
+
+
     }
 
 
     // save absences
     public function save(Array $inputs){
 
-        foreach($inputs['code_etudiant'] as $list ){
-            
-            $this->model->code_etudiant = $inputs['code_etudiant'];
+        $absence =new Absences;
 
-            $this->store($this->model);
+
+        foreach($inputs['code_etudiant'] as $list => $value) {
+
+            $absence['code_etudiant'] = $value;
+            $absence['date_jour'] = $inputs['date'];
+
+            $absence->save();
         }
-
-
 
     }
 
@@ -71,7 +74,7 @@ class AbscencesRepository extends ResourceRepository
         ->leftJoin('absences',function($join_){
             $join_->on('etudiants.code_etudiant','=','absences.code_etudiant')
             ->where('absences.AbscenceActive',false)
-            ->where('absences.date_jour','=',$this->inputs['anne']);
+            ->where('absences.date_jour','=',$this->inputs['annee']);
         })
 
         ->select('etudiants.Nom_etudiant','etudiants.prenom_etudiant','etudiants.code_etudiant')

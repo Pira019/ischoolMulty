@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Models\Models;
+namespace App\Models;
 
-use App\Models\annee;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class absences extends Model
+class Absences extends Model
 {
     use HasFactory;
 
@@ -14,9 +14,13 @@ class absences extends Model
         'code_etudiant'
     ];
 
+    protected $casts =[
+        'date_jour' => 'datetime:d-m-Y'
+    ];
+
     public function annee(){
 
-        return $this->belongsTo(annee::class,'annee_scolaire');
+        return $this->belongsTo(Annee::class,'annee_scolaire');
 
    }
 

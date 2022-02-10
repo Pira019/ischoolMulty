@@ -23,10 +23,11 @@ class RechercheAbscentRequest extends FormRequest
      */
     public function rules()
     {
+        $todayDate = date('d-m-Y');
         return [
 
             'sem' => 'required|digits_between:1,2|',
-            'date' => 'required|before_or_equal:date',
+            'date' => 'required|date|before_or_equal:'.$todayDate,
             'fil' => 'required|',
             'cls' => 'required|',
         ];

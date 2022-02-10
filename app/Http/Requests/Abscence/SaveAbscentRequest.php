@@ -23,10 +23,14 @@ class SaveAbscentRequest extends FormRequest
      */
     public function rules()
     {
+
+        $todayDate = date('d/m/Y');
+
+
         return [
 
             'seance' => 'required|',
-            'code_etudiant' => 'nullable'
+            'code_etudiant' => 'required|array',
         ];
     }
 }

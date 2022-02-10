@@ -7,6 +7,8 @@ use App\Http\Requests\Abscence\RechercheAbscentRequest;
 use App\Http\Requests\Abscence\SaveAbscentRequest;
 use App\Repositories\AbscencesRepository;
 use Illuminate\Http\Request;
+use Symfony\Component\Console\Input\Input;
+
 
 class AbscencesController extends Controller
 {
@@ -19,11 +21,14 @@ class AbscencesController extends Controller
      private $title ='Gestion d\'abscence';
 
      protected $abscenceRepository;
+     protected $getclassModuleProf;
 
      public function __construct(AbscencesRepository $abscenceRepository)
     {
         $this->middleware('auth');
         $this->abscenceRepository = $abscenceRepository;
+
+        $this->getclassModuleProf = $this->abscenceRepository->getClassModule();
 
 
     }
@@ -77,17 +82,20 @@ class AbscencesController extends Controller
     public function store(SaveAbscentRequest $request)
     {
 
-        $getclassModuleProf = $this->abscenceRepository->getClassModule();
         $EtudiantPresent = $this->abscenceRepository->getPresentStudent($request->all());
 
-        $this->abscenceRepository->save($request->all());
-       return
-          view( 'profile.create',[
-           'dataRqt' => $request,
-           'title' => $this->title,
-        ]
 
-        );
+
+       $this->abscenceRepository->save($request->all());
+
+
+         return
+             view( 'profile.create',[
+              'dataRqt' => $request,
+              'title' => $this->title,
+           ]
+
+           );
 
     }
 
