@@ -30,7 +30,6 @@ class AbscencesRepository extends ResourceRepository
 
     // save absences
     public function save(Array $inputs){
-
         $finalAray = array();
 
         foreach($inputs['code_etudiant'] as $list => $value) {
@@ -42,6 +41,7 @@ class AbscencesRepository extends ResourceRepository
             'code_seance' => $inputs['seance'],
             'anneeScolaire' => $inputs['annee'],
             'remarques' => $inputs['annee'],
+            'professeur' => $inputs['prof'],
             'AbscenceActive' => true,
 
           ));
@@ -80,14 +80,14 @@ class AbscencesRepository extends ResourceRepository
             })
 
             ->leftJoin('absences',function($join){
-                $join->on('etudiants.code_etudiant','=','absences.code_etudiant');
+                $join->on('etudiants.code_etudiant','=','absences.code_etudiant')
+                ->where('absences.date_jour', '=', date('Y-m-d',strtotime($this->inputs['date'])) );
 
             })
 
             ->where('AbscenceActive',false)
             ->orWhere('AbscenceActive')
-            ->where('absences.date_jour','=', $this->inputs['annee'])
-            ->orWhere('absences.date_jour')
+
 
             ->select('etudiants.Nom_etudiant','etudiants.prenom_etudiant','etudiants.code_etudiant')
 
@@ -116,9 +116,12 @@ class AbscencesRepository extends ResourceRepository
             })
 
             ->leftJoin('absences',function($join){
-                $join->on('etudiants.code_etudiant','=','absences.code_etudiant');
+                $join->on('etudiants.code_etudiant','=','absences.code_etudiant')
+
+                ->where('absences.date_jour', '=', date('Y-m-d',strtotime($this->inputs['date'])) );
+
             })->where('AbscenceActive',true)
-            ->where( 'absences.date_jour','=',$this->inputs['annee'])
+
 
             ->select('etudiants.Nom_etudiant','etudiants.prenom_etudiant','etudiants.code_etudiant')
 

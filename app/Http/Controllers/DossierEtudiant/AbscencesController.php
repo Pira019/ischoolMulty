@@ -42,8 +42,13 @@ class AbscencesController extends Controller
         $getclassModuleProf = $this->abscenceRepository->getClassModule();
 
        // return $getclassModuleProf ;
-       return view('profile.create',['title' => $this->title,'dataRqt' => []]
-        ,compact('getclassModuleProf') );
+       return view('profile.create',
+       ['title' => $this->title,'dataRqt' => [],
+        'getclassModuleProf' => $this->getclassModuleProf
+    ]
+
+);
+
 
     }
 
@@ -58,7 +63,7 @@ class AbscencesController extends Controller
     {
         //
 
-        $getclassModuleProf = $this->abscenceRepository->getClassModule();
+
         $EtudiantPresent = $this->abscenceRepository->getPresentStudent($inputs->all());
 
         $etudiantAbscents = $this->abscenceRepository->getAbscentsStudent($inputs->all());
@@ -68,10 +73,10 @@ class AbscencesController extends Controller
         return view(
         'profile.create',['title' => $this->title,
         'prensent' => $EtudiantPresent,
-         'absents' => $etudiantAbscents,
-        'dataRqt' => $inputs
-    ],
-         compact('getclassModuleProf')
+        'absents' => $etudiantAbscents,
+        'dataRqt' => $inputs,
+        'getclassModuleProf' => $this->getclassModuleProf
+    ]
        );
     }
 
