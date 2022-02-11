@@ -38,10 +38,13 @@ class AbscencesRepository extends ResourceRepository
 
             'code_etudiant' => $value,
             'date_jour' => $inputs['date'],
+            'mois' => date('m',strtotime($inputs['date'])) ,
             'code_seance' => $inputs['seance'],
             'anneeScolaire' => $inputs['annee'],
             'remarques' => $inputs['annee'],
             'professeur' => $inputs['prof'],
+            'code_seance' => $inputs['seance'],
+            'semestre' => $inputs['sem'],
             'AbscenceActive' => true,
 
           ));

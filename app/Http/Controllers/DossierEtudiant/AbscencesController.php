@@ -89,20 +89,15 @@ class AbscencesController extends Controller
     public function store(SaveAbscentRequest $request)
     {
 
-        $EtudiantPresent = $this->abscenceRepository->getPresentStudent($request->all());
+      //  $EtudiantPresent = $this->abscenceRepository->getPresentStudent($request->all());
 
 
 
-     return  $this->abscenceRepository->save($request->all());
+        $this->abscenceRepository->save($request->all());
 
 
-        /* return
-             view( 'profile.create',[
-              'dataRqt' => $request,
-              'title' => $this->title,
-           ]
 
-           );*/
+        return back()->withStatus("Absence marquée");
 
     }
 

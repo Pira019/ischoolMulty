@@ -45,6 +45,28 @@
 
                     </ul>
                 </li>
+
+                <li class="dropdown nav-item">
+                    <div>
+                        <select id="annee" name="annee" class="form-control " title="{{ __('Année') }}">
+                            <option>2021/2022</option>
+                            <option>2022/2023</option>
+                        </select>
+
+                    </div>
+                </li>
+
+                <li class="dropdown nav-item">
+                    <div>
+                        <select id="annee" name="annee" class="form-control " title="{{ __('Semetre') }}">
+                            <option>Sem 1</option>
+                            <option>Sem 2</option>
+                        </select>
+
+                    </div>
+                </li>
+
+
                 <li class="dropdown nav-item">
                     <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
                         <div class="photo">
@@ -59,12 +81,12 @@
                                 class="nav-item dropdown-item">{{ __('Profile') }}</a>
                         </li>
                         <li class="nav-link">
-                            <a href="#" class="nav-item dropdown-item">{{ __('Settings') }}</a>
+                            <a href="#" class="nav-item dropdown-item">{{ __('Parametre') }}</a>
                         </li>
                         <li class="dropdown-divider"></li>
                         <li class="nav-link">
                             <a href="{{ route('logout') }}" class="nav-item dropdown-item"
-                                onclick="event.preventDefault();  document.getElementById('logout-form').submit();">{{ __('Log out') }}</a>
+                                onclick="event.preventDefault();  document.getElementById('logout-form').submit();">{{ __('Déconnexion') }}</a>
                         </li>
                     </ul>
                 </li>
