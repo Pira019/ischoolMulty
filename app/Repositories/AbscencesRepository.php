@@ -114,8 +114,7 @@ class AbscencesRepository extends ResourceRepository
             ->Join('classe', function($join){
                 $join->on('etudiants.classe_actuelle','=','classe.niveauClasse')
                     ->where('etudiants.classe_actuelle','=', $this->inputs['cls'] )
-                    ->where('etudiants.Filiere','=', $this->inputs['fil'] )
-                   ->where('etudiants.annee_encours','=', $this->inputs['annee'] );
+                    ->where('etudiants.Filiere','=', $this->inputs['fil'] ) ;
             })
 
             ->leftJoin('absences',function($join){
@@ -133,6 +132,31 @@ class AbscencesRepository extends ResourceRepository
 
 
     }
+
+
+
+    public function upDateAbsentStudent(Array $inputs){
+
+
+        Absences::whereNotIn('AbscenceActive',$inputs['seance'])->update(
+
+            ['Justifie' =>  $inputs['$abs'] && substr($inputs['$abs'],-1) == 'J' ? true : false]);
+
+
+        /*$finalArray = array();
+
+        foreach ($inputs['abs'] as $abs){
+            array_push($finalArray, array(
+                'Justifie' =>  $abs['$abs'] && substr($abs['$abs'],-1) == 'J' ? true : ''
+            ));
+        }
+
+        Absences::update($finalArray);
+
+*/
+
+
+}
 
 
 }

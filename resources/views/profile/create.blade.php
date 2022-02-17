@@ -228,7 +228,12 @@ if (isset($getclassModuleProf)) {
 
                                     <div class="row">
                                         <button type="submit" class="btn btn-fill btn-primary">{{ __('ABS') }}</button>
-                                        <button type="submit" class="btn btn-fill btn-primary">{{ __('REC') }}</button>
+
+                                        <button type="submit" class="btn btn-fill btn-primary" value="update">
+                                            <i class="icon-user icon-white"></i> Sign in
+                                        </button>
+
+
                                     </div>
 
 
@@ -253,11 +258,15 @@ if (isset($getclassModuleProf)) {
                                                 @isset($absents)
                                                     @foreach ($absents as $list)
                                                         <tr>
-                                                            <td><input type="checkbox"></td>
+                                                            <td>
+                                                                <input type="checkbox" value="" name="abs[]"></td>
                                                             <td>{{ $list->Nom_etudiant }}</td>
-                                                            <td><input type="checkbox"></td>
-                                                            <td><input type="checkbox"></td>
-                                                            <td><input type="checkbox"></td>
+                                                            <td>
+                                                                <input type="checkbox" value="" name="abs[]"></td>
+                                                            <td>
+                                                                <input type="checkbox" value="" name="abs[]"></td>
+                                                            <td>
+                                                                <input type="checkbox" value="" name="abs[]"></td>
                                                         </tr>
                                                     @endforeach
 

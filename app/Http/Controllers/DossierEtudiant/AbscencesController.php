@@ -86,14 +86,14 @@ class AbscencesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(SaveAbscentRequest $request)
+    public function store(Request $request)
     {
 
       //  $EtudiantPresent = $this->abscenceRepository->getPresentStudent($request->all());
 
 
 
-        $this->abscenceRepository->save($request->all());
+        $this->abscenceRepository->upDateAbsentStudent($request->all());
 
 
 
