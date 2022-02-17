@@ -31,11 +31,12 @@ class AbscencesRepository extends ResourceRepository
     // save absences
     public function save(Array $inputs){
         $finalAray = array();
+        $ifExiste =array();
 
         foreach($inputs['code_etudiant'] as $list => $value) {
 
-          array_push($finalAray , array(
 
+          array_push($finalAray , array(
             'code_etudiant' => $value,
             'date_jour' => $inputs['date'],
             'mois' => date('m',strtotime($inputs['date'])) ,
@@ -51,8 +52,10 @@ class AbscencesRepository extends ResourceRepository
 
         }
 
-
         Absences::insert($finalAray);
+
+
+
     }
 
 
@@ -137,26 +140,33 @@ class AbscencesRepository extends ResourceRepository
 
     public function upDateAbsentStudent(Array $inputs){
 
-
-        Absences::whereNotIn('AbscenceActive',$inputs['seance'])->update(
-
-            ['Justifie' =>  $inputs['$abs'] && substr($inputs['$abs'],-1) == 'J' ? true : false]);
-
-
-        /*$finalArray = array();
+        /*
+         * test if is :
+         * 'M ' => -mail
+         * 'J'  => justif
+         * 'P'  => present
+         * */
+        $absTestVariable = array();
 
         foreach ($inputs['abs'] as $abs){
-            array_push($finalArray, array(
-                'Justifie' =>  $abs['$abs'] && substr($abs['$abs'],-1) == 'J' ? true : ''
-            ));
+            array_push($absTestVariable ,substr($abs,0,-1));
         }
 
-        Absences::update($finalArray);
+        //
+        foreach (array_unique($absTestVariable ,substr($abs,0,-1)) as $noteUpate){
 
-*/
+             Absences::where("code_etudiant",$noteUpate)
+                 ->update(['AbscenceActive' => false]);
 
 
-}
+        }
+
+
+    }
+
+
+
+
 
 
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\DossierEtudiant;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Abscence\RechercheAbscentRequest;
 use App\Http\Requests\Abscence\SaveAbscentRequest;
+use App\Http\Requests\Abscence\UpdateAbsentStudentsRequest;
 use App\Repositories\AbscencesRepository;
 use Illuminate\Http\Request;
 use Symfony\Component\Console\Input\Input;
@@ -89,12 +90,17 @@ class AbscencesController extends Controller
     public function store(Request $request)
     {
 
-      //  $EtudiantPresent = $this->abscenceRepository->getPresentStudent($request->all());
+
+        if($request->has('abs')){
 
 
+             $this->abscenceRepository->upDateAbsentStudent($request->all());
+        }
 
-        $this->abscenceRepository->upDateAbsentStudent($request->all());
+        else{
 
+             $this->abscenceRepository->save($request->all());
+        }
 
 
         return back()->withStatus("Absence marquée");
