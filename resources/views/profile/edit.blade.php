@@ -5,7 +5,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="title">{{ __('Edit Profile') }}</h5>
+                    <h5 class="title">{{ __(''.$title) }}</h5>
                 </div>
                 <form method="post" action="{{ route('etudiant.store') }}" autocomplete="off">
                     <div class="card-body">
@@ -15,13 +15,13 @@
                         @include('alerts.success')
 
                         <div class="row">
-                            <div class="col-md-8">
+                            <div class="col-md-4">
                                 <fieldset>
 
                                     <legend class="title"> {{ __('Information de base') }}</legend>
                                     <div class="form-row">
                                         <div
-                                            class="form-group{{ $errors->has('name') ? ' has-danger' : '' }} col-md-4 mb-3 ">
+                                            class="form-group{{ $errors->has('name') ? ' has-danger' : '' }} col-md-6 mb-3 ">
                                             <label>{{ __('Nom de l\'étudiant') }}</label>
                                             <input type="text" name="Nom_etudiant"
                                                 class="form-control{{ $errors->has('Nom_etudiant') ? ' is-invalid' : '' }}"
@@ -31,32 +31,35 @@
                                         </div>
 
                                         <div
-                                            class="form-group{{ $errors->has('prenom_etudiant') ? ' has-danger' : '' }} col-md-4 mb-3 ">
-                                            <label>{{ __('Prénom') }}</label>
-                                            <input type="text" name="prenom_etudiant"
-                                                class="form-control{{ $errors->has('prenom_etudiant') ? ' is-invalid' : '' }}"
-                                                placeholder="{{ __('prenom_etudiant') }}"
-                                                value="{{ old('prenom_etudiant', auth()->user()->name) }}">
-                                            @include('alerts.feedback', ['field' => 'prenom_etudiant'])
-                                        </div>
-                                        <div
-                                            class="form-group{{ $errors->has('Filiere') ? ' has-danger' : '' }} col-md-4 mb-3 ">
+                                                class="form-group{{ $errors->has('Filiere') ? ' has-danger' : '' }} col-md-6 mb-3 ">
                                             <label for="filliere">{{ __('Fillière') }}</label>
                                             <select name="Filiere" id="filliere"
-                                                class="form-control{{ $errors->has('Filiere') ? ' is-invalid' : '' }}">
+                                                    class="form-control{{ $errors->has('Filiere') ? ' is-invalid' : '' }}">
                                                 <option value="volvo">Volvo</option>
                                                 <option value="saab">Saab</option>
                                                 <option value="mercedes">Mercedes</option>
                                             </select>
                                             @include('alerts.feedback', ['field' => 'Filiere'])
                                         </div>
+
                                     </div>
+
                                     <div class="form-row">
                                         <div
-                                            class="form-group{{ $errors->has('classe_actuelle') ? ' has-danger' : '' }} col-md-4 mb-3 ">
+                                                class="form-group{{ $errors->has('prenom_etudiant') ? ' has-danger' : '' }} col-md-6 mb-3 ">
+                                            <label>{{ __('Prénom de l\'étudiant') }}</label>
+                                            <input type="text" name="prenom_etudiant"
+                                                   class="form-control{{ $errors->has('prenom_etudiant') ? ' is-invalid' : '' }}"
+                                                   placeholder="{{ __('prenom_etudiant') }}"
+                                                   value="{{ old('prenom_etudiant', auth()->user()->name) }}">
+                                            @include('alerts.feedback', ['field' => 'prenom_etudiant'])
+                                        </div>
+
+                                        <div
+                                                class="form-group{{ $errors->has('classe_actuelle') ? ' has-danger' : '' }} col-md-6 mb-3 ">
                                             <label for="classe_actuelle">{{ __('Classe') }}</label>
                                             <select name="classe_actuelle" id="classe_actuelle"
-                                                class="form-control{{ $errors->has('classe_actuelle') ? ' is-invalid' : '' }}">
+                                                    class="form-control{{ $errors->has('classe_actuelle') ? ' is-invalid' : '' }}">
                                                 <option value="volvo">Volvo</option>
                                                 <option value="saab">Saab</option>
                                                 <option value="mercedes">Mercedes</option>
@@ -64,53 +67,78 @@
                                             @include('alerts.feedback', ['field' => 'classe_actuelle'])
                                         </div>
 
-                                        <div
-                                            class="form-group{{ $errors->has('cin_etudiant') ? ' has-danger' : '' }} col-md-4 mb-3 ">
-                                            <label>{{ __('CIN') }}</label>
-                                            <input type="text" name="cin_etudiant"
-                                                class="form-control{{ $errors->has('cin_etudiant') ? ' is-invalid' : '' }}"
-                                                placeholder="{{ __('Name') }}"
-                                                value="{{ old('cin_etudiant', auth()->user()->name) }}">
-                                            @include('alerts.feedback', ['field' => 'cin_etudiant'])
-                                        </div>
-
-                                        <div
-                                            class="form-group{{ $errors->has('Telephone_personnel') ? ' has-danger' : '' }} col-md-4 mb-3 ">
-                                            <label>{{ __('Gsm étudiant') }}</label>
-                                            <input type="text" name="Telephone_personnel"
-                                                class="form-control{{ $errors->has('Telephone_personnel') ? ' is-invalid' : '' }}"
-                                                placeholder="{{ __('Gsm étudiant') }}"
-                                                value="{{ old('Telephone_personnel', auth()->user()->name) }}">
-                                            @include('alerts.feedback', ['field' => 'Telephone_personnel'])
-                                        </div>
                                     </div>
                                     <div class="form-row">
                                         <div
-                                            class="form-group{{ $errors->has('groupe') ? ' has-danger' : '' }} col-md-4 mb-3 ">
-                                            <label>{{ __('Groupe') }}</label>
-                                            <input type="text" name="groupe"
-                                                class="form-control{{ $errors->has('groupe') ? ' is-invalid' : '' }}"
-                                                placeholder="{{ __('Groupe') }}"
-                                                value="{{ old('groupe', auth()->user()->name) }}">
-                                            @include('alerts.feedback', ['field' => 'groupe'])
+                                            class="form-group{{ $errors->has('classe_actuelle') ? ' has-danger' : '' }} col-md-6 mb-3 ">
+                                            <label for="nameArabe">{{ __('nom an arable') }}</label>
+
                                         </div>
 
                                         <div
-                                            class="form-group{{ $errors->has('Email') ? ' has-danger' : '' }} col-md-4 mb-3 ">
-                                            <label>{{ __('Email personnel') }}</label>
-                                            <input type="text" name="Email" required
-                                                class="form-control{{ $errors->has('Email') ? ' is-invalid' : '' }}"
+                                            class="form-group{{ $errors->has('nameArabe') ? ' has-danger' : '' }} col-md-4 mb-3 ">
+                                            <input type="text" name="nameArabe" id="nameArabe"
+                                                class="form-control{{ $errors->has('nameArabe') ? ' is-invalid' : '' }} "
+                                                placeholder="{{ __('Name') }}"
+                                                value="{{ old('nameArabe', auth()->user()->name) }}">
+                                            @include('alerts.feedback', ['field' => 'nameArabe'])
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+
+                                        <div
+                                                class="form-group{{ $errors->has('numCIN') ? ' has-danger' : '' }} col-md-4 mb-3 ">
+                                            <label for="numCIN">{{ __('N°CIN') }}</label>
+                                            <input type="text" name="numCIN" id="gstEtudiant"
+                                                   class="form-control{{ $errors->has('numCIN') ? ' is-invalid' : '' }}"
+                                                   placeholder="{{ __('Gsm étudiant') }}"
+                                                   value="{{ old('numCIN', '069552') }}">
+                                            @include('alerts.feedback', ['field' => 'numCIN'])
+                                        </div>
+
+                                        <div
+                                                class="form-group{{ $errors->has('gstEtudiant') ? ' has-danger' : '' }} col-md-4 mb-3 ">
+                                            <label for="gstEtudiant">{{ __('Gsm étudiant') }}</label>
+                                            <input type="text" name="gstEtudiant" id="gstEtudiant"
+                                                   class="form-control{{ $errors->has('gstEtudiant') ? ' is-invalid' : '' }}"
+                                                   placeholder="{{ __('Gsm étudiant') }}"
+                                                   value="{{ old('gstEtudiant', '069552') }}">
+                                            @include('alerts.feedback', ['field' => 'gstEtudiant'])
+                                        </div>
+
+                                        <div
+                                                class="form-group{{ $errors->has('grp') ? ' has-danger' : '' }} col-md-4 mb-3 ">
+                                            <label for="grp">{{ __('Groupe') }}</label>
+                                            <select name="grp" id="grp"
+                                                    class="form-control{{ $errors->has('grp') ? ' is-invalid' : '' }}">
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                            </select>
+                                            @include('alerts.feedback', ['field' => 'grp'])
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="form-row">
+                                        <div
+                                            class="form-group{{ $errors->has('emailPerso') ? ' has-danger' : '' }} col-md-6 mb-3 ">
+                                            <label for="emailPerso">{{ __('Email personnel') }}</label>
+                                            <input type="text" name="Email" id="emailPerso"
+                                                class="form-control{{ $errors->has('emailPerso') ? ' is-invalid' : '' }}"
                                                 placeholder="{{ __('Email personnel') }}"
-                                                value="{{ old('email_ecole', auth()->user()->name) }}">
-                                            @include('alerts.feedback', ['field' => 'Email'])
+                                                value="{{ old('emailPerso', 'perso@email.com') }}">
+                                            @include('alerts.feedback', ['field' => 'emailPerso'])
                                         </div>
                                         <div
-                                            class="form-group{{ $errors->has('Email école') ? ' has-danger' : '' }} col-md-4 mb-3 ">
-                                            <label>{{ __('Email école') }}</label>
-                                            <input type="text" name="email_ecole"
+                                            class="form-group{{ $errors->has('Email école') ? ' has-danger' : '' }} col-md-6 mb-3 ">
+                                            <label for="email_ecole">{{ __('Email école') }}</label>
+                                            <input type="text" id="email_ecole" name="email_ecole"
                                                 class="form-control{{ $errors->has('Email école') ? ' is-invalid' : '' }}"
                                                 placeholder="{{ __('Email école') }}"
-                                                value="{{ old('email_ecole', auth()->user()->name) }}">
+                                                value="{{ old('email_ecole', 'ecole@email.com') }}">
                                             @include('alerts.feedback', ['field' => 'email_ecole'])
                                         </div>
                                     </div>
@@ -118,62 +146,72 @@
                                     <div class="form-row">
                                         <div
                                             class="form-group{{ $errors->has('Adresse_actuelle') ? ' has-danger' : '' }} col-md-4 mb-3 ">
-                                            <label>{{ __('Adresse étudiant') }}</label>
-                                            <textarea type="text" name="Adresse_actuelle"
-                                                class="form-control{{ $errors->has('Adresse_actuelle') ? ' is-invalid' : '' }}">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </textarea>
+                                            <label for="adresseActuelle">{{ __('Adresse étudiant') }}</label>
+                                            <textarea id="adresseActuelle" type="text" name="adresseActuelle" autocomplete="address"
+                                                class="form-control{{ $errors->has('adresseActuelle') ? ' is-invalid' : '' }}" >                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </textarea>
+
+                                       </textarea>
                                             @include('alerts.feedback', ['field' => 'Adresse_actuelle'])
                                         </div>
 
+
                                         <div
                                             class="form-group{{ $errors->has('Date_naissance') ? ' has-danger' : '' }} col-md-4 mb-3 ">
-                                            <label>{{ __('Date de naissance') }}</label>
-                                            <input type="date" name="Date_naissance"
-                                                class="form-control{{ $errors->has('Date_naissance') ? ' is-invalid' : '' }}"
+                                            <label for="dateNaissance">{{ __('Date de naissance') }}</label>
+                                            <input type="date" id="dateNaissance"  name="dateNaissance"
+                                                class="form-control{{ $errors->has('dateNaissance') ? ' is-invalid' : '' }}"
                                                 placeholder="{{ __('Date de naissance') }}"
-                                                value="{{ old('Date_naissance', auth()->user()->name) }}">
-                                            @include('alerts.feedback', ['field' => 'Date_naissance'])
+                                                value="<?php echo e( old('Date_naissance', strtotime( date('Y-m-d'))) )?> ">
+                                            @include('alerts.feedback', ['field' => 'dateNaissance'])
                                         </div>
                                         <div
                                             class="form-group{{ $errors->has('ville_naissance') ? ' has-danger' : '' }} col-md-4 mb-3 ">
-                                            <label>{{ __('Ville de naissance') }}</label>
-                                            <input type="text" name="ville_naissance"
+                                            <label for="ville_naissance">{{ __('Ville de naissance') }}</label>
+                                            <input type="text" id="ville_naissance" name="ville_naissance"
                                                 class="form-control{{ $errors->has('ville_naissance') ? ' is-invalid' : '' }}"
                                                 placeholder="{{ __('ville_naissance') }}"
-                                                value="{{ old('ville_naissance', auth()->user()->name) }}">
+                                                value="{{ old('ville_naissance', 'Casablanca') }}">
                                             @include('alerts.feedback', ['field' => 'ville_naissance'])
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div
-                                            class="form-group{{ $errors->has('Ville') ? ' has-danger' : '' }} col-md-4 mb-3 ">
+                                            class="form-group{{ $errors->has('ville') ? ' has-danger' : '' }} col-md-3 mb-3 ">
                                             <label>{{ __('Ville') }}</label>
-                                            <input type="text" name="Ville"
-                                                class="form-control{{ $errors->has('Ville') ? ' is-invalid' : '' }}"
+                                            <input type="text" id="ville" name="ville"
+                                                class="form-control{{ $errors->has('ville') ? ' is-invalid' : '' }}"
                                                 placeholder="{{ __('Ville') }}"
-                                                value="{{ old('Ville', auth()->user()->name) }}">
-                                            @include('alerts.feedback', ['field' => 'Ville'])
+                                                value="{{ old('ville', 'Rabat') }}">
+                                            @include('alerts.feedback', ['field' => 'ville'])
                                         </div>
 
                                         <div
-                                            class="form-group{{ $errors->has('Nationalité') ? ' has-danger' : '' }} col-md-4 mb-3 ">
-                                            <label>{{ __('Nationalité') }}</label>
-                                            <input type="text" name="Nationalité"
-                                                class="form-control{{ $errors->has('Nationalité') ? ' is-invalid' : '' }}"
+                                            class="form-group{{ $errors->has('Nationalité') ? ' has-danger' : '' }} col-md-3 mb-3 ">
+                                            <label for="nationalite">{{ __('Nationalité') }}</label>
+                                            <input type="text" id="nationalite" name="nationalite"
+                                                class="form-control{{ $errors->has('nationalite') ? ' is-invalid' : '' }}"
                                                 placeholder="{{ __('Nationalité') }}"
-                                                value="{{ old('Nationalité', auth()->user()->name) }}">
-                                            @include('alerts.feedback', ['field' => 'Nationalité'])
+                                                value="{{ old('nationalite', 'COD') }}">
+                                            @include('alerts.feedback', ['field' => 'nationalite'])
                                         </div>
                                         <div
-                                            class="form-group{{ $errors->has('Sexe') ? ' has-danger' : '' }} col-md-4 mb-3 ">
-                                            <label for="Sexe">{{ __('Sexe') }}</label>
-                                            <select name="Sexe" id="Sexe"
-                                                class="form-control{{ $errors->has('Sexe') ? ' is-invalid' : '' }}">
-                                                <option value="Masculin">{{ __('Masculin') }}</option>
-                                                <option value="Féminn">{{ __('Féminn') }}</option>
-                                                <option value="Autre">{{ __('Autre') }}</option>
+                                            class="form-group{{ $errors->has('Sexe') ? ' has-danger' : '' }} col-md-3 mb-3 ">
+                                            <label for="sexe">{{ __('Sexe') }}</label>
+                                            <select name="Sexe" id="sexe"
+                                                class="form-control{{ $errors->has('sexe') ? ' is-invalid' : '' }}">
+                                                <option value="Masculin">{{ __('M') }}</option>
+                                                <option value="Féminn">{{ __('F') }}</option>
                                             </select>
-                                            @include('alerts.feedback', ['field' => 'Sexe'])
+                                            @include('alerts.feedback', ['field' => 'sexe'])
+                                        </div>
+                                        <div
+                                                class="form-group{{ $errors->has('numInscription') ? ' has-danger' : '' }} col-md-3 mb-3 ">
+                                            <label for="numInscription">{{ __('Nationalité') }}</label>
+                                            <input type="text" id="numInscription" name="numInscription"
+                                                   class="form-control{{ $errors->has('numInscription') ? ' is-invalid' : '' }}"
+                                                   placeholder="{{ __('Nationalité') }}"
+                                                   value="{{ old('numInscription', 'AFJHF01') }}">
+                                            @include('alerts.feedback', ['field' => 'numInscription'])
                                         </div>
                                     </div>
                                 </fieldset>
@@ -312,8 +350,6 @@
                                                         src="{{ asset('black') }}/img/emilyz.jpg" alt="">
                                                 </a>
 
-                                                </p>
-
                                             </div>
                                         </div>
                                     </div>
@@ -415,31 +451,30 @@
                                 </fieldset>
 
                             </div>
-                            <!--  <div class="card-footer">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <div class="button-container">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div>!-->
+                            <!--  <div class="card-footer">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   <div class="button-container">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     </div>!-->
+                            <div  class="col-md-4">
+                                <button type="reset" class="btn btn-fill btn-primary">{{ __('Vider') }}</button>
+                                <button type="submit" class="btn btn-fill btn-primary">{{ __('Enregistrer') }}</button>
+                                <button type="submit" class="btn btn-fill btn-primary">{{ __('Modifier') }}</button>
+                                <button type="submit" class="btn btn-fill btn-primary">{{ __('Supprimer') }}</button>
+                                <button type="submit" class="btn btn-fill btn-primary">{{ __('Imprimer') }}</button>
+                                <button type="submit" class="btn btn-fill btn-primary">{{ __('Dossier') }}</button>
+                                <button type="submit" class="btn btn-fill btn-primary">{{ __('Att scolarité') }}</button>
+                                <button type="submit"
+                                        class="btn btn-fill btn-primary">{{ __('Attest d inscription') }}</button>
+                                <button type="submit" class="btn btn-fill btn-primary">{{ __('Att de reussite') }}</button>
+                                <button type="submit" class="btn btn-fill btn-primary">{{ __('Aut de tournage') }}</button>
+                                <button type="submit" class="btn btn-fill btn-primary">{{ __('Fiche etudiant') }}</button>
+                                <button type="submit"
+                                        class="btn btn-fill btn-primary">{{ __('Fiches d abscences') }}</button>
 
 
-                        </div>
-                        <div class="card-footer">
-                            <button type="reset" class="btn btn-fill btn-primary">{{ __('Vider') }}</button>
-                            <button type="submit" class="btn btn-fill btn-primary">{{ __('Enregistrer') }}</button>
-                            <button type="submit" class="btn btn-fill btn-primary">{{ __('Modifier') }}</button>
-                            <button type="submit" class="btn btn-fill btn-primary">{{ __('Supprimer') }}</button>
-                            <button type="submit" class="btn btn-fill btn-primary">{{ __('Imprimer') }}</button>
-                            <button type="submit" class="btn btn-fill btn-primary">{{ __('Dossier') }}</button>
-                            <button type="submit" class="btn btn-fill btn-primary">{{ __('Att scolarité') }}</button>
-                            <button type="submit"
-                                class="btn btn-fill btn-primary">{{ __('Attest d inscription') }}</button>
-                            <button type="submit" class="btn btn-fill btn-primary">{{ __('Att de reussite') }}</button>
-                            <button type="submit" class="btn btn-fill btn-primary">{{ __('Aut de tournage') }}</button>
-                            <button type="submit" class="btn btn-fill btn-primary">{{ __('Fiche etudiant') }}</button>
-                            <button type="submit"
-                                class="btn btn-fill btn-primary">{{ __('Fiches d abscences') }}</button>
-
+                            </div>
 
                         </div>
+                        </div>
+
                 </form>
             </div>
 

@@ -25,12 +25,14 @@ class EtudiantController extends Controller
     protected $etudiantRepository;
 
     protected $nbrPerPage = 4;
+    protected  $title;
 
 
     public function __construct(EtudiantRepository $etudiantRepository)
     {
         $this->middleware('auth');
         $this->etudiantRepository = $etudiantRepository;
+        $this->title ="Dossier des étudiants";
 
 
     }
@@ -44,7 +46,9 @@ class EtudiantController extends Controller
         $links = $students->render();
 
 
-        return view('profile.edit', compact('students','links'));
+        return view('profile.edit',
+            ['title' => $this->title],
+            compact('students','links'));
     }
 
     /**
