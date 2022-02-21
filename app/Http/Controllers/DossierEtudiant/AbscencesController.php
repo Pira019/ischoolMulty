@@ -99,7 +99,7 @@ class AbscencesController extends Controller
 
         else{
 
-             $this->abscenceRepository->save($request->all());
+                $this->abscenceRepository->save($request->all());
         }
 
 

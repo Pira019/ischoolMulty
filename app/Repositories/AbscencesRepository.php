@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Absences;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 
 
@@ -31,7 +32,8 @@ class AbscencesRepository extends ResourceRepository
     // save absences
     public function save(Array $inputs){
         $finalAray = array();
-        $ifExiste =array();
+        $getCodeStudent =  $inputs['code_etudiant'];
+        
 
         foreach($inputs['code_etudiant'] as $list => $value) {
 
@@ -52,7 +54,17 @@ class AbscencesRepository extends ResourceRepository
 
         }
 
-        Absences::insert($finalAray);
+        try {
+
+            Absences::insert($finalAray);
+
+        } catch (QueryException $e) {
+
+         //  return  in_array($getCodeStudent) ;
+              Absences::whereIn("code_etudiant",$getCodeStudent)
+                ->update(['AbscenceActive' => true]);
+
+        }
 
 
 
