@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Abscence;
+namespace App\Http\Requests\Student;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SaveAbscentRequest extends FormRequest
+class SearchStudentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,11 +23,10 @@ class SaveAbscentRequest extends FormRequest
      */
     public function rules()
     {
-
         return [
 
-            'seance' => 'required|',
-            'code_etudiant' => 'required|array',
+            'matricule' => 'required_if:rechechePar,matricule'
+            //
         ];
     }
 }

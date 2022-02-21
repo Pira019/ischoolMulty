@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Etudiants;
+use PhpParser\Node\Expr\Array_;
 
 class EtudiantRepository extends ResourceRepository
 {
@@ -85,6 +86,12 @@ class EtudiantRepository extends ResourceRepository
 
 
 	}
+
+	public  function searchByFilter($filter){
+
+       return $filter;
+
+    }
 
 
 

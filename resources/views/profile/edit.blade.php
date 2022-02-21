@@ -1,6 +1,14 @@
 @extends('layouts.app', ['page' => __('User Profile'), 'pageSlug' => 'profile'])
 
-
+<script>
+    $(document).ready(function () {
+        @if(  in_array('dossier',$_GET))
+        $('html, body').animate({
+            scrollTop: $('#dossier').offset().top
+        }, 'slow');
+        @endif
+    });
+</script>
 @section('content')
     <div class="row">
         <div class="col-md-12">
@@ -588,25 +596,21 @@
                 </form>
             </div>
 
-            <div class="card">
+            <div id="dossier"  > <div class="card">
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
                             <h4 class="card-title">Recherche étudiant</h4>
                         </div>
-                        <div class="col-4 text-right">
-
-                            <a href="#" class="btn btn-sm btn-primary">Add user</a>
-                        </div>
                     </div>
 
-                    <form>
+                    <form method="post" action="{{ route('etudiant.search') }}" autocomplete="on">
                         @csrf
                         @method('post')
 
                         @include('alerts.success')
 
-                        <fieldset class="form-group border p-3 ">
+                       <fieldset class="form-group border p-3 ">
 
 
                             <div class="form-row">
@@ -615,14 +619,14 @@
 
                                     <div class="">
                                         <label for="rParMatricule" class="form-check-label">
-                                            <input class="form-check-radio ml-1" type="radio" id="rParMatricule" value="rParMatricule" name="rechechePar">
+                                            <input class="form-check-radio ml-1" type="radio" id="rParMatricule" value="matricule" {{(old('rechechePar') == 'matricule') ? 'checked' : ''}} name="rechechePar">
                                             <span class="form-check-sign"> <span class="check"></span>
                                                          {{__('Matricule')}}
                                                  </span>
                                         </label>
                                         <input type="text" name="matricule" id="rParMatricule"
                                                class="form-control{{ $errors->has('matricule') ? ' is-invalid' : '' }} mt-2"
-                                               placeholder="{{ __('MA xxx') }}" value="{{ old('matricule','MA XX') }}">
+                                               placeholder="{{ __('MA xxx') }}" >
                                         @include('alerts.feedback', ['field' => 'matricule'])
 
                                     </div>
@@ -692,17 +696,108 @@
                                 </div>
 
 
-                                <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }} col-md-2 mb-3 ">
-                                    <label>{{ __('Name') }}</label>
-                                    <input type="text" name="name"
-                                           class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}"
-                                           placeholder="{{ __('Name') }}" value="{{ old('name', auth()->user()->name) }}">
-                                    @include('alerts.feedback', ['field' => 'name'])
+                                <div class="form-group form-check-radio{{ $errors->has('rechechePar') ? ' has-danger' : '' }} col-md-2  ">
+                                    <div class=" ">
+                                        <label for="rParclasse" class="form-check-label">
+                                            <input class="form-check-radio ml-1" type="radio" id="rParclasse" value="rParfilliere" name="rechechePar">
+                                            <span class="form-check-sign"> <span class="check"></span>
+                                                         {{__('Classe actuelle')}}
+                                                 </span>
+
+                                        </label>
+                                        <select name="classe" id="rParclasse"
+                                                class="form-control{{ $errors->has('classe') ? ' is-invalid' : '' }} mt-2">
+                                            <option value="volvo">Info</option>
+                                            <option value="saab">Manag</option>
+                                        </select>
+                                        @include('alerts.feedback', ['field' => 'classe'])
+                                    </div>
+                                    @include('alerts.feedback', ['field' => 'classe'])
+
+                                </div>
+
+                                <div class="form-group form-check-radio{{ $errors->has('rechechePar') ? ' has-danger' : '' }} col-md-2  ">
+                                    <div class=" ">
+                                        <label for="rGrp" class="form-check-label">
+                                            <input class="form-check-radio ml-1" type="radio" id="rGrp" value="rParfilliere" name="rechechePar">
+                                            <span class="form-check-sign"> <span class="check"></span>
+                                                         {{__('Groupe')}}
+                                                 </span>
+
+                                        </label>
+                                        <select name="classe" id="rParclasse"
+                                                class="form-control{{ $errors->has('rGrp') ? ' is-invalid' : '' }} mt-2">
+                                            <option value="volvo">Info</option>
+                                            <option value="saab">Manag</option>
+                                        </select>
+                                        @include('alerts.feedback', ['field' => 'rGrp'])
+                                    </div>
+                                    @include('alerts.feedback', ['field' => 'rGrp'])
+
                                 </div>
 
 
 
 
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group form-check-radio{{ $errors->has('rechechePar') ? ' has-danger' : '' }} col-md-3  ">
+                                    <div class=" ">
+                                        <label for="rBlocage" class="form-check-label">
+                                            <input class="form-check-radio ml-1" type="radio" id="rBlocage" value="rParfilliere" name="rechechePar">
+                                            <span class="form-check-sign"> <span class="check"></span>
+                                                         {{__('Blocage')}}
+                                                 </span>
+
+                                        </label>
+                                        <select name="blocage"   id="rParfilliere"
+                                                class="form-control{{ $errors->has('blocage') ? ' is-invalid' : '' }} mt-2">
+                                            <option value="volvo">Info</option>
+                                            <option value="saab">Manag</option>
+                                        </select>
+                                        @include('alerts.feedback', ['field' => 'blocage'])
+                                    </div>
+                                    @include('alerts.feedback', ['field' => 'blocage'])
+
+                                </div>
+
+                                <div class="form-group form-check-radio{{ $errors->has('laureats') ? ' has-danger' : '' }} col-md-3">
+
+                                    <div class="">
+                                        <label class="form-check-label">
+                                            <input class="form-check-radio " type="radio" value="" name="rechechePar">
+                                            <span class="form-check-sign"> <span class="check"></span>
+                                                         {{__('Lauréats uniquement')}}
+                                          </span>
+
+                                        </label>
+
+                                    </div>
+                                    @include('alerts.feedback', ['field' => 'laureats'])
+                                </div>
+
+                                <div class="form-group form-check-radio{{ $errors->has('Tous') ? ' has-danger' : '' }} col-md-3  ">
+
+                                    <div class="">
+                                        <label class="form-check-label">
+                                            <input class="form-check-radio " type="radio" value="" name="rechechePar">
+                                            <span class="form-check-sign"> <span class="check"></span>
+                                                         {{__('Tous')}}
+                                          </span>
+
+                                        </label>
+
+                                    </div>
+                                    @include('alerts.feedback', ['field' => 'Tous'])
+                                </div>
+
+                                <div class="form-group form-check-radio{{ $errors->has('Tous') ? ' has-danger' : '' }} col-md-3">
+
+                                    <button class="btn btn-info">
+                                        <i class="tim-icons icon-refresh-02"></i>
+                                    </button>
+                                </div>
                             </div>
                         </fieldset>
                     </form>
@@ -771,7 +866,7 @@
 
                     </nav>
                 </div>
-            </div>
+                </div> </div>
             <!-- <div class="card">
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             <div class="card-header">
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 <h5 class="title">{{ __('Password') }}</h5>

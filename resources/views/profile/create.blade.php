@@ -121,7 +121,7 @@ if (isset($getclassModuleProf)) {
 
 
                             </div>
-
+                        </div>
                     </form>
 
 
@@ -129,8 +129,6 @@ if (isset($getclassModuleProf)) {
 
                         @csrf
                         @method('post')
-
-
 
 
                         <input name="cls" type="hidden"
@@ -198,6 +196,7 @@ if (isset($getclassModuleProf)) {
                                             </thead>
                                             <tbody>
 
+
                                                 @isset($prensent)
 
                                                     @foreach ($prensent as $etudiant)
@@ -228,7 +227,7 @@ if (isset($getclassModuleProf)) {
 
                                     <div class="row">
 
-                                        <button type="submit" class="btn btn-fill btn-primary" value="update">
+                                        <button type="submit" class="btn btn-fill btn-primary" value="update" name="submit">
                                             <i class="tim-icons icon-book-bookmark"></i>
                                         </button>
 
@@ -280,7 +279,7 @@ if (isset($getclassModuleProf)) {
                             </div>
 
                         </div>
-                </div>
+
 
                 </form>
             </div>

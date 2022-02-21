@@ -90,17 +90,14 @@ class AbscencesController extends Controller
     public function store(Request $request)
     {
 
+        $saveQuest = new SaveAbscentRequest($request->all());
 
-        if($request->has('abs')){
+
+              $this->abscenceRepository->upDateAbsentStudent($request->all());
 
 
-             $this->abscenceRepository->upDateAbsentStudent($request->all());
-        }
-
-        else{
-
+                $saveQuest->validate($saveQuest->rules());
                 $this->abscenceRepository->save($request->all());
-        }
 
 
         return back()->withStatus("Absence marquée");

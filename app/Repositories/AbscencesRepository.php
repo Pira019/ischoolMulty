@@ -33,7 +33,7 @@ class AbscencesRepository extends ResourceRepository
     public function save(Array $inputs){
         $finalAray = array();
         $getCodeStudent =  $inputs['code_etudiant'];
-        
+
 
         foreach($inputs['code_etudiant'] as $list => $value) {
 
@@ -160,6 +160,7 @@ class AbscencesRepository extends ResourceRepository
          * */
         $absTestVariable = array();
 
+        if (isset($inputs['abs'])){
         foreach ($inputs['abs'] as $abs){
             array_push($absTestVariable ,substr($abs,0,-1));
         }
@@ -173,7 +174,7 @@ class AbscencesRepository extends ResourceRepository
 
         }
 
-
+        }
     }
 
 

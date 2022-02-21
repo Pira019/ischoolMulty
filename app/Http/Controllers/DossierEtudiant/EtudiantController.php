@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\DossierEtudiant;
 
+use App\Http\Requests\Student\SearchStudentRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreEtudiantRequest;
@@ -59,6 +60,13 @@ class EtudiantController extends Controller
     public function create()
     {
         //
+    }
+
+
+    public function search(SearchStudentRequest $searchStudent)
+    {
+
+       return $this->etudiantRepository->searchByFilter($searchStudent->all());
     }
 
     /**

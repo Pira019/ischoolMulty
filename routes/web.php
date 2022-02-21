@@ -23,6 +23,7 @@ Route::get('/', function () {
 
 Route::middleware('tenant')->group(function() {
     // routes
+    Route::post('etudiant/search','App\Http\Controllers\DossierEtudiant\EtudiantController@search')->name('etudiant.search');
     Route::resource('etudiant', EtudiantController::class);
     Route::resource('assiduite', AbscencesController::class);
 
