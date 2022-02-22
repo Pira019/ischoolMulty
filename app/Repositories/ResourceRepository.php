@@ -2,6 +2,8 @@
 
 namespace App\Repositories;
 
+use Illuminate\Support\Facades\DB;
+
 class ResourceRepository
 {
     protected $model;
@@ -20,6 +22,14 @@ class ResourceRepository
 	{
 		return $this->model->findOrFail($id);
 	}
+
+    public function getByFilter($column,$filterBy)
+    {
+        $results = DB::table($this->model)
+            ->where($column,$filterBy)
+            ->get();
+        return  $results;
+    }
 
 	public function update($id, Array $inputs)
 	{

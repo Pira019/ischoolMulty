@@ -28,6 +28,9 @@ class EtudiantController extends Controller
     protected $nbrPerPage = 4;
     protected  $title;
 
+    //get All filliere
+    protected  $filliere;
+
 
     public function __construct(EtudiantRepository $etudiantRepository)
     {
@@ -35,10 +38,10 @@ class EtudiantController extends Controller
         $this->etudiantRepository = $etudiantRepository;
         $this->title ="Dossier des étudiants";
 
+        $this->filliere =  $this->etudiantRepository->getClassFillière();
+
 
     }
-
-
 
 
     public function index()
@@ -48,7 +51,11 @@ class EtudiantController extends Controller
 
 
         return view('profile.edit',
-            ['title' => $this->title],
+            [
+                'title' => $this->title,
+                'filliere' => $this->filliere
+
+            ],
             compact('students','links'));
     }
 
@@ -66,7 +73,17 @@ class EtudiantController extends Controller
     public function search(SearchStudentRequest $searchStudent)
     {
 
-       return $this->etudiantRepository->searchByFilter($searchStudent->all());
+
+
+        return view('profile.edit')->with(
+           [
+           'title' => $this->title,
+           'students' =>  $this->etudiantRepository->searchByFilter($searchStudent->all()),
+           'filliere' => $this->filliere,
+           'input' => $searchStudent
+
+       ]);
+
     }
 
     /**

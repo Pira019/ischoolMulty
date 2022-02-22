@@ -3,12 +3,12 @@
 namespace App\Repositories;
 
 use App\Models\Etudiants;
+use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\DB;
 use PhpParser\Node\Expr\Array_;
 
 class EtudiantRepository extends ResourceRepository
 {
-
-
 
    public function __constructor(Etudiants $etudiant) {
 
@@ -87,10 +87,67 @@ class EtudiantRepository extends ResourceRepository
 
 	}
 
-	public  function searchByFilter($filter){
+	public  function searchByFilter(Array $inputs){
 
-       return $filter;
+       //Table name
+       $this->model = "etudiants";
+        $rsl =  array();
+       try{
 
+           if (isset($inputs) and !empty($inputs['rechechePar'])){
+
+           switch ($inputs['rechechePar']){
+
+               case 'matricule' :
+                   $rsl = $this->getByFilter('code_etudiant',$inputs['matricule']); break;
+
+               case 'nom' :
+                   $rsl = $this->getByFilter('Nom_etudiant',$inputs['nom']); break;
+
+               case 'prenom' :
+                   $rsl = $this->getByFilter('prenom_etudiant',$inputs['prenom']); break;
+
+               case 'filiere' :
+                   $rsl = $this->getByFilter('filiere',$inputs['filiere']); break;
+
+               case 'classe' :
+                   $rsl = $this->getByFilter('filiere',$inputs['filiere']); break;
+
+               default :  $rsl = $rsl;
+
+           }
+
+           }
+
+
+           return $rsl;
+
+       }catch (QueryException  $e){
+
+       }
+
+
+
+    }
+
+
+
+    public function getClassFillière(){
+
+        /*get data
+        fillière
+        classe
+        niveau*/
+
+        $classModuleProf = DB::table('class_mod_prof')
+            ->orderBy('filiere.Nom_filiere', 'asc')
+            ->groupBy('filiere.code_filiere','classe.niveauClasse','classe.code_classe')
+            ->Join('classe', 'class_mod_prof.codeClasse','=','classe.code_classe')
+            ->Join('filiere','class_mod_prof.codeFiliere','=','filiere.code_filiere' )
+            ->select('filiere.Nom_filiere','filiere.code_filiere','classe.niveauClasse','classe.code_classe')
+            ->get();
+
+        return $classModuleProf;
     }
 
 
