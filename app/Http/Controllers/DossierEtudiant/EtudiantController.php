@@ -3,11 +3,16 @@
 namespace App\Http\Controllers\DossierEtudiant;
 
 use App\Http\Requests\Student\SearchStudentRequest;
+
+use Facade\FlareClient\Http\Exceptions\BadResponse;
+use GuzzleHttp\Exception\BadResponseException;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreEtudiantRequest;
 use App\Models\Etudiants;
 use App\Repositories\EtudiantRepository;
+use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\URL;
 
 class EtudiantController extends Controller
 {
@@ -32,6 +37,7 @@ class EtudiantController extends Controller
     protected  $filliere;
 
 
+
     public function __construct(EtudiantRepository $etudiantRepository)
     {
         $this->middleware('auth');
@@ -53,7 +59,8 @@ class EtudiantController extends Controller
         return view('profile.edit',
             [
                 'title' => $this->title,
-                'filliere' => $this->filliere
+                'filliere' => $this->filliere,
+                 'search' => true,
 
             ],
             compact('students','links'));
@@ -74,13 +81,13 @@ class EtudiantController extends Controller
     {
 
 
-
         return view('profile.edit')->with(
            [
            'title' => $this->title,
            'students' =>  $this->etudiantRepository->searchByFilter($searchStudent->all()),
            'filliere' => $this->filliere,
-           'input' => $searchStudent
+           'input' => $searchStudent,
+           'search' => true,
 
        ]);
 
@@ -106,8 +113,18 @@ class EtudiantController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    /*
+     * $id = code student
+     * */
     public function show($id)
     {
+
+        return view('profile.edit')->with(
+            [
+                'title' => $this->title,
+                'edit' => true
+            ]);
 
     }
 

@@ -15,6 +15,7 @@
             <div class="card">
                 <div class="card-header">
                     <h5 class="title">{{ __(''.$title) }}</h5>
+                    <a class="float-right" href="{{route('etudiant.index',['inputs' => isset($inputs) ? $inputs : ''])}}">{{ __(''.$title) }}</a>
                 </div>
                 <form method="post" action="{{ route('etudiant.store') }}" autocomplete="off">
                     <div class="card-body">
@@ -23,7 +24,7 @@
 
                         @include('alerts.success')
 
-                        <div class="row">
+                     @isset($edit)   <div class="row">
                             <div class="col-md-4">
                                 <fieldset class="form-group border p-3 " >
 
@@ -590,18 +591,21 @@
                             </div>
 
 
-                        </div>
+                        </div> @endisset
                         </div>
 
                 </form>
             </div>
 
-            <div id="dossier"  > <div class="card">
+        @isset($search)    <div id="dossier"  >
+
+                <div class="card">
                 <div class="card-header">
                     <div class="row">
-                        <div class="col-8">
+                        <div class="col-4">
                             <h4 class="card-title">Recherche étudiant</h4>
                         </div>
+
                     </div>
 
                     <form method="post" action="{{ route('etudiant.search') }}" autocomplete="on">
@@ -870,8 +874,13 @@
                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     <i class="fas fa-ellipsis-v"></i>
                                                 </a>
+
                                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                    <a class="dropdown-item" href="#">Edit</a>
+                                                    <a class="dropdown-item" href="{{route('etudiant.show', [$student->code_etudiant] )}}">{{__('Voir')}}</a>
+                                                    <a class="dropdown-item" href="#">{{__('Voir')}}</a>
+                                                    <a class="dropdown-item" href="#">{{__('Voir')}}</a>
+                                                    <a class="dropdown-item" href="#">{{__('Voir')}}</a>
+                                                    <a class="dropdown-item" href="#">{{__('Voir')}}</a>
                                                 </div>
                                             </div>
                                         </td>
@@ -898,7 +907,7 @@
 
                     </nav>
                 </div>
-                </div> </div>
+                </div> </div> @endisset
             <!-- <div class="card">
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             <div class="card-header">
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 <h5 class="title">{{ __('Password') }}</h5>

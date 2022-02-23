@@ -6783,16 +6783,16 @@
         },
         {
             "name": "laravel-lang/lang",
-            "version": "10.4.0",
+            "version": "10.4.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Laravel-Lang/lang.git",
-                "reference": "00dacab33999a643613159ecb2f0a9b311e785b7"
+                "reference": "a879cab3f19eb8d85ed3a0f1e8c9936c973a0621"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Laravel-Lang/lang/zipball/00dacab33999a643613159ecb2f0a9b311e785b7",
-                "reference": "00dacab33999a643613159ecb2f0a9b311e785b7",
+                "url": "https://api.github.com/repos/Laravel-Lang/lang/zipball/a879cab3f19eb8d85ed3a0f1e8c9936c973a0621",
+                "reference": "a879cab3f19eb8d85ed3a0f1e8c9936c973a0621",
                 "shasum": ""
             },
             "require": {
@@ -6855,7 +6855,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2022-01-24T21:57:50+00:00"
+            "time": "2022-02-22T17:57:38+00:00"
         },
         {
             "name": "laravel/breeze",
