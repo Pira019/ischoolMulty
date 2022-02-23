@@ -60,7 +60,7 @@ class EtudiantController extends Controller
             [
                 'title' => $this->title,
                 'filliere' => $this->filliere,
-                 'search' => true,
+
 
             ],
             compact('students','links'));
@@ -87,8 +87,6 @@ class EtudiantController extends Controller
            'students' =>  $this->etudiantRepository->searchByFilter($searchStudent->all()),
            'filliere' => $this->filliere,
            'input' => $searchStudent,
-           'search' => true,
-
        ]);
 
     }
@@ -120,10 +118,19 @@ class EtudiantController extends Controller
     public function show($id)
     {
 
-        return view('profile.edit')->with(
+        $studentDataById = [
+            'id' => $id,
+            'column' => "code_etudiant"
+        ];
+
+
+
+         return view('profile.edit')->with(
             [
                 'title' => $this->title,
-                'edit' => true
+                'filliere' => $this->filliere,
+                'edit' => true,
+                'data' => $this->etudiantRepository->searchById($studentDataById)
             ]);
 
     }

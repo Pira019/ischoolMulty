@@ -32,11 +32,11 @@
                                     <div class="form-row">
                                         <div
                                             class="form-group{{ $errors->has('name') ? ' has-danger' : '' }} col-md-6 mb-3 ">
-                                            <label>{{ __('Nom de l\'étudiant') }}</label>
-                                            <input type="text" name="Nom_etudiant"
+                                            <label for="Nom_etudiant">{{ __('Nom de l\'étudiant') }}</label>
+                                            <input type="text" name="Nom_etudiant" id="Nom_etudiant"
                                                 class="form-control{{ $errors->has('Nom_etudiant') ? ' is-invalid' : '' }}"
                                                 placeholder="{{ __('Nom etudiant') }}"
-                                                value="{{ old('Nom_etudiant', '') }}">
+                                                value="{{ old('Nom_etudiant', isset($data) && !empty($data)? $data->Nom_etudiant : '') }}">
                                             @include('alerts.feedback', ['field' => 'Nom_etudiant'])
                                         </div>
 
@@ -45,9 +45,11 @@
                                             <label for="filliere">{{ __('Fillière') }}</label>
                                             <select name="Filiere" id="filliere"
                                                     class="form-control{{ $errors->has('Filiere') ? ' is-invalid' : '' }}">
-                                                <option value="volvo">Volvo</option>
-                                                <option value="saab">Saab</option>
-                                                <option value="mercedes">Mercedes</option>
+                                                @isset($filliere)
+                                                    @foreach($filliere as $fill)
+                                                        <option value="{{$fill->code_filiere}}" {{ old('Filiere', isset($data) && !empty($data) ? $data->Filiere : $fill->code_filiere) ==$fill->code_filiere? 'selected': '' }}>{{$fill->Nom_filiere}}</option>
+                                                    @endforeach
+                                                @endisset 
                                             </select>
                                             @include('alerts.feedback', ['field' => 'Filiere'])
                                         </div>
@@ -597,7 +599,7 @@
                 </form>
             </div>
 
-        @isset($search)    <div id="dossier"  >
+            <div id="dossier"  >
 
                 <div class="card">
                 <div class="card-header">
@@ -876,7 +878,7 @@
                                                 </a>
 
                                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                    <a class="dropdown-item" href="{{route('etudiant.show', [$student->code_etudiant] )}}">{{__('Voir')}}</a>
+                                                    <a class="dropdown-item" type="button" href="{{route('etudiant.show', [$student->code_etudiant] )}}">{{__('Voir')}}</a>
                                                     <a class="dropdown-item" href="#">{{__('Voir')}}</a>
                                                     <a class="dropdown-item" href="#">{{__('Voir')}}</a>
                                                     <a class="dropdown-item" href="#">{{__('Voir')}}</a>
@@ -907,7 +909,7 @@
 
                     </nav>
                 </div>
-                </div> </div> @endisset
+                </div> </div>
             <!-- <div class="card">
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             <div class="card-header">
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 <h5 class="title">{{ __('Password') }}</h5>

@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Etudiants;
+use App\Models\Modules;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 use PhpParser\Node\Expr\Array_;
@@ -73,6 +74,13 @@ class EtudiantRepository extends ResourceRepository
 
         $etudiant->save();
 
+    }
+
+    public function searchById(Array $inputs){
+
+       $this->model = "etudiants";
+
+       return $this->getByFilter($inputs['column'],$inputs['id'])->first();
     }
 
     public function store(Array $inputs)
