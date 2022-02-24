@@ -9,7 +9,8 @@ class Etudiants extends Model
 {
     use HasFactory;
 
-
+   protected $guarded =[];
+   protected $primaryKey ="code_etudiant";
 
 
 

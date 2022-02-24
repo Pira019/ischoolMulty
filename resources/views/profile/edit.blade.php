@@ -17,7 +17,7 @@
                     <h5 class="title">{{ __(''.$title) }}</h5>
                     <a class="float-right" href="{{route('etudiant.index',['inputs' => isset($inputs) ? $inputs : ''])}}">{{ __(''.$title) }}</a>
                 </div>
-                <form method="post" action="{{ route('etudiant.store') }}" autocomplete="off">
+                <form method="post" action="{{ route('etudiant.store') }}" autocomplete="off" enctype="multipart/form-data">
                     <div class="card-body">
                         @csrf
                         @method('post')
@@ -49,7 +49,7 @@
                                                     @foreach($filliere as $fill)
                                                         <option value="{{$fill->code_filiere}}" {{ old('Filiere', isset($data) && !empty($data) ? $data->Filiere : $fill->code_filiere) ==$fill->code_filiere? 'selected': '' }}>{{$fill->Nom_filiere}}</option>
                                                     @endforeach
-                                                @endisset 
+                                                @endisset
                                             </select>
                                             @include('alerts.feedback', ['field' => 'Filiere'])
                                         </div>
@@ -59,11 +59,11 @@
                                     <div class="form-row">
                                         <div
                                                 class="form-group{{ $errors->has('prenom_etudiant') ? ' has-danger' : '' }} col-md-6 mb-3 ">
-                                            <label>{{ __('Prénom de l\'étudiant') }}</label>
-                                            <input type="text" name="prenom_etudiant"
+                                            <label for="prenom_etudiant">{{ __('Prénom de l\'étudiant') }}</label>
+                                            <input type="text" name="prenom_etudiant"  id="prenom_etudiant"
                                                    class="form-control{{ $errors->has('prenom_etudiant') ? ' is-invalid' : '' }}"
                                                    placeholder="{{ __('prenom_etudiant') }}"
-                                                   value="{{ old('prenom_etudiant', auth()->user()->name) }}">
+                                                   value="{{ old('prenom_etudiant', isset($data) && !empty($data)? $data->prenom_etudiant : '') }}">
                                             @include('alerts.feedback', ['field' => 'prenom_etudiant'])
                                         </div>
 
@@ -72,9 +72,11 @@
                                             <label for="classe_actuelle">{{ __('Classe') }}</label>
                                             <select name="classe_actuelle" id="classe_actuelle"
                                                     class="form-control{{ $errors->has('classe_actuelle') ? ' is-invalid' : '' }}">
-                                                <option value="volvo">Volvo</option>
-                                                <option value="saab">Saab</option>
-                                                <option value="mercedes">Mercedes</option>
+                                                @isset($filliere)
+                                                    @foreach($filliere as $fill)
+                                                        <option value="{{$fill->niveauClasse}},{{$fill->code_filiere}}" {{ old('Filiere', isset($data) && !empty($data) || $data->classe_actuelle == $fill->niveauClasse? $data->Filiere : $fill->code_filiere) ==$fill->code_filiere ? 'selected': '' }}>{{$fill->niveauClasse}} {{$fill->Nom_filiere}}</option>
+                                                    @endforeach
+                                                @endisset
                                             </select>
                                             @include('alerts.feedback', ['field' => 'classe_actuelle'])
                                         </div>
@@ -83,7 +85,7 @@
                                     <div class="form-row">
                                         <div
                                             class="form-group{{ $errors->has('classe_actuelle') ? ' has-danger' : '' }} col-md-6 mb-3 ">
-                                            <label for="nameArabe">{{ __('nom an arable') }}</label>
+                                            <label for="nameArabe">{{ __('Noms en arabe') }}</label>
 
                                         </div>
 
@@ -91,32 +93,34 @@
                                             class="form-group{{ $errors->has('nameArabe') ? ' has-danger' : '' }} col-md-4 mb-3 ">
                                             <input type="text" name="nameArabe" id="nameArabe"
                                                 class="form-control{{ $errors->has('nameArabe') ? ' is-invalid' : '' }} "
-                                                placeholder="{{ __('Name') }}"
-                                                value="{{ old('nameArabe', auth()->user()->name) }}">
+                                                placeholder="{{ __('Nom et prénom en arable') }}"
+                                                value="{{ old('nameArabe', isset($data) && !empty($data)? $data->NomPrenom_Arabe : '') }}">
                                             @include('alerts.feedback', ['field' => 'nameArabe'])
                                         </div>
                                     </div>
 
                                     <div class="form-row">
 
+                                        <input name="code_etudiant" type="hidden" value="{{isset($data) && !empty($data)? $data->code_etudiant : ''}}">
+
                                         <div
                                                 class="form-group{{ $errors->has('numCIN') ? ' has-danger' : '' }} col-md-4 mb-3 ">
                                             <label for="numCIN">{{ __('N°CIN') }}</label>
-                                            <input type="text" name="numCIN" id="gstEtudiant"
+                                            <input type="text" name="numCIN" id="numCIN"
                                                    class="form-control{{ $errors->has('numCIN') ? ' is-invalid' : '' }}"
-                                                   placeholder="{{ __('Gsm étudiant') }}"
-                                                   value="{{ old('numCIN', '069552') }}">
+                                                   placeholder="{{ __('N°CIN') }}"
+                                                   value="{{ old('numCIN', isset($data) && !empty($data)? $data->cin_etudiant : '') }}">
                                             @include('alerts.feedback', ['field' => 'numCIN'])
                                         </div>
 
                                         <div
-                                                class="form-group{{ $errors->has('gstEtudiant') ? ' has-danger' : '' }} col-md-4 mb-3 ">
-                                            <label for="gstEtudiant">{{ __('Gsm étudiant') }}</label>
-                                            <input type="text" name="gstEtudiant" id="gstEtudiant"
-                                                   class="form-control{{ $errors->has('gstEtudiant') ? ' is-invalid' : '' }}"
+                                                class="form-group{{ $errors->has('gsmEtudiant') ? ' has-danger' : '' }} col-md-4 mb-3 ">
+                                            <label for="gsmEtudiant">{{ __('Gsm étudiant') }}</label>
+                                            <input type="text" name="gsmEtudiant" id="gsmEtudiant" title="{{ old('gsmEtudiant', isset($data) && !empty($data)? $data->Telephone_personnel : 'Gsm personnel') }}"
+                                                   class="form-control{{ $errors->has('gsmEtudiant') ? ' is-invalid' : '' }}"
                                                    placeholder="{{ __('Gsm étudiant') }}"
-                                                   value="{{ old('gstEtudiant', '069552') }}">
-                                            @include('alerts.feedback', ['field' => 'gstEtudiant'])
+                                                   value="{{ old('gsmEtudiant', isset($data) && !empty($data)? $data->Telephone_personnel : '') }}">
+                                            @include('alerts.feedback', ['field' => 'gsmEtudiant'])
                                         </div>
 
                                         <div
@@ -124,9 +128,8 @@
                                             <label for="grp">{{ __('Groupe') }}</label>
                                             <select name="grp" id="grp"
                                                     class="form-control{{ $errors->has('grp') ? ' is-invalid' : '' }}">
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
+                                                <option value="{{$data->groupe}}" {{ old('grp', isset($data) && !empty($data) ? $data->groupe : '') ==  $data->groupe ? 'selected': '' }}>{{ $data->groupe}}  </option>
+
                                             </select>
                                             @include('alerts.feedback', ['field' => 'grp'])
                                         </div>
@@ -138,42 +141,42 @@
                                         <div
                                             class="form-group{{ $errors->has('emailPerso') ? ' has-danger' : '' }} col-md-6 mb-3 ">
                                             <label for="emailPerso">{{ __('Email personnel') }}</label>
-                                            <input type="text" name="Email" id="emailPerso"
+                                            <input type="text" name="emailPerso" id="emailPerso"
                                                 class="form-control{{ $errors->has('emailPerso') ? ' is-invalid' : '' }}"
                                                 placeholder="{{ __('Email personnel') }}"
-                                                value="{{ old('emailPerso', 'perso@email.com') }}">
+                                               value="{{ old('emailPerso', isset($data) && !empty($data)? $data->Email : '') }}">
                                             @include('alerts.feedback', ['field' => 'emailPerso'])
                                         </div>
                                         <div
-                                            class="form-group{{ $errors->has('Email école') ? ' has-danger' : '' }} col-md-6 mb-3 ">
+                                            class="form-group{{ $errors->has('email_ecole') ? ' has-danger' : '' }} col-md-6 mb-3 ">
                                             <label for="email_ecole">{{ __('Email école') }}</label>
                                             <input type="text" id="email_ecole" name="email_ecole"
-                                                class="form-control{{ $errors->has('Email école') ? ' is-invalid' : '' }}"
+                                                class="form-control{{ $errors->has('email_ecole') ? ' is-invalid' : '' }}"
                                                 placeholder="{{ __('Email école') }}"
-                                                value="{{ old('email_ecole', 'ecole@email.com') }}">
+                                                value="{{ old('email_ecole', isset($data) && !empty($data)? $data->email_ecole : '') }}">
                                             @include('alerts.feedback', ['field' => 'email_ecole'])
                                         </div>
                                     </div>
 
                                     <div class="form-row">
                                         <div
-                                            class="form-group{{ $errors->has('Adresse_actuelle') ? ' has-danger' : '' }} col-md-4 mb-3 ">
+                                            class="form-group{{ $errors->has('adresseActuelle') ? ' has-danger' : '' }} col-md-4 mb-3 ">
                                             <label for="adresseActuelle">{{ __('Adresse étudiant') }}</label>
                                             <textarea id="adresseActuelle" type="text" name="adresseActuelle" autocomplete="address"
-                                                class="form-control{{ $errors->has('adresseActuelle') ? ' is-invalid' : '' }}" >                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </textarea>
-
-                                       </textarea>
-                                            @include('alerts.feedback', ['field' => 'Adresse_actuelle'])
+                                                class="form-control{{ $errors->has('adresseActuelle') ? ' is-invalid' : '' }}" >
+                                               {{ old('adresseActuelle', isset($data) && !empty($data)? $data->Adresse_permanante : '') }}
+                                            </textarea>
+                                            @include('alerts.feedback', ['field' => 'adresseActuelle'])
                                         </div>
 
 
                                         <div
-                                            class="form-group{{ $errors->has('Date_naissance') ? ' has-danger' : '' }} col-md-4 mb-3 ">
+                                            class="form-group{{ $errors->has('dateNaissance') ? ' has-danger' : '' }} col-md-4 mb-3 ">
                                             <label for="dateNaissance">{{ __('Date de naissance') }}</label>
-                                            <input type="date" id="dateNaissance"  name="dateNaissance"
+                                            <input type="date" id="dateNaissance"  name="dateNaissance" title=" {{ old('dateNaissance', isset($data) && !empty($data)? $data->Date_naissance : 'Date de naissance') }}"
                                                 class="form-control{{ $errors->has('dateNaissance') ? ' is-invalid' : '' }}"
                                                 placeholder="{{ __('Date de naissance') }}"
-                                                value="<?php echo e( old('Date_naissance', strtotime( date('Y-m-d'))) )?> ">
+                                                value="<?php echo e( old('Date_naissance',isset($data) && !empty($data)? date('d-m-Y',strtotime($data->Date_naissance)) : '') )?> ">
                                             @include('alerts.feedback', ['field' => 'dateNaissance'])
                                         </div>
                                         <div
@@ -182,28 +185,30 @@
                                             <input type="text" id="ville_naissance" name="ville_naissance"
                                                 class="form-control{{ $errors->has('ville_naissance') ? ' is-invalid' : '' }}"
                                                 placeholder="{{ __('ville_naissance') }}"
-                                                value="{{ old('ville_naissance', 'Casablanca') }}">
+                                                value=" {{ old('ville_naissance', isset($data) && !empty($data)? $data->ville_naissance : '') }}">
                                             @include('alerts.feedback', ['field' => 'ville_naissance'])
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div
-                                            class="form-group{{ $errors->has('ville') ? ' has-danger' : '' }} col-md-3 mb-3 ">
+                                            class="form-group{{ $errors->has('ville') ? ' has-danger' : '' }} col-md-3 mb-3 " title="{{ old('ville', isset($data) && !empty($data)? $data->Ville : 'Ville') }}">
                                             <label>{{ __('Ville') }}</label>
-                                            <input type="text" id="ville" name="ville"
+                                            <input type="text" id="ville" name="ville" title="{{ old('ville', isset($data) && !empty($data)? $data->Ville : 'Ville') }}"
                                                 class="form-control{{ $errors->has('ville') ? ' is-invalid' : '' }}"
                                                 placeholder="{{ __('Ville') }}"
-                                                value="{{ old('ville', 'Rabat') }}">
+                                                value=" {{ old('ville', isset($data) && !empty($data)? $data->Ville : '') }}">
                                             @include('alerts.feedback', ['field' => 'ville'])
                                         </div>
 
                                         <div
-                                            class="form-group{{ $errors->has('Nationalité') ? ' has-danger' : '' }} col-md-3 mb-3 ">
+                                            class="form-group{{ $errors->has('nationalite') ? ' has-danger' : '' }} col-md-3 mb-3 "
+                                        title="{{ old('nationalite', isset($data) && !empty($data)? $data->Nationalité : '') }}">
                                             <label for="nationalite">{{ __('Nationalité') }}</label>
                                             <input type="text" id="nationalite" name="nationalite"
                                                 class="form-control{{ $errors->has('nationalite') ? ' is-invalid' : '' }}"
+                                                   title="{{ old('nationalite', isset($data) && !empty($data)? $data->Nationalité : '') }}"
                                                 placeholder="{{ __('Nationalité') }}"
-                                                value="{{ old('nationalite', 'COD') }}">
+                                                value=" {{ old('nationalite', isset($data) && !empty($data)? $data->Nationalité : '') }}">
                                             @include('alerts.feedback', ['field' => 'nationalite'])
                                         </div>
                                         <div
@@ -211,18 +216,20 @@
                                             <label for="sexe">{{ __('Sexe') }}</label>
                                             <select name="Sexe" id="sexe"
                                                 class="form-control{{ $errors->has('sexe') ? ' is-invalid' : '' }}">
-                                                <option value="Masculin">{{ __('M') }}</option>
-                                                <option value="Féminn">{{ __('F') }}</option>
+                                                <option value="Masculin" {{ old('Sexe', isset($data) && !empty($data) ? substr($data->Sexe,0,1)  : '') ==  'M' ? 'selected': '' }} >{{ __('M') }}
+                                                      </option>
+                                                </option>
+                                                <option value="Fémin" {{ old('Sexe', isset($data) && !empty($data) ? substr($data->Sexe,0,1) : '') ==  'F' ? 'selected': '' }}>{{ __('F') }}</option>
                                             </select>
-                                            @include('alerts.feedback', ['field' => 'sexe'])
+                                            @include('alerts.feedback', ['field' => 'Sexe'])
                                         </div>
                                         <div
                                                 class="form-group{{ $errors->has('numInscription') ? ' has-danger' : '' }} col-md-3 mb-3 ">
-                                            <label for="numInscription">{{ __('Nationalité') }}</label>
+                                            <label for="numInscription" title="{{__('Num inscription')}}">{{ __('N° insc.') }}</label>
                                             <input type="text" id="numInscription" name="numInscription"
                                                    class="form-control{{ $errors->has('numInscription') ? ' is-invalid' : '' }}"
-                                                   placeholder="{{ __('Nationalité') }}"
-                                                   value="{{ old('numInscription', 'AFJHF01') }}">
+                                                   placeholder="{{ __('Num inscription') }}"
+                                                   value="{{ old('numInscription', isset($data) && !empty($data)? $data->num_inscription : '') }}">
                                             @include('alerts.feedback', ['field' => 'numInscription'])
                                         </div>
                                     </div>
@@ -239,7 +246,11 @@
 
                                                 <div class="mt-4">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="checkbox" value="" name="actif">
+                                                        <input class="form-check-input" type="checkbox"  name="actif"
+                                                               value="{{ old('actif', isset($data) && !empty($data)? $data->actif : '') }}"
+                                                                {{ old('actif', isset($data) && !empty($data) && $data->actif==true ? $data->actif : '') == true ? 'checked' : '' }}
+                                                                >
+
                                                         <span class="form-check-sign"> <span class="check"></span>
                                                          {{__('Active')}}
                                                  </span>
@@ -254,7 +265,9 @@
 
                                                 <div class="mt-4">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="checkbox" value="" name="Boursier">
+                                                        <input class="form-check-input" type="checkbox" value="{{ old('Boursier', isset($data) && !empty($data)? $data->boursier : '') }}"
+                                                               name="Boursier"
+                                                               {{ old('Boursier', isset($data) && !empty($data) && $data->boursier==true ? $data->boursier : '') == true ? 'checked' : '' }} >
                                                         <span class="form-check-sign"> <span class="check"></span>
                                                          {{__('Boursier')}}
                                                  </span>
@@ -269,7 +282,10 @@
 
                                                 <div class="mt-4">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="checkbox" value="" checked name="blocage">
+                                                        <input class="form-check-input" type="checkbox"
+                                                               value="{{ old('blocage', isset($data) && !empty($data)? $data->Situation_bloquee : '') }}"
+                                                                {{ old('blocage', isset($data) && !empty($data) && $data->Situation_bloquee==true ? $data->Situation_bloquee : '') == true ? 'checked' : '' }}
+                                                        name="blocage">
                                                         <span class="form-check-sign"> <span class="check"></span>
                                                          {{__('Blocage')}}
                                                  </span>
@@ -284,7 +300,10 @@
 
                                                 <div class="mt-4">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="checkbox" value="" name="laureat">
+                                                        <input class="form-check-input" type="checkbox"
+                                                               value="{{ old('laureat', isset($data) && !empty($data)? $data->Lauréat : '') }}"
+                                                               name="laureat"
+                                                                {{ old('laureat', isset($data) && !empty($data) && $data->Lauréat==true ? $data->Lauréat : '') == true ? 'checked' : '' }} >
                                                         <span class="form-check-sign"> <span class="check"></span>
                                                          {{__('Lauréat')}}
                                                  </span>
@@ -296,8 +315,6 @@
                                             </div>
 
                                         </div>
-
-
 
                                 </fieldset>
                             </div>
@@ -339,24 +356,27 @@
                                             <label for="nomPere">{{ __('Prénom du père') }}</label>
                                             <input type="text" id="nomPere" name="nomPere"
                                                 class="form-control{{ $errors->has('nomPere') ? ' is-invalid' : '' }}"
+                                                title="{{ old('nomPere', isset($data) && !empty($data)? $data->Nom_pere : '') }}"
                                                 placeholder="{{ __('Prénom du père') }}"
-                                                value="{{ old('Nom_pere', 'Hamlaoui') }}">
+                                                value="{{ old('nomPere', isset($data) && !empty($data)? $data->Nom_pere : '') }}">
                                             @include('alerts.feedback', ['field' => 'nomPere'])
                                         </div>
 
                                         <div
                                             class="form-group{{ $errors->has('Telephone_pere') ? ' has-danger' : '' }} col-md-4 mb-3 ">
-                                            <label>{{ __('Tél père') }}</label>
-                                            <input type="text" name="Telephone_pere"
+                                            <label for="Telephone_pere">{{ __('Tél père') }}</label>
+                                            <input type="text" name="Telephone_pere" id="Telephone_pere"
+                                                title="{{ old('Telephone_pere', isset($data) && !empty($data)? $data->Telephone_pere : '') }}"
                                                 class="form-control{{ $errors->has('Telephone_pere') ? ' is-invalid' : '' }}"
                                                 placeholder="{{ __('Tél père') }}"
-                                                value="{{ old('Telephone_pere', auth()->user()->name) }}">
+                                                 value="{{ old('Telephone_pere', isset($data) && !empty($data)? $data->Telephone_pere : '') }}">
                                             @include('alerts.feedback', ['field' => 'Telephone_pere'])
                                         </div>
 
                                         <div class="text-center col-md-4 mb-3">
-                                            <img id="frame" src="" class="rounded mx-auto d-block" alt="..." width="70%" height="50%"/>
-                                            <input  type="file" id="formFile" onchange="preview()">
+                                            <img id="frame" src="{{old('photoStudent', isset($data) && !empty($data)? asset('img/'.$data->photo_etudiant) : asset('img/student.png'))}}" class="rounded mx-auto d-block" alt="photo étudiant" width="70%" height="50%"/>
+                                            <input  type="file" id="formFile" onchange="preview()" name="photoStudent"
+                                                    accept=image/x-png,image/jpg,image/jpeg">
                                             <button onclick="clearImage()" class="btn shadow-none"><i class="tim-icons icon-upload"></i></button>
                                         </div>
 
@@ -365,22 +385,23 @@
 
                                     <div class="form-row">
                                         <div
-                                            class="form-group{{ $errors->has('name') ? ' has-danger' : '' }} col-md-6 mb-3 ">
+                                            class="form-group{{ $errors->has('Nom_mere') ? ' has-danger' : '' }} col-md-6 mb-3 ">
                                             <label for="Nom_mere">{{ __('Nom de la mère') }}</label>
                                             <input type="text" id="Nom_mere" name="Nom_mere"
+                                                   title="{{ old('Nom_mere', isset($data) && !empty($data)? $data->Nom_mere : '') }}"
                                                 class="form-control{{ $errors->has('Nom_mere') ? ' is-invalid' : '' }}"
                                                 placeholder="{{ __('Nom de la mère') }}"
-                                                value="{{ old('Nom_mere', 'Nom_mere') }}">
+                                                value="{{ old('Nom_mere', isset($data) && !empty($data)? $data->Nom_mere : '') }}">
                                             @include('alerts.feedback', ['field' => 'Nom_mere'])
                                         </div>
 
                                         <div
-                                            class="form-group{{ $errors->has('name') ? ' has-danger' : '' }} col-md-6 mb-3 ">
+                                            class="form-group{{ $errors->has('Telephone_mere') ? ' has-danger' : '' }} col-md-6 mb-3 ">
                                             <label>{{ __('Tél de la mère') }}</label>
                                             <input type="text" name="Telephone_mere"
                                                 class="form-control{{ $errors->has('Telephone_mere') ? ' is-invalid' : '' }}"
                                                 placeholder="{{ __('Tél de la mère') }}"
-                                                value="{{ old('Telephone_mere', auth()->user()->name) }}">
+                                                value="{{ old('Telephone_mere', isset($data) && !empty($data)? $data->Telephone_mere : '') }}">
                                             @include('alerts.feedback', ['field' => 'Telephone_mere'])
                                         </div>
 
@@ -392,9 +413,10 @@
                                             class="form-group{{ $errors->has('tuteur') ? ' has-danger' : '' }} col-md-6 mb-3 ">
                                             <label for="tuteur">{{ __('Tuteur') }}</label>
                                             <input type="text" id="tuteur" name="tuteur"
+                                                 title="{{ old('tuteur', isset($data) && !empty($data)? $data->tuteur : '') }}"
                                                 class="form-control{{ $errors->has('tuteur') ? ' is-invalid' : '' }}"
-                                                placeholder="{{ __('tuteur') }}"
-                                                value="{{ old('tuteur', 'tuteur') }}">
+                                                placeholder="{{ __('Tuteur') }}"
+                                                value="{{ old('tuteur', isset($data) && !empty($data)? $data->tuteur : '') }}">
                                             @include('alerts.feedback', ['field' => 'tuteur'])
                                         </div>
 
@@ -402,9 +424,10 @@
                                             class="form-group{{ $errors->has('telephone_tuteur') ? ' has-danger' : '' }} col-md-6 mb-3 ">
                                             <label for="telephone_tuteur">{{ __('Tél tuteur') }}</label>
                                             <input type="text" id="telephone_tuteur" name="telephone_tuteur"
+                                                 title="{{ old('telephone_tuteur', isset($data) && !empty($data)? $data->telephone_tuteur : '') }}"
                                                 class="form-control{{ $errors->has('telephone_tuteur') ? ' is-invalid' : '' }}"
                                                 placeholder="{{ __('Tél tuteur') }}"
-                                                value="{{ old('telephone_tuteur', '02565602012') }}">
+                                                value="{{ old('telephone_tuteur', isset($data) && !empty($data)? $data->telephone_tuteur : '') }}">
                                             @include('alerts.feedback', ['field' => 'telephone_tuteur'])
                                         </div>
 
@@ -414,10 +437,11 @@
                                         <div
                                             class="form-group{{ $errors->has('passport_etudiant') ? ' has-danger' : '' }} col-md-6 mb-3 ">
                                             <label for="passport_etudiant" >{{ __('N° passeport') }}</label>
-                                            <input type="text" id="passport_etudiant" name="passport_etudiant"
+                                            <input type="text" id="passport_etudiant" name="passport_etudiant" maxlength="10"
+                                                title="{{ old('passport_etudiant', isset($data) && !empty($data)? $data->passport_etudiant : '') }}"
                                                 class="form-control{{ $errors->has('passport_etudiant') ? ' is-invalid' : '' }}"
                                                 placeholder="{{ __('N° passeport') }}"
-                                                value="{{ old('passport_etudiant', '01P54545') }}">
+                                               value="{{ old('passport_etudiant', isset($data) && !empty($data)? $data->passport_etudiant : '') }}">
                                             @include('alerts.feedback', ['field' => 'passport_etudiant'])
                                         </div>
 
@@ -427,7 +451,7 @@
 
                                             <textarea id="Adresse_permanante" name="Adresse_permanante"
                                                 class="form-control{{ $errors->has('Adresse_permanante') ? ' is-invalid' : '' }}">
-                                                {{old('Adresse_permanante','Av rabar')}}
+                                               {{ old('Adresse_permanante', isset($data) && !empty($data)? $data->Adresse_permanante : '') }}
                                             </textarea>
                                             @include('alerts.feedback', ['field' => 'Adresse_permanante'])
 
@@ -441,18 +465,19 @@
                                             <input type="text" id="maladChronique" name="maladChronique"
                                                    class="form-control{{ $errors->has('maladChronique') ? ' is-invalid' : '' }}"
                                                    placeholder="{{ __('Maladie chronique') }}"
-                                                   value="{{ old('maladChronique', 'Asthme') }}">
+                                                   title="{{ old('maladChronique', isset($data) && !empty($data)? $data->Maladies_chronique : '') }}"
+                                                   value="{{ old('maladChronique', isset($data) && !empty($data)? $data->Maladies_chronique : '') }}">
                                             @include('alerts.feedback', ['field' => 'maladChronique'])
                                         </div>
 
                                         <div
                                                 class="form-group{{ $errors->has('grpSanguin') ? ' has-danger' : '' }} col-md-4 mb-3 ">
                                             <label for="grpSanguin">{{ __('Grp sanguin') }}</label>
-                                            <select name="grpSanguin" id="grpSanguin"
-                                                    class="form-control{{ $errors->has('grpSanguin') ? ' is-invalid' : '' }}">
-                                                <option value="volvo">OH</option>
-                                                <option value="saab">OA</option>
-                                            </select>
+                                            <input type="text" id="grpSanguin" name="grpSanguin"
+                                                   class="form-control{{ $errors->has('grpSanguin') ? ' is-invalid' : '' }}"
+                                                   placeholder="{{ __('Grp Sanguin') }}"
+                                                   title="{{ old('grpSanguin', isset($data) && !empty($data)? $data->Groupe_sanguin : '') }}"
+                                                   value="{{ old('grpSanguin', isset($data) && !empty($data)? $data->Groupe_sanguin : '') }}">
                                             @include('alerts.feedback', ['field' => 'grpSanguin'])
                                         </div>
 
@@ -462,32 +487,32 @@
 
                                             <textarea id="remarques" name="remarques"
                                                       class="form-control{{ $errors->has('remarques') ? ' is-invalid' : '' }}">
-                                                {{old('remarques','Av rabar avant tout')}}
+                                              {{ old('remarques', isset($data) && !empty($data)? $data->remarques : '') }}
                                             </textarea>
                                             @include('alerts.feedback', ['field' => 'remarques'])
 
                                         </div>
                                     </div>
 
+
                                     <div class="form-row">
                                         <div
-                                                class="form-group{{ $errors->has('maladChronique') ? ' has-danger' : '' }} col-md-4 mb-3 ">
+                                                class="form-group{{ $errors->has('etatprecedent') ? ' has-danger' : '' }} col-md-4 mb-3 ">
                                             <label for="etatprecedent" >{{ __('Et. précedent') }}</label>
                                             <input type="text" id="etatprecedent" name="etatprecedent" title="Etablissement précedent"
                                                    class="form-control{{ $errors->has('etatprecedent') ? ' is-invalid' : '' }}"
                                                    placeholder="{{ __('Etablissement précedent') }}"
-                                                   value="{{ old('etatprecedent', 'Asthme') }}">
+                                                   value="{{ old('etatprecedent', isset($data) && !empty($data)? $data->etablissement_precedent : '') }}">
                                             @include('alerts.feedback', ['field' => 'etatprecedent'])
                                         </div>
 
                                         <div
                                                 class="form-group{{ $errors->has('religion') ? ' has-danger' : '' }} col-md-4 mb-3 ">
                                             <label for="religion">{{ __('Réligion') }}</label>
-                                            <select name="religion" id="religion"
-                                                    class="form-control{{ $errors->has('religion') ? ' is-invalid' : '' }}">
-                                                <option value="volvo">Muslim</option>
-                                                <option value="saab">Autre</option>
-                                            </select>
+                                            <input type="text" id="religion" name="religion" title="Réligion"
+                                            class="form-control{{ $errors->has('religion') ? ' is-invalid' : '' }}"
+                                            placeholder="{{ __('Réligion') }}"
+                                            value="{{ old('religion', isset($data) && !empty($data)? $data->religion : '') }}">
                                             @include('alerts.feedback', ['field' => 'religion'])
                                         </div>
 
@@ -495,7 +520,10 @@
 
                                             <div class="mt-4">
                                                 <label class="form-check-label">
-                                                    <input class="form-check-input" type="checkbox" value="" name="Handicape">
+                                                    <input class="form-check-input" type="checkbox" name="Handicape"
+                                                           value="{{old('Handicape', isset($data) && !empty($data)? $data->handicape : '') }}"
+
+                                                            {{ old('Handicape', isset($data) && !empty($data) && $data->handicape==true ? $data->handicape : '') == true ? 'checked' : '' }}>
                                                     <span class="form-check-sign"> <span class="check"></span>
                                                          {{__('Handicapé')}}
                                           </span>
@@ -509,12 +537,12 @@
 
                                     <div class="form-row">
                                         <div
-                                                class="form-group{{ $errors->has('maladChronique') ? ' has-danger' : '' }} col-md-6 mb-3 ">
+                                                class="form-group{{ $errors->has('compBanque') ? ' has-danger' : '' }} col-md-6 mb-3 ">
                                             <label for="compBanque" >{{ __('C. bancaire') }}</label>
                                             <input type="text" id="compBanque" name="compBanque"
                                                    class="form-control{{ $errors->has('compBanque') ? ' is-invalid' : '' }}"
                                                    placeholder="{{ __('Compte bancaire') }}"
-                                                   value="{{ old('compBanque', '11 05 211515 151515 01515 151') }}">
+                                                   value="{{old('compBanque', isset($data) && !empty($data)? $data->Compte_bancaire : '') }}">
                                             @include('alerts.feedback', ['field' => 'compBanque'])
                                         </div>
 
@@ -524,7 +552,7 @@
                                             <input type="text" id="switf" name="switf"
                                                    class="form-control{{ $errors->has('switf') ? ' is-invalid' : '' }}"
                                                    placeholder="{{ __('code swift') }}"
-                                                   value="{{ old('switf', 'MA021152V') }}">
+                                                   value="{{old('switf', isset($data) && !empty($data)? $data->swift_etudiant : '') }}">
                                             @include('alerts.feedback', ['field' => 'switf'])
                                         </div>
                                     </div>

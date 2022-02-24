@@ -4,6 +4,7 @@ namespace App\Http\Controllers\DossierEtudiant;
 
 use App\Http\Requests\Student\SearchStudentRequest;
 
+use App\Http\Requests\Student\UpdateStudentRequest;
 use Facade\FlareClient\Http\Exceptions\BadResponse;
 use GuzzleHttp\Exception\BadResponseException;
 use Illuminate\Http\Request;
@@ -97,9 +98,13 @@ class EtudiantController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreEtudiantRequest $request)
+    public function store(UpdateStudentRequest $request)
     {
-         $this->etudiantRepository ->store($request->all());
+       //  $this->etudiantRepository ->store($request->all());
+
+
+
+      $this->etudiantRepository->save($request->all());
 
 		return redirect('home')->withOk("L'utilisateur a été créé.");
 

@@ -7,6 +7,7 @@ use App\Models\Modules;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 use PhpParser\Node\Expr\Array_;
+use function PHPUnit\Framework\isEmpty;
 
 class EtudiantRepository extends ResourceRepository
 {
@@ -18,62 +19,57 @@ class EtudiantRepository extends ResourceRepository
 
 	}
 
-    private function save(Etudiants $etudiant ,Array $inputs){
+    public function save(Array $inputs){
 
       //  $etudiant->code_etudiant = $inputs['code_etudiant'];
 
+        $codeEtudiant = $inputs['code_etudiant'];
 
-        $etudiant->code_etudiant =25;
-        $etudiant->actif =true;
-        $etudiant->Situation_bloquee=false;
+        $data = [
 
-        $etudiant->prenom_etudiant = $inputs['prenom_etudiant'];
-        $etudiant->Nom_etudiant = $inputs['Nom_etudiant'];
-        $etudiant->Nom_pere = $inputs['Nom_pere'];
-        $etudiant->Nom_mere = $inputs['Nom_mere'];
-        $etudiant->Adresse_permanante = $inputs['Adresse_permanante'];
-        $etudiant->Adresse_actuelle = $inputs['Adresse_actuelle'];
-        $etudiant->Nationalité = $inputs['Nationalité'];
-        $etudiant->Ville = $inputs['Ville'];
-        $etudiant->Sexe = $inputs['Sexe'];
-        $etudiant->Telephone_personnel = $inputs['Telephone_personnel'];
-        $etudiant->Telephone_pere = $inputs['Telephone_pere'];
-        $etudiant->Telephone_mere = $inputs['Telephone_mere'];
-        $etudiant->Email = $inputs['Email'];
-        $etudiant->Date_naissance = $inputs['Date_naissance'];
-        $etudiant->remarques = $inputs['remarques'];
-        $etudiant->Filiere = $inputs['Filiere'];
-        $etudiant->classe_actuelle = $inputs['classe_actuelle'];
-       // $etudiant->boursier = $inputs['boursier'];
-        $etudiant->ville_naissance = $inputs['ville_naissance'];
-        $etudiant->tuteur = $inputs['tuteur'];
-        $etudiant->telephone_tuteur = $inputs['telephone_tuteur'];
-
-        $etudiant->Compte_bancaire = $inputs['Compte_bancaire'];
-        $etudiant->etablissement_precedent = $inputs['etablissement_precedent'];
-        //$etudiant->Groupe_sanguin = $inputs['Groupe_sanguin'];
-        //$etudiant->Maladies_chronique = $inputs['Maladies_chronique'];
-
-        $etudiant->handicape = $inputs['handicape'];
-        $etudiant->religion = $inputs['religion'];
-       // $etudiant->photo_etudiant = $inputs['photo_etudiant'];
-       // $etudiant->cin_etudiant = $inputs['cin_etudiant'];
-
-        $etudiant->cin_etudiant = $inputs['cin_etudiant'];
-       /* $etudiant->cin_etudiant = $inputs['cin_etudiant'];
-        $etudiant->cin_etudiant = $inputs['cin_etudiant'];
-        $etudiant->cin_etudiant = $inputs['cin_etudiant'];
-        $etudiant->cin_etudiant = $inputs['cin_etudiant'];
-        $etudiant->cin_etudiant = $inputs['cin_etudiant'];
-        $etudiant->cin_etudiant = $inputs['cin_etudiant'];
-        $etudiant->cin_etudiant = $inputs['cin_etudiant'];
-        $etudiant->cin_etudiant = $inputs['cin_etudiant'];
-        $etudiant->cin_etudiant = $inputs['cin_etudiant'];*/
+            'Filiere' => $inputs['Filiere'],
+            'Nom_etudiant' => $inputs['Nom_etudiant'],
+            'prenom_etudiant' => $inputs['prenom_etudiant'],
+            'classe_actuelle' =>  explode(",",$inputs['classe_actuelle'])[0],
+            'NomPrenom_Arabe' => $inputs['nameArabe'],
+            'cin_etudiant' => $inputs['numCIN'],
+            'Telephone_personnel' => $inputs['gsmEtudiant'],
+            'groupe' => $inputs['grp'],
+            'Email' => $inputs['emailPerso'],
+            'email_ecole' => $inputs['email_ecole'],
+            'Adresse_permanante' => $inputs['adresseActuelle'],
+            'Date_naissance' => $inputs['dateNaissance'],
+            'ville_naissance' => $inputs['ville_naissance'],
+            'Ville' => $inputs['ville'],
+            'Nationalité' => $inputs['nationalite'],
+            'Sexe' => $inputs['Sexe'],
+            'num_inscription' => $inputs['numInscription'],
+          //  'actif' => $inputs['actif'],
+           // 'boursier' => $inputs['Boursier'],
+           // 'Situation_bloquee' => $inputs['blocage'],
+            //'Lauréat' => $inputs['laureat'],
+            'Nom_pere' => $inputs['nomPere'],
+            'Telephone_pere' => $inputs['Telephone_pere'],
+            'Nom_mere' => $inputs['Nom_mere'],
+            'Telephone_mere' => $inputs['Telephone_mere'],
+            'tuteur' => $inputs['tuteur'],
+            'telephone_tuteur' => $inputs['telephone_tuteur'],
+            'passport_etudiant' => $inputs['passport_etudiant'],
+            'photo_etudiant' => $this->savePhoto($inputs,'photoStudent'),
+            'Adresse_permanante' => $inputs['Adresse_permanante'],
+            'Maladies_chronique' => $inputs['maladChronique'],
+            'Groupe_sanguin' => $inputs['grpSanguin'],
+            'remarques' => $inputs['remarques'],
+            'etablissement_precedent' => $inputs['etatprecedent'],
+            'religion' => $inputs['religion'],
+          //  'handicape' => $inputs['Handicape'],
+            'Compte_bancaire' => $inputs['compBanque'],
+            'swift_etudiant' => $inputs['switf'],
+        ];
 
 
-
-        $etudiant->save();
-
+        $etudiant = Etudiants::where('code_etudiant',$codeEtudiant)
+                    ->update($data);
     }
 
     public function searchById(Array $inputs){
@@ -158,6 +154,25 @@ class EtudiantRepository extends ResourceRepository
         return $classModuleProf;
     }
 
+    /*
+     * Save student photo
+     * */
+    public function savePhoto($images,$nameInput){
+
+        //rename image
+
+        if (isset($images) && !isEmpty($images)){
+            $nameImage = time().'.'.$images->file($nameInput)->getClientOriginalName();
+
+            // Storage::disk('img')->put($nameImage, 'Contents');
+            $images->$nameInput->move(public_path('img'), substr($nameImage,-150));
+
+            return $nameImage;
+        }
+
+       return 'no_picture.jpg';
+
+    }
 
 
 }
