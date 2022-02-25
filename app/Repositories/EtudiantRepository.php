@@ -3,12 +3,11 @@
 namespace App\Repositories;
 
 use App\Models\Etudiants;
-use App\Models\Modules;
+
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
-use PhpParser\Node\Expr\Array_;
-use function PHPUnit\Framework\isEmpty;
+use Illuminate\Support\Facades\File;
+
 
 class EtudiantRepository extends ResourceRepository
 {
@@ -70,9 +69,8 @@ class EtudiantRepository extends ResourceRepository
 
 
 
-
         $etudiant = Etudiants::where('code_etudiant',$codeEtudiant)
-                    ->update($data);
+                    ->update(array_filter($data));
 
 
     }
@@ -122,6 +120,9 @@ class EtudiantRepository extends ResourceRepository
                case 'classe' :
                    $rsl = $this->getByFilter('filiere',$inputs['filiere']); break;
 
+               case 'tous' :
+                   $rsl = Etudiants::all(); break;
+
                default :  $rsl = $rsl;
 
            }
@@ -165,9 +166,7 @@ class EtudiantRepository extends ResourceRepository
     public function savePhoto(Array $images)
     {
 
-        //rename image
 
-        //$inputs['photoStudent']->move(public_path('img'),time().'.'.$inputs['photoStudent']->extension()) : 'no_picture.jpg'
 
         if (isset($images['photoStudent']))
         {
@@ -175,10 +174,18 @@ class EtudiantRepository extends ResourceRepository
 
             $images['photoStudent']->move(public_path('img'), $nameImage);
 
+           $getExistImage = Etudiants::find($images['code_etudiant']);
+
+            $file_path = public_path('img/'.$getExistImage->photo_etudiant);
+
+           if (File::exists($file_path)){
+              File::delete($file_path);
+           }
+
             return $nameImage;
         }else{
 
-            return 'no_picture.jpg';
+            return '';
         }
 
 

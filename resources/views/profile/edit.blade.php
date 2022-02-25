@@ -31,7 +31,7 @@
                                     <legend class="title col-form-label pt-0   float-none w-auto"> {{ __('Information de base') }}</legend>
                                     <div class="form-row">
                                         <div
-                                            class="form-group{{ $errors->has('name') ? ' has-danger' : '' }} col-md-6 mb-3 ">
+                                            class="form-group{{ $errors->has('Nom_etudiant') ? ' has-danger' : '' }} col-md-6 mb-3 ">
                                             <label for="Nom_etudiant">{{ __('Nom de l\'étudiant') }}</label>
                                             <input type="text" name="Nom_etudiant" id="Nom_etudiant"
                                                 class="form-control{{ $errors->has('Nom_etudiant') ? ' is-invalid' : '' }}"
@@ -375,7 +375,7 @@
                                         </div>
 
                                         <div class="text-center col-md-4 mb-3">
-                                            <img id="frame" src="{{old('photoStudent', isset($data) && !empty($data) && $data->photo_etudiant != 'no_picture.jpg'? asset('img/'.$data->photo_etudiant) : asset('img/student.png'))}}" class="rounded mx-auto d-block" alt="photo étudiant" width="70%" height="50%"/>
+                                            <img id="frame"  src="{{old('photoStudent', isset($data) && !empty($data) && $data->photo_etudiant != 'no_picture.jpg'? asset('img/'.$data->photo_etudiant) : asset('img/student.png'))}}" class="rounded mx-auto d-block" alt="photo étudiant" width="500" height="100"/>
                                             <input  type="file" id="formFile" onchange="preview()" name="photoStudent"
                                                     accept=".png, .jpg, .jpeg" value="{{old('photoStudent', isset($data) && !empty($data) ? $data->photo_etudiant : '' )}}">
                                             <button onclick="clearImage()" class="btn shadow-none"><i class="tim-icons icon-upload"></i></button>
@@ -568,7 +568,7 @@
                               <fieldset class="form-group border p-3" >
                                 <div class="form-row">
 
-                                        <button type="reset"
+                                        <button type="reset" onClick="document.location.reload(true)"
                                                 class="btn btn-fill btn-secondary col-md-3">{{ __('vider') }}</button>
 
                                         <button type="submit"
@@ -579,9 +579,10 @@
 
                                 </div>
 
-                                <div class="form-row">
 
-                                        <button type="reset"
+
+                                <div class="form-row">
+                                        <button  type="reset"
                                                 class="btn btn-fill btn-danger col-md-3">{{ __('Supprimer') }}</button>
 
                                         <button type="submit"
@@ -732,7 +733,6 @@
                                                     @foreach($filliere as $fill)
                                                         <option value="{{$fill->code_filiere}}"   {{ old('filiere', isset($input) && !empty($input) ? $input['filiere'] : $fill->code_filiere) ==$fill->code_filiere? 'selected': '' }}>{{$fill->Nom_filiere}}</option>
                                                     @endforeach
-
                                                  @endisset
 
 
@@ -785,8 +785,8 @@
                                         </label>
                                         <select name="classe" id="rParclasse"
                                                 class="form-control{{ $errors->has('rGrp') ? ' is-invalid' : '' }} mt-2">
-                                            <option value="volvo">Info</option>
-                                            <option value="saab">Manag</option>
+                                            <option value="volvo">1</option>
+                                            <option value="saab">2</option>
                                         </select>
                                         @include('alerts.feedback', ['field' => 'rGrp'])
                                     </div>
@@ -839,7 +839,8 @@
 
                                     <div class="">
                                         <label class="form-check-label">
-                                            <input class="form-check-radio " type="radio" value="" name="rechechePar">
+                                            <input class="form-check-radio " type="radio" value="tous" name="rechechePar"
+                                        {{ old('rechechePar',isset($input) ? $input['rechechePar'] : 'tous') == 'tous'  ? 'checked' : ''}}>
                                             <span class="form-check-sign"> <span class="check"></span>
                                                          {{__('Tous')}}
                                           </span>

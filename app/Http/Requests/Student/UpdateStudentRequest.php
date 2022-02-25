@@ -24,7 +24,9 @@ class UpdateStudentRequest extends FormRequest
     public function rules()
     {
         return [
-           'photoStudent' => 'nullable|image|mimes:jpg,png,jpeg|max:2048'
+           'photoStudent' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
+           'Nom_etudiant' => 'required|alpha|max:255',
+           'prenom_etudiant' => 'required|alpha|max:255',
         ];
     }
 }
