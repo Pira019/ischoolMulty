@@ -162,9 +162,9 @@
                                         <div
                                             class="form-group{{ $errors->has('adresseActuelle') ? ' has-danger' : '' }} col-md-4 mb-3 ">
                                             <label for="adresseActuelle">{{ __('Adresse étudiant') }}</label>
-                                            <textarea id="adresseActuelle" type="text" name="adresseActuelle" autocomplete="address"
+                                            <textarea id="adresseActuelle"   name="adresseActuelle" autocomplete="address"
                                                 class="form-control{{ $errors->has('adresseActuelle') ? ' is-invalid' : '' }}" >
-                                               {{ old('adresseActuelle', isset($data) && !empty($data)? $data->Adresse_permanante : '') }}
+                                               {{ old('adresseActuelle', isset($data) && !empty($data)? $data->Adresse_actuelle : '') }}
                                             </textarea>
                                             @include('alerts.feedback', ['field' => 'adresseActuelle'])
                                         </div>
@@ -173,15 +173,16 @@
                                         <div
                                             class="form-group{{ $errors->has('dateNaissance') ? ' has-danger' : '' }} col-md-4 mb-3 ">
                                             <label for="dateNaissance">{{ __('Date de naissance') }}</label>
-                                            <input type="date" id="dateNaissance"  name="dateNaissance" title=" {{ old('dateNaissance', isset($data) && !empty($data)? $data->Date_naissance : 'Date de naissance') }}"
+                                            <input type="date" id="dateNaissance"  name="dateNaissance" title=" {{ old('dateNaissance', isset($data) && !empty($data)? date('d-m-Y',strtotime($data->Date_naissance))  : 'Date de naissance') }}"
                                                 class="form-control{{ $errors->has('dateNaissance') ? ' is-invalid' : '' }}"
-                                                placeholder="{{ __('Date de naissance') }}"
-                                                value="<?php echo e( old('Date_naissance',isset($data) && !empty($data)? date('d-m-Y',strtotime($data->Date_naissance)) : '') )?> ">
+                                                   value="<?php echo e(old('date', isset($data) && !empty($data) ? date('Y-m-d', strtotime($data->Date_naissance)) : date('Y-m-d'))); ?>"
+                                                placeholder="{{ __('Date de naissance') }}">
+
                                             @include('alerts.feedback', ['field' => 'dateNaissance'])
                                         </div>
                                         <div
-                                            class="form-group{{ $errors->has('ville_naissance') ? ' has-danger' : '' }} col-md-4 mb-3 ">
-                                            <label for="ville_naissance">{{ __('Ville de naissance') }}</label>
+                                            class="form-group{{ $errors->has('ville_naissance') ? ' has-danger' : '' }} col-md-4 mb-3 " >
+                                            <label for="ville_naissance" >{{ __('Ville de naissance') }}</label>
                                             <input type="text" id="ville_naissance" name="ville_naissance"
                                                 class="form-control{{ $errors->has('ville_naissance') ? ' is-invalid' : '' }}"
                                                 placeholder="{{ __('ville_naissance') }}"
@@ -242,13 +243,13 @@
 
                                         <div class="form-row">
 
-                                            <div class="form-check{{ $errors->has('actif') ? ' has-danger' : '' }} col-md-3 mb-3 ">
+                                            <div class="form-check{{ $errors->has('actifStudent') ? ' has-danger' : '' }} col-md-3 mb-3 ">
 
                                                 <div class="mt-4">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="checkbox"  name="actif"
-                                                               value="{{ old('actif', isset($data) && !empty($data)? $data->actif : '') }}"
-                                                                {{ old('actif', isset($data) && !empty($data) && $data->actif==true ? $data->actif : '') == true ? 'checked' : '' }}
+                                                        <input class="form-check-input" type="checkbox" name="actifStudent"
+                                                               value="{{ old('actifStudent', isset($data) && !empty($data) && $data->actif==true ? $data->actif : false) }}"
+                                                                {{ old('actifStudent', isset($data) && !empty($data) && $data->actif==true ? $data->actif : false) == true ? 'checked' : '' }}
                                                                 >
 
                                                         <span class="form-check-sign"> <span class="check"></span>
@@ -265,8 +266,8 @@
 
                                                 <div class="mt-4">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="checkbox" value="{{ old('Boursier', isset($data) && !empty($data)? $data->boursier : '') }}"
-                                                               name="Boursier"
+                                                        <input class="form-check-input" type="checkbox" name="Boursier"
+                                                               value="{{ old('Boursier', isset($data) && !empty($data)? $data->boursier : false) }}"
                                                                {{ old('Boursier', isset($data) && !empty($data) && $data->boursier==true ? $data->boursier : '') == true ? 'checked' : '' }} >
                                                         <span class="form-check-sign"> <span class="check"></span>
                                                          {{__('Boursier')}}
@@ -374,9 +375,9 @@
                                         </div>
 
                                         <div class="text-center col-md-4 mb-3">
-                                            <img id="frame" src="{{old('photoStudent', isset($data) && !empty($data)? asset('img/'.$data->photo_etudiant) : asset('img/student.png'))}}" class="rounded mx-auto d-block" alt="photo étudiant" width="70%" height="50%"/>
+                                            <img id="frame" src="{{old('photoStudent', isset($data) && !empty($data) && $data->photo_etudiant != 'no_picture.jpg'? asset('img/'.$data->photo_etudiant) : asset('img/student.png'))}}" class="rounded mx-auto d-block" alt="photo étudiant" width="70%" height="50%"/>
                                             <input  type="file" id="formFile" onchange="preview()" name="photoStudent"
-                                                    accept=image/x-png,image/jpg,image/jpeg">
+                                                    accept=".png, .jpg, .jpeg" value="{{old('photoStudent', isset($data) && !empty($data) ? $data->photo_etudiant : '' )}}">
                                             <button onclick="clearImage()" class="btn shadow-none"><i class="tim-icons icon-upload"></i></button>
                                         </div>
 
@@ -891,11 +892,11 @@
 
                                 @foreach ($students as  $student)
                                     <tr>
-                                        <td>{!! $student->Nom_etudiant !!} {!! $student->prenom_etudiant !!} </td>
-                                        <td>{!! $student->Adresse_actuelle !!}</td>
-                                        <td>{!! $student->Nationalité !!}</td>
-                                        <td>{!! $student->Ville !!}</td>
-                                        <td>{!! $student->Date_naissance !!}</td>
+                                        <td> {!! strtoupper($student->Nom_etudiant) !!} {!! ucfirst(strtolower( $student->prenom_etudiant)) !!}  </td>
+                                        <td>{!! ucfirst(strtolower($student->Adresse_actuelle)) !!}</td>
+                                        <td>{!! ucfirst(strtolower($student->Nationalité )) !!}</td>
+                                        <td>{!! ucfirst(strtolower($student->Ville ))!!}</td>
+                                        <td>{!! $student->Date_naissance ? date('d-m-Y',strtotime($student->Date_naissance)) :'' !!}</td>
                                         <td>{!! $student->Telephone_personnel !!}</td>
 
                                         <td class="text-right">

@@ -104,7 +104,8 @@ class EtudiantController extends Controller
 
 
 
-      $this->etudiantRepository->save($request->all());
+
+     return $this->etudiantRepository->save($request->all());
 
 		return redirect('home')->withOk("L'utilisateur a été créé.");
 

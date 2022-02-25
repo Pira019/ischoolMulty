@@ -6,6 +6,7 @@ use App\Models\Etudiants;
 use App\Models\Modules;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use PhpParser\Node\Expr\Array_;
 use function PHPUnit\Framework\isEmpty;
 
@@ -37,17 +38,17 @@ class EtudiantRepository extends ResourceRepository
             'groupe' => $inputs['grp'],
             'Email' => $inputs['emailPerso'],
             'email_ecole' => $inputs['email_ecole'],
-            'Adresse_permanante' => $inputs['adresseActuelle'],
+            'Adresse_actuelle' => $inputs['adresseActuelle'],
             'Date_naissance' => $inputs['dateNaissance'],
             'ville_naissance' => $inputs['ville_naissance'],
             'Ville' => $inputs['ville'],
             'Nationalité' => $inputs['nationalite'],
             'Sexe' => $inputs['Sexe'],
             'num_inscription' => $inputs['numInscription'],
-          //  'actif' => $inputs['actif'],
-           // 'boursier' => $inputs['Boursier'],
-           // 'Situation_bloquee' => $inputs['blocage'],
-            //'Lauréat' => $inputs['laureat'],
+            'actif' =>  isset($inputs['actifStudent']) ? true : false,
+            'boursier' => isset($inputs['Boursier']) ? $inputs['Boursier'] : false,
+            'Situation_bloquee' => isset($inputs['blocage']) ? $inputs['blocage'] : false,
+            'Lauréat' => isset($inputs['laureat']) ? $inputs['laureat'] : false,
             'Nom_pere' => $inputs['nomPere'],
             'Telephone_pere' => $inputs['Telephone_pere'],
             'Nom_mere' => $inputs['Nom_mere'],
@@ -55,7 +56,7 @@ class EtudiantRepository extends ResourceRepository
             'tuteur' => $inputs['tuteur'],
             'telephone_tuteur' => $inputs['telephone_tuteur'],
             'passport_etudiant' => $inputs['passport_etudiant'],
-            'photo_etudiant' => $this->savePhoto($inputs,'photoStudent'),
+            'photo_etudiant' => $this->savePhoto($inputs),
             'Adresse_permanante' => $inputs['Adresse_permanante'],
             'Maladies_chronique' => $inputs['maladChronique'],
             'Groupe_sanguin' => $inputs['grpSanguin'],
@@ -68,8 +69,12 @@ class EtudiantRepository extends ResourceRepository
         ];
 
 
+
+
         $etudiant = Etudiants::where('code_etudiant',$codeEtudiant)
                     ->update($data);
+
+
     }
 
     public function searchById(Array $inputs){
@@ -157,22 +162,30 @@ class EtudiantRepository extends ResourceRepository
     /*
      * Save student photo
      * */
-    public function savePhoto($images,$nameInput){
+    public function savePhoto(Array $images)
+    {
 
         //rename image
 
-        if (isset($images) && !isEmpty($images)){
-            $nameImage = time().'.'.$images->file($nameInput)->getClientOriginalName();
+        //$inputs['photoStudent']->move(public_path('img'),time().'.'.$inputs['photoStudent']->extension()) : 'no_picture.jpg'
 
-            // Storage::disk('img')->put($nameImage, 'Contents');
-            $images->$nameInput->move(public_path('img'), substr($nameImage,-150));
+        if (isset($images['photoStudent']))
+        {
+            $nameImage = time().'.'.$images['photoStudent']->extension();
+
+            $images['photoStudent']->move(public_path('img'), $nameImage);
 
             return $nameImage;
+        }else{
+
+            return 'no_picture.jpg';
         }
 
-       return 'no_picture.jpg';
 
+
+    }
     }
 
 
-}
+
+
