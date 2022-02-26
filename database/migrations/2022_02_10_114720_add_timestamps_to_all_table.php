@@ -37,7 +37,7 @@ class AddTimestampsToAllTable extends Migration
         foreach ( $tables as $table ) {
             //todo add it to laravel jobs, process it will queue as it will take time.
             Schema::table($table->$columns, function (Blueprint $table) {
-                $ $table->timestamps();
+             //   $ $table->timestamps();
             });
         }
     }
