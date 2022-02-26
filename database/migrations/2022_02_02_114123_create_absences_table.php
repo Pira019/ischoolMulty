@@ -36,7 +36,7 @@ class CreateAbsencesTable extends Migration
             $table->date('dateEnvoiSms')->nullable();
             $table->integer('groupe')->nullable();
 
-            $table->timestamps();
+           // $table->timestamps();
             
             $table->primary(['code_seance', 'code_etudiant', 'date_jour']);
             $table->foreign('anneeScolaire', 'FK_absences_Annee')->references('annee_scolaire')->on('annee');
