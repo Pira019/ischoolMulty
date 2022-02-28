@@ -7,6 +7,7 @@ use App\Http\Requests\Abscence\RechercheAbscentRequest;
 use App\Http\Requests\Abscence\SaveAbscentRequest;
 use App\Http\Requests\Abscence\UpdateAbsentStudentsRequest;
 use App\Repositories\AbscencesRepository;
+use App\Repositories\PersonnelRepository;
 use Illuminate\Http\Request;
 use Symfony\Component\Console\Input\Input;
 
@@ -21,8 +22,8 @@ class AbscencesController extends Controller
 
      private $title ='Gestion d\'abscence';
 
-     protected $abscenceRepository;
-     protected $getclassModuleProf;
+     protected $abscenceRepository,$personnalRepo;
+     protected $getclassModuleProf,$getTeachers;
 
      public function __construct(AbscencesRepository $abscenceRepository)
     {
@@ -30,6 +31,7 @@ class AbscencesController extends Controller
         $this->abscenceRepository = $abscenceRepository;
 
         $this->getclassModuleProf = $this->abscenceRepository->getClassModule();
+        $this->personnalRepo = new PersonnelRepository();
 
 
     }
@@ -45,7 +47,8 @@ class AbscencesController extends Controller
        // return $getclassModuleProf ;
        return view('profile.create',
        ['title' => $this->title,'dataRqt' => [],
-        'getclassModuleProf' => $this->getclassModuleProf
+        'getclassModuleProf' => $this->getclassModuleProf,
+         'teachers' => $this->personnalRepo->getTeachers()
     ]
 
 );
@@ -76,7 +79,8 @@ class AbscencesController extends Controller
         'prensent' => $EtudiantPresent,
         'absents' => $etudiantAbscents,
         'dataRqt' => $inputs,
-        'getclassModuleProf' => $this->getclassModuleProf
+        'getclassModuleProf' => $this->getclassModuleProf,
+         'teachers' => $this->personnalRepo->getTeachers()
     ]
        );
     }

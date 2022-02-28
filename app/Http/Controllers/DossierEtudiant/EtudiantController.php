@@ -7,6 +7,8 @@ use App\Http\Requests\Student\SearchStudentRequest;
 use App\Http\Requests\Student\UpdateStudentRequest;
 use Facade\FlareClient\Http\Exceptions\BadResponse;
 use GuzzleHttp\Exception\BadResponseException;
+use http\Client\Response;
+use http\Cookie;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreEtudiantRequest;
@@ -35,7 +37,9 @@ class EtudiantController extends Controller
     protected  $title;
 
     //get All filliere
-    protected  $filliere;
+    protected  $filliere,$inputs;
+
+
 
 
 
@@ -72,13 +76,13 @@ class EtudiantController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+   /* public function create()
     {
         //
-    }
+    }*/
 
 
-    public function search(SearchStudentRequest $searchStudent)
+    public function create(SearchStudentRequest $searchStudent)
     {
 
 
@@ -88,9 +92,12 @@ class EtudiantController extends Controller
            'students' =>  $this->etudiantRepository->searchByFilter($searchStudent->all()),
            'filliere' => $this->filliere,
            'input' => $searchStudent,
+
        ]);
 
     }
+
+
 
     /**
      * Store a newly created resource in storage.
@@ -105,7 +112,7 @@ class EtudiantController extends Controller
        $this->etudiantRepository->save($request->all());
 
 		return back()->with([
-		    "rsl" => "Modification effectué avec succès"
+		    "status" => "Modification effectuée avec succès"
         ]);
 
     }
@@ -125,17 +132,18 @@ class EtudiantController extends Controller
 
         $studentDataById = [
             'id' => $id,
-            'column' => "code_etudiant"
+            'column' => "code_etudiant",
+
         ];
 
 
-
-         return view('profile.edit')->with(
+     return view('profile.edit')->with(
             [
                 'title' => $this->title,
                 'filliere' => $this->filliere,
                 'edit' => true,
-                'data' => $this->etudiantRepository->searchById($studentDataById)
+                'data' => $this->etudiantRepository->searchById($studentDataById),
+                'input' => $this->inputs
             ]);
 
     }

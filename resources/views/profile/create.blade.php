@@ -99,23 +99,10 @@ if (isset($getclassModuleProf)) {
                                     @include('alerts.feedback', ['field' => 'grp'])
                                 </div>
 
-                                <div class="form-group{{ $errors->has('annee') ? ' has-danger' : '' }} col-md-2 mb-3 ">
-                                    <label for="annee">{{ __('Année scolaire') }}</label>
-                                    <select id="annee" name="annee"
-                                        class="form-control{{ $errors->has('annee') ? ' is-invalid' : '' }}">
-                                        @if ($data)
-                                            @foreach ($getclassModuleProf->unique('anneeScolaire') as $anneeScolaire)
-                                                <option value="{{ $anneeScolaire->anneeScolaire }}"
-                                                    {{ old('annee', isset($dataRqt) && !empty($dataRqt) ? $dataRqt['annee'] : $anneeScolaire->anneeScolaire) ==$anneeScolaire->anneeScolaire? 'selected': '' }}>
-                                                    {{ $anneeScolaire->anneeScolaire }}
-                                                </option>
-                                            @endforeach
-                                        @endif
-                                    </select>
-                                    @include('alerts.feedback', ['field' => 'annee'])
-                                </div>
+                                <input name="annee" value="2021/2022" type="hidden">
 
-                                <div class="">
+
+                                <div class="form-group  col-md-2 mt-3 ">
                                     <button type="submit" class="btn btn-fill btn-info">{{ __('Recherche') }}</button>
                                 </div>
 
@@ -169,8 +156,16 @@ if (isset($getclassModuleProf)) {
                                 <label for="prof">{{ __('Professeur') }}</label>
                                 <select id="prof" name="prof"
                                     class="form-control{{ $errors->has('prof') ? ' is-invalid' : '' }}">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
+
+                                    @isset($teachers)
+                                        @foreach ($teachers as $teacher)
+                                            <option value="{{old('prof',$teacher->CodePersonnel)}}"
+                                                    {{ old('prof',   !empty($teachers) ? $teacher->CodePersonnel : $teacher->CodePersonnel) == $teacher->CodePersonnel? 'selected': '' }}>
+                                                {{ $teacher->NomPersonnel.' '.$teacher->PrenomPersonnel }}
+                                            </option>
+                                        @endforeach
+                                    @endisset
+
                                 </select>
                                 @include('alerts.feedback', ['field' => 'prof'])
                             </div>
@@ -182,7 +177,8 @@ if (isset($getclassModuleProf)) {
                             <div class="row">
 
                                 <div class="col-8">
-                                    <h4 class="card-title">{{ __('Présents') }}</h4>
+                                    <h4 class="card-title">{{ __('Présents')}}</h4>
+                                    <p>{{isset($prensent) ? $prensent->count() :'' }}</p>
                                     @include('alerts.success')
                                 </div>
                                 <div class="col-md-5">
@@ -191,7 +187,7 @@ if (isset($getclassModuleProf)) {
                                             <thead class=" text-primary">
                                                 <tr>
                                                     <th scope="col">{{ __('Noms') }}</th>
-                                                    <th scope="col"> </th>
+                                                    <th scope="col">{{isset($prensent) ? $prensent->count() :'' }} </th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -216,7 +212,18 @@ if (isset($getclassModuleProf)) {
                                                             </td>
                                                         </tr>
                                                     @endforeach
+
+                                                    @if($prensent->count() == 0)
+                                                        <tr>
+                                                            <td>{{__('Aucun étudiant trouvé')}}</td>
+                                                        </tr>
+                                                        @endif
                                                 @endisset
+
+
+
+
+
 
                                             </tbody>
                                         </table>
@@ -236,13 +243,20 @@ if (isset($getclassModuleProf)) {
 
 
                                 </div>
+
+
                                 <div class="col-md-5">
                                     <div class="col-8">
                                         <h4 class="card-title">{{ __('Abscens') }}</h4>
+                                        <p>{{isset($absents) ? $absents->count() :'' }}</p>
                                     </div>
                                     <div class="">
+
+                                        @isset($absents)
+
                                         <table class="table tablesorter " id="">
                                             <thead class=" text-primary">
+
                                                 <tr>
                                                     <th scope="col"> </th>
                                                     <th scope="col">{{ __('Noms') }}</th>
@@ -253,7 +267,7 @@ if (isset($getclassModuleProf)) {
                                             </thead>
                                             <tbody>
 
-                                                @isset($absents)
+
                                                     @foreach ($absents as $list)
                                                         <tr>
                                                             <td>
@@ -268,13 +282,13 @@ if (isset($getclassModuleProf)) {
                                                         </tr>
                                                     @endforeach
 
-                                                @endisset
 
 
                                             </tbody>
-                                        </table>
+                                        </table> @endisset
                                     </div>
                                 </div>
+
 
                             </div>
 

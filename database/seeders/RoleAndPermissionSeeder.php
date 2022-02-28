@@ -14,7 +14,7 @@ class RoleAndPermissionSeeder extends Seeder
      */
     public function run()
     {
-        $roles = ['admin','professeur'];
+        $roles = ['admin','professeur','parent','etudiant'];
 
 
         foreach($roles as $key => $role){

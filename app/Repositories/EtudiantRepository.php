@@ -79,7 +79,7 @@ class EtudiantRepository extends ResourceRepository
 
        $this->model = "etudiants";
 
-       return $this->getByFilter($inputs['column'],$inputs['id'])->first();
+       return $this->getByFilter(['code_etudiant' => $inputs['id']])->first();
     }
 
     public function store(Array $inputs)
@@ -98,7 +98,7 @@ class EtudiantRepository extends ResourceRepository
 
        //Table name
        $this->model = "etudiants";
-        $rsl =  array();
+        $rsl = null;
        try{
 
            if (isset($inputs) and !empty($inputs['rechechePar'])){
@@ -106,31 +106,55 @@ class EtudiantRepository extends ResourceRepository
            switch ($inputs['rechechePar']){
 
                case 'matricule' :
-                   $rsl = $this->getByFilter('code_etudiant',$inputs['matricule']); break;
+                   $rsl = $this->getByFilter([
+                       'code_etudiant' => $inputs['matricule']
+                   ]); break;
 
                case 'nom' :
-                   $rsl = $this->getByFilter('Nom_etudiant',$inputs['nom']); break;
+                   $rsl = $this->getByFilter(['Nom_etudiant' => $inputs['nom']]); break;
 
                case 'prenom' :
-                   $rsl = $this->getByFilter('prenom_etudiant',$inputs['prenom']); break;
+                   $rsl = $this->getByFilter(['prenom_etudiant' => $inputs['prenom']]); break;
 
                case 'filiere' :
-                   $rsl = $this->getByFilter('filiere',$inputs['filiere']); break;
+                   $rsl = $this->getByFilter(['filiere' => $inputs['filiere']]); break;
 
                case 'classe' :
-                   $rsl = $this->getByFilter('filiere',$inputs['filiere']); break;
 
-               case 'tous' :
-                   $rsl = Etudiants::all(); break;
+                   $classe = explode(',','1,5');
 
-               default :  $rsl = $rsl;
+                   $rsl = $this->getByFilter([
+                       //'Filiere' => explode(',',$inputs['classe'])[1],
+                       'classe_actuelle' => 1,
+                         ]); break;
+
+               case 'blocage' :
+                   $rsl = $this->getByFilter([
+                       'Situation_bloquee' => true,
+                       'Filiere'  => $inputs['blocage']
+                   ]); break;
+
+               case 'laureat' :
+                   $rsl = $this->getByFilter([
+                       'Lauréat' => true
+                   ]);
+
+                   break;
+
+
+
+               default :
+                   $rsl = $this->getByFilter([]);
+
 
            }
 
+           }else{
+
            }
 
 
-           return $rsl;
+           return   $rsl  ;
 
        }catch (QueryException  $e){
 

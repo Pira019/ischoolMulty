@@ -25,12 +25,17 @@ class SearchStudentRequest extends FormRequest
     {
         return [
 
-            'rechechePar' => 'required',
+            //'rechechePar' => 'required',
+
             'matricule' => 'required_if:rechechePar,matricule',
+
             'nom' => 'required_if:rechechePar,nom|max:255',
             'prenom' => 'required_if:rechechePar,prenom|max:255',
             'filiere' => 'required_if:rechechePar,filiere',
             'classe' => 'required_if:rechechePar,classe',
+
+
+            'blocage' => 'required_if:rechechePar,blocage',
 
 
 

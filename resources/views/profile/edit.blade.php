@@ -74,7 +74,7 @@
                                                     class="form-control{{ $errors->has('classe_actuelle') ? ' is-invalid' : '' }}">
                                                 @isset($filliere)
                                                     @foreach($filliere as $fill)
-                                                        <option value="{{$fill->niveauClasse}},{{$fill->code_filiere}}" {{ old('Filiere', isset($data) && !empty($data) || $data->classe_actuelle == $fill->niveauClasse? $data->Filiere : $fill->code_filiere) ==$fill->code_filiere ? 'selected': '' }}>{{$fill->niveauClasse}} {{$fill->Nom_filiere}}</option>
+                                                        <option value="{{$fill->niveauClasse}},{{$fill->code_filiere}}" {{ old('Filiere', isset($data) && !empty($data) || $data->niveauClasse == $fill->niveauClasse? $data->Filiere : $fill->code_filiere) ==$fill->code_filiere ? 'selected': '' }}>{{$fill->niveauClasse}} {{$fill->Nom_filiere}}</option>
                                                     @endforeach
                                                 @endisset
                                             </select>
@@ -128,8 +128,9 @@
                                             <label for="grp">{{ __('Groupe') }}</label>
                                             <select name="grp" id="grp"
                                                     class="form-control{{ $errors->has('grp') ? ' is-invalid' : '' }}">
-                                                <option value="{{$data->groupe}}" {{ old('grp', isset($data) && !empty($data) ? $data->groupe : '') ==  $data->groupe ? 'selected': '' }}>{{ $data->groupe}}  </option>
-
+                                                @isset($data->groupe)
+                                                <option value=" {{ $data->groupe}}" {{ old('grp', isset($data) && !empty($data) ? $data->groupe : '') ==  $data->groupe ? 'selected': '' }}>{{ $data->groupe}}  </option>
+                                                    @endisset
                                             </select>
                                             @include('alerts.feedback', ['field' => 'grp'])
                                         </div>
@@ -640,9 +641,9 @@
 
                     </div>
 
-                    <form method="post" action="{{ route('etudiant.search') }}" autocomplete="on">
+                    <form method="get" action="{{ route('etudiant.create') }}" autocomplete="on">
                         @csrf
-                        @method('post')
+                        @method('get')
 
                         @include('alerts.success')
 
@@ -731,7 +732,8 @@
                                                 <option selected>{{__('--Filière--')}}</option>
                                                 @isset($filliere)
                                                     @foreach($filliere as $fill)
-                                                        <option value="{{$fill->code_filiere}}"   {{ old('filiere', isset($input) && !empty($input) ? $input['filiere'] : $fill->code_filiere) ==$fill->code_filiere? 'selected': '' }}>{{$fill->Nom_filiere}}</option>
+                                                        <option value="{{$fill->code_filiere}}"
+                                                                {{ old('filiere', isset($input) && !empty($input) ? $input['filiere'] : $fill->code_filiere) ==$fill->code_filiere? 'selected': '' }}>{{$fill->Nom_filiere}}</option>
                                                     @endforeach
                                                  @endisset
 
@@ -747,22 +749,26 @@
                                 <div class="form-group form-check-radio{{ $errors->has('rechechePar') ? ' has-danger' : '' }} col-md-2  ">
                                     <div class=" ">
                                         <label for="rParclasse" class="form-check-label">
-                                            <input class="form-check-radio ml-1" type="radio" id="rParclasse" value="classe" name="rechechePar">
+
+                                            <input class="form-check-radio ml-1" type="radio" id="rParclasse" value="classe" name="rechechePar"
+                                                    {{ old('rechechePar',isset($input) ? $input['rechechePar'] : 'classe') == 'classe'  ? 'checked' : ''}}>
                                             <span class="form-check-sign"> <span class="check"></span>
                                                          {{__('Classe actuelle')}}
                                                  </span>
 
                                         </label>
                                         <select name="classe" id="rParclasse"
+
                                                 class="form-control{{ $errors->has('classe') ? ' is-invalid' : '' }} mt-2">
                                             <option selected>{{__('-- Classe --')}}</option>
 
                                             @isset($filliere)
                                                 @foreach($filliere as $fill)
-                                                    <option value="{{$fill->code_classe}}"
-                                                            {{ old('classe', isset($input) && !empty($input) ? $input['classe'] : $fill->code_classe) ==$fill->code_classe? 'selected': '' }}>
-                                                        {{$fill->niveauClasse}} {{$fill->Nom_filiere}}
-                                                    </option>
+
+                                                    <option value="{{$fill->niveauClasse}},{{$fill->code_filiere}}"
+                                                        >{{$fill->niveauClasse}} {{$fill->Nom_filiere}}</option>
+
+
                                                 @endforeach
 
                                             @endisset
@@ -803,16 +809,25 @@
                                 <div class="form-group form-check-radio{{ $errors->has('rechechePar') ? ' has-danger' : '' }} col-md-3  ">
                                     <div class=" ">
                                         <label for="rBlocage" class="form-check-label">
-                                            <input class="form-check-radio ml-1" type="radio" id="rBlocage" value="rParfilliere" name="rechechePar">
+                                            <input class="form-check-radio ml-1" type="radio" id="rBlocage" value="blocage" name="rechechePar"
+                                                    {{ old('rechechePar',isset($input) ? $input['rechechePar'] : 'blocage') == 'blocage'  ? 'checked' : ''}}>
                                             <span class="form-check-sign"> <span class="check"></span>
                                                          {{__('Blocage')}}
                                                  </span>
 
                                         </label>
-                                        <select name="blocage"   id="rParfilliere"
-                                                class="form-control{{ $errors->has('blocage') ? ' is-invalid' : '' }} mt-2">
-                                            <option value="volvo">Info</option>
-                                            <option value="saab">Manag</option>
+                                        <select name="blocage" id="rParfilliere"
+
+                                        class="form-control{{ $errors->has('blocage') ? ' is-invalid' : '' }} mt-2">
+                                            @isset($filliere)
+                                                @foreach($filliere as $fill)
+                                                    <option value="{{$fill->code_filiere}}" >
+                                                        {{$fill->Nom_filiere}}</option>
+
+
+                                                @endforeach
+
+                                            @endisset
                                         </select>
                                         @include('alerts.feedback', ['field' => 'blocage'])
                                     </div>
@@ -824,7 +839,9 @@
 
                                     <div class="">
                                         <label class="form-check-label">
-                                            <input class="form-check-radio " type="radio" value="" name="rechechePar">
+                                            <input class="form-check-radio " type="radio" value="laureat" name="rechechePar"
+                                                    {{ old('rechechePar',isset($input) ? $input['rechechePar'] : 'laureat') == 'laureat'  ? 'checked' : ''}}>
+
                                             <span class="form-check-sign"> <span class="check"></span>
                                                          {{__('Lauréats uniquement')}}
                                           </span>
@@ -912,7 +929,6 @@
                                                     <a class="dropdown-item" href="#">{{__('Voir')}}</a>
                                                     <a class="dropdown-item" href="#">{{__('Voir')}}</a>
                                                     <a class="dropdown-item" href="#">{{__('Voir')}}</a>
-                                                    <a class="dropdown-item" href="#">{{__('Voir')}}</a>
                                                 </div>
                                             </div>
                                         </td>
@@ -922,7 +938,7 @@
 
                                     @endisset
 
-                                @if(isset($students) && empty($students))
+                                @if( isset($students) && $students->count() ==0 )
                                     <tr>
                                         <td colspan="7">
                                             <p class="text-center">{{__('Aucune donnée trouvée')}}</p>
@@ -932,6 +948,11 @@
 
                             </tbody>
                         </table>
+                        <div class="">
+                    @isset  ( $students)
+                              {{  $students->links("pagination::bootstrap-4")  }}
+                            @endisset
+                        </div>
                     </div>
                 </div>
                 <div class="card-footer py-4">

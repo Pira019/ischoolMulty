@@ -23,12 +23,14 @@ class ResourceRepository
 		return $this->model->findOrFail($id);
 	}
 
-    public function getByFilter($column,$filterBy)
+    public function getByFilter(Array $data)
     {
+      //  $arg_list = func_get_args();
+
         $results = DB::table($this->model)
-            ->where($column,$filterBy)
-            ->get();
-        return  $results;
+            ->where($data) ;
+       // $results->appends(['sort' => 'Nom_etudiant']);
+        return  $results->paginate(10);
     }
 
 	public function update($id, Array $inputs)
@@ -41,4 +43,14 @@ class ResourceRepository
 		$this->getById($id)->delete();
 	}
 
+
+	//Without padding
+    public function getAll(Array $data)
+    {
+
+        $results = DB::table($this->model)
+            ->where($data);
+
+        return  $results;
+    }
 }
