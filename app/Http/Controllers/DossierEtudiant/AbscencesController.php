@@ -104,7 +104,9 @@ class AbscencesController extends Controller
                 $this->abscenceRepository->save($request->all());
 
 
-        return back()->withStatus("Absence marquée");
+        return back()->with([
+            'Status' => "Absence marquée",
+            'input' => $saveQuest]);
 
     }
 

@@ -30,7 +30,7 @@ class ResourceRepository
         $results = DB::table($this->model)
             ->where($data) ;
        // $results->appends(['sort' => 'Nom_etudiant']);
-        return  $results->paginate(10);
+        return  $results;
     }
 
 	public function update($id, Array $inputs)

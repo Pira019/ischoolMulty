@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\PersonnelEvent;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -35,6 +36,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
+        event(new PersonnelEvent);
         $this->middleware('guest')->except('logout');
     }
 }

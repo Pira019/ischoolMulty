@@ -28,6 +28,7 @@ class SaveAbscentRequest extends FormRequest
 
             'seance' => 'required|',
             'code_etudiant' => 'required|array',
+            'prof' => 'required'
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\DossierEtudiant;
 
+use App\Events\PersonnelEvent;
 use App\Http\Requests\Student\SearchStudentRequest;
 
 use App\Http\Requests\Student\UpdateStudentRequest;
@@ -45,6 +46,7 @@ class EtudiantController extends Controller
 
     public function __construct(EtudiantRepository $etudiantRepository)
     {
+
         $this->middleware('auth');
         $this->etudiantRepository = $etudiantRepository;
         $this->title ="Dossier des étudiants";
@@ -57,9 +59,10 @@ class EtudiantController extends Controller
 
     public function index()
     {
-        $students = Etudiants::paginate(5);
-        $links = $students->render();
+        $students = [];
+      //  $links = $students->render();
 
+        event(new PersonnelEvent);
 
         return view('profile.edit',
             [
@@ -68,7 +71,7 @@ class EtudiantController extends Controller
 
 
             ],
-            compact('students','links'));
+            compact('students'));
     }
 
     /**

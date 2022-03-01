@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-12">
+      <!--  <div class="col-12">
             <div class="card card-chart">
                 <div class="card-header ">
                     <div class="row">
@@ -43,50 +43,53 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
     </div>
     <div class="row">
-        <div class="col-lg-4">
+        <div class="col-lg-6">
             <div class="card card-chart">
                 <div class="card-header">
-                    <h5 class="card-category">Total Shipments</h5>
-                    <h3 class="card-title"><i class="tim-icons icon-bell-55 text-primary"></i> 763,215</h3>
+                    <h5 class="card-category">{{__("Information")}}</h5>
+                    <h3 class="card-title"><i class="tim-icons icon-bell-55 text-primary"></i>{{__("Information")}}</h3>
                 </div>
-                <div class="card-body">
+                <!--<div class="card-body">
                     <div class="chart-area">
                         <canvas id="chartLinePurple"></canvas>
                     </div>
-                </div>
+                </div>-->
             </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-6">
             <div class="card card-chart">
-                <div class="card-header">
-                    <h5 class="card-category">Daily Sales</h5>
-                    <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i> 3,500€</h3>
-                </div>
-                <div class="card-body">
-                    <div class="chart-area">
-                        <canvas id="CountryChart"></canvas>
+                <!--  <div class="card-header">
+                  <h5 class="card-category">Daily Sales</h5>
+                     <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i> 3,500€</h3>
+                 </div>-->
+
+                <div class="card-body mt-4">
+                    <div class="text-center">
+                        <p class="h1">{{ __(ucfirst(date("l"))) .' '.date("d-m-Y")}}</p>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-4">
+        </div></div>
+
+        <div class="row">
+        <div class="col-lg-6">
             <div class="card card-chart">
                 <div class="card-header">
-                    <h5 class="card-category">Completed Tasks</h5>
-                    <h3 class="card-title"><i class="tim-icons icon-send text-success"></i> 12,100K</h3>
+                    <h5 class="card-category">{{__("Important")}}</h5>
+                    <h3 class="card-title"><i class="tim-icons icon-send text-success"></i>{{__("Important")}}</h3>
                 </div>
-                <div class="card-body">
+              <!--  <div class="card-body">
                     <div class="chart-area">
                         <canvas id="chartLineGreen"></canvas>
                     </div>
-                </div>
+                </div>-->
             </div>
         </div>
     </div>
-    <div class="row">
+   <!-- <div class="row">
         <div class="col-lg-6 col-md-12">
             <div class="card card-tasks">
                 <div class="card-header ">
@@ -368,7 +371,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 @endsection
 
 @push('js')

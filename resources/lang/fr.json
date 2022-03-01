@@ -1,4 +1,12 @@
 {
+
+    "Monday" : "Lundi",
+    "Tuesday" : "Mardi",
+    "Wednesday" : "Mercredi",
+    "Thursday" : "Jeudi",
+    "Friday" : "Vendredi",
+    "Saturday" : "Samedi",
+    "Sunday" : "Dimanche",
     "30 Days": "30 jours",
     "60 Days": "60 jours",
     "90 Days": "90 jours",

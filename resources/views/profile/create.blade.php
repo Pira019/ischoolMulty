@@ -156,13 +156,20 @@ if (isset($getclassModuleProf)) {
                                 <label for="prof">{{ __('Professeur') }}</label>
                                 <select id="prof" name="prof"
                                     class="form-control{{ $errors->has('prof') ? ' is-invalid' : '' }}">
-
                                     @isset($teachers)
                                         @foreach ($teachers as $teacher)
-                                            <option value="{{old('prof',$teacher->CodePersonnel)}}"
-                                                    {{ old('prof',   !empty($teachers) ? $teacher->CodePersonnel : $teacher->CodePersonnel) == $teacher->CodePersonnel? 'selected': '' }}>
+                                            @role('professeur')
+                                            <option value="{{old('prof',$teacher->emailPersonnel == \Illuminate\Support\Facades\Auth::user()->email ? $teacher->CodePersonnel : '' )}}"
+                                                    {{ old('prof', $teacher->emailPersonnel == \Illuminate\Support\Facades\Auth::user()->email ? 'selected ': 'hidden' )}}>
                                                 {{ $teacher->NomPersonnel.' '.$teacher->PrenomPersonnel }}
                                             </option>
+                                            @else
+                                                <option value="{{old('prof',$teacher->CodePersonnel)}}"
+                                                        {{ old('prof', isset($input['prof']) ? $input['prof'] : '') == $teacher->CodePersonnel  ? 'selected': '' }}>
+                                                    {{ $teacher->NomPersonnel.' '.$teacher->PrenomPersonnel }}
+                                                </option>
+                                             @endrole
+
                                         @endforeach
                                     @endisset
 

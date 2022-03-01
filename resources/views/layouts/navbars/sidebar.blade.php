@@ -5,13 +5,13 @@
             <a href="#" class="simple-text logo-normal">{{ __('ISCHOOL') }}</a>
         </div>
         <ul class="nav">
-        <!--  <li @if ($pageSlug == 'dashboard') class="active " @endif>
+          <li @if ($pageSlug == 'dashboard') class="active " @endif>
                 <a href="{{ route('home') }}">
                     <i class="tim-icons icon-chart-pie-36"></i>
                     <p>{{ __('Dashboard') }}</p>
                 </a>
             </li>
-               <li>
+         <!--      <li>
               <a data-toggle="collapse" href="#laravel-examples" aria-expanded="true">
                     <i class="fab fa-laravel" ></i>
                     <span class="nav-link-text" >{{ __('Laravel Examples') }}</span>

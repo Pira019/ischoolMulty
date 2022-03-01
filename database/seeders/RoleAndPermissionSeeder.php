@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Database\QueryException;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 
@@ -14,12 +15,17 @@ class RoleAndPermissionSeeder extends Seeder
      */
     public function run()
     {
-        $roles = ['admin','professeur','parent','etudiant'];
+        $roles = ['super_admin','admin','professeur','parent','etudiant'];
 
 
-        foreach($roles as $key => $role){
+        foreach($roles as $role){
 
-           Role::create(['name' => $role]);
+            try{
+            $role =  Role::create(['name' => $role]);
+            }catch (QueryException $e){
+
+            }
+
         }
 
 

@@ -884,8 +884,18 @@
                 </div>
                 <div class="card-body">
 
-                    <div class="">
-                        <table class="table tablesorter " id="">
+                    <style>
+                        .my-custom-scrollbar {
+                            position: relative;
+                            height: 500px;
+                            overflow: auto;
+                        }
+                        .table-wrapper-scroll-y {
+                            display: block;
+                        }
+                    </style>
+                    <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                        <table class="table table-bordered table-striped mb-0" id="" style="overflow: auto; max-height: 400px;">
                             <thead class=" text-primary">
 
 
@@ -926,9 +936,14 @@
 
                                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                                                     <a class="dropdown-item" type="button" href="{{route('etudiant.show', [$student->code_etudiant] )}}">{{__('Voir')}}</a>
-                                                    <a class="dropdown-item" href="#">{{__('Voir')}}</a>
-                                                    <a class="dropdown-item" href="#">{{__('Voir')}}</a>
-                                                    <a class="dropdown-item" href="#">{{__('Voir')}}</a>
+                                                    <a class="dropdown-item" href="#">{{__('Att. Inscription')}}</a>
+                                                    <a class="dropdown-item" href="#">{{__('Att. Scolarité')}}</a>
+                                                    <a class="dropdown-item" href="#">{{__('Att. Réussite')}}</a>
+                                                    <a class="dropdown-item" href="#">{{__('Att. Réussite')}}</a>
+                                                    <a class="dropdown-item" href="#">{{__('Att. Tournage')}}</a>
+                                                    <a class="dropdown-item" href="#">{{__('Fiche Etudiant')}}</a>
+                                                    <a class="dropdown-item" href="#">{{__('Fiche de suivi')}}</a>
+                                                    <a class="dropdown-item" href="#">{{__('Fiche d\'abscence')}}</a>
                                                 </div>
                                             </div>
                                         </td>
@@ -936,9 +951,8 @@
                                 @endforeach
 
 
-                                    @endisset
 
-                                @if( isset($students) && $students->count() ==0 )
+                                @if( count($students) == 0)
                                     <tr>
                                         <td colspan="7">
                                             <p class="text-center">{{__('Aucune donnée trouvée')}}</p>
@@ -946,13 +960,13 @@
                                     </tr>
                                 @endif
 
+                                    @endisset
+
+
+
                             </tbody>
                         </table>
-                        <div class="">
-                    @isset  ( $students)
-                              {{  $students->links("pagination::bootstrap-4")  }}
-                            @endisset
-                        </div>
+
                     </div>
                 </div>
                 <div class="card-footer py-4">

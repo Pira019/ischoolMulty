@@ -154,7 +154,7 @@ class EtudiantRepository extends ResourceRepository
            }
 
 
-           return   $rsl  ;
+           return   $rsl->orderBy('Nom_etudiant', 'asc')->get()  ;
 
        }catch (QueryException  $e){
 
