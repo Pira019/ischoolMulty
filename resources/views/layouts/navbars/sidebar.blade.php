@@ -20,12 +20,15 @@
 
                 <div class="collapse show" id="laravel-examples">
                     <ul class="nav pl-4">!-->
+
             <li @if ($pageSlug == 'profile') class="active " @endif>
                 <a href="{{ route('etudiant.index',["#dossier"] ) }}"  >
                     <i class="tim-icons icon-single-02"></i>
                     <p>{{ __('Dosier étudiants') }}</p>
                 </a>
             </li>
+            
+
             <li @if ($pageSlug == 'assiduite') class="active " @endif>
                 <a href="{{ route('assiduite.index') }}">
                     <i class="tim-icons icon-bullet-list-67"></i>
