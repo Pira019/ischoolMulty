@@ -35,6 +35,13 @@
                     <p>{{ __('Assiduité') }}</p>
                 </a>
             </li>
+
+            <li @if ($pageSlug == 'Pedagogie') class="active " @endif>
+                <a href="{{ route('evaluation.index') }}">
+                    <i class="tim-icons icon-bank"></i>
+                    <p>{{ __('Pedagogie') }}</p>
+                </a>
+            </li>
             <!--   </ul>
                  </div>
             </li>!-->

@@ -26,6 +26,7 @@ Route::middleware('tenant')->group(function() {
     Route::post('etudiant/search','App\Http\Controllers\DossierEtudiant\EtudiantController@search')->name('etudiant.search');
     Route::resource('etudiant', EtudiantController::class);
     Route::resource('assiduite', AbscencesController::class);
+    Route::resource('evaluation',\App\Http\Controllers\Pedagogie\ModuleController::class);
 
 
     Route::get('/dashboard', function () {
