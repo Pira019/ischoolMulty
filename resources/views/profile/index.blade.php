@@ -39,7 +39,7 @@ if (isset($getclassModuleProf)) {
                                     <select id="fil" name="fil" onchange="javascript:this.form.submit()"
                                         class="form-control{{ $errors->has('fil') ? ' is-invalid' : '' }}">
                                         @if ($data)
-                                            @foreach ($getclassModuleProf as $codeFiliere)
+                                            @foreach ($getclassModuleProf->unique('codeFiliere') as $codeFiliere)
                                                 <option value="{{ $codeFiliere->codeFiliere }}"
                                                     {{ old('fil', isset($dataRqt) && !empty($dataRqt) ? $dataRqt['fil'] : $codeFiliere->codeFiliere) ==$codeFiliere->codeFiliere? 'selected': '' }}>
                                                     {{ ucfirst($codeFiliere->codeFiliere) }}
@@ -53,16 +53,18 @@ if (isset($getclassModuleProf)) {
 
 
 
-                                <div class="form-group{{ $errors->has('class') ? ' has-danger' : '' }} col-md-2 mb-3 ">
+                                <div class="form-group{{ $errors->has('cls') ? ' has-danger' : '' }} col-md-2 mb-3 ">
                                     <label for="cls">{{ __('Classe') }}</label>
-
-                                  <select id="cls" name="cls"
+                                  <select id="cls" name="cls" onchange="javascript:this.form.submit()" title="Niveau classe"
                                         class="form-control{{ $errors->has('cls') ? ' is-invalid' : '' }}">
-
+                                      <option value="">{{__('Choisissez une classe')}}</option>
                                       @isset($getClasses)
-                                      @foreach($getClasses as  $classStudent)
-                                          <option>{{$classStudent->niveauClasse}}</option>
-                                       @endforeach
+                                      @forelse($getClasses as  $classStudent)
+                                          <option value="{{old('cls',$classStudent->code_classe)}}" {{ old('cls', isset($dataRqt) && !empty($dataRqt) ? $dataRqt['cls'] : $classStudent->code_classe) == $classStudent->code_classe? 'selected': '' }}>
+                                               {{$classStudent->niveauClasse}}</option>
+                                          @empty
+                                              <option value="">Aucune classe</option>
+                                       @endforelse
                                       @endisset
                                     </select>
 
@@ -80,32 +82,44 @@ if (isset($getclassModuleProf)) {
                                     @include('alerts.feedback', ['field' => 'grp'])
                                 </div>
 
-                                <div class="form-group{{ $errors->has('sem') ? ' has-danger' : '' }} col-md-2 mb-3 ">
-                                    <label for="sem">{{ __('Professeur') }}</label>
-                                    <select id="sem" name="sem"
-                                            class="form-control{{ $errors->has('sem') ? ' is-invalid' : '' }}">
-                                        <option value="1">1</option
-                                                {{ old('sem', isset($dataRqt) && !empty($dataRqt) ? $dataRqt['sem'] : 'sem') == 1 ? 'selected' : '' }}>
-                                        >
-                                        <option value="2"
-                                                {{ old('sem', isset($dataRqt) && !empty($dataRqt) ? $dataRqt['sem'] : 'sem') == 2 ? 'selected' : '' }}>
-                                            2</option>
+                                <div class="form-group{{ $errors->has('prof') ? ' has-danger' : '' }} col-md-2 mb-3 ">
+                                    <label for="prof">{{ __('Professeur') }}</label>
+                                    <select id="prof" name="prof" onchange="javascript:this.form.submit()"
+                                            class="form-control{{ $errors->has('prof') ? ' is-invalid' : '' }}">
+                                        <option value="">{{__('Choisissez le professeur')}}</option>
+                                        @isset($profs)
+                                           @forelse($profs as $prof)
+                                        <option value="{{old('prof',$prof->CodePersonnel)}}"
+                                                    {{ old('prof', isset($dataRqt) && !empty($dataRqt) ? $dataRqt['prof'] : $prof->CodePersonnel) == $prof->CodePersonnel? 'selected': '' }}>
+
+                                            {{$prof->NomPersonnel.' '.$prof->PrenomPersonnel}}
+                                        </option>
+                                        @empty
+                                               <option>--Vide-</option>
+                                            @endforelse
+                                        @endisset
+
                                     </select>
-                                    @include('alerts.feedback', ['field' => 'sem'])
+                                    @include('alerts.feedback', ['field' => 'prof'])
                                 </div>
 
-                                <div class="form-group{{ $errors->has('sem') ? ' has-danger' : '' }} col-md-2 mb-3 ">
-                                    <label for="sem">{{ __('Professeur') }}</label>
-                                    <select id="sem" name="sem"
+                                <div class="form-group{{ $errors->has('module') ? ' has-danger' : '' }} col-md-2 mb-3 ">
+                                    <label for="module">{{ __('Module') }}</label>
+                                    <select id="module" name="module"
                                             class="form-control{{ $errors->has('sem') ? ' is-invalid' : '' }}">
-                                        <option value="1">1</option
-                                                {{ old('sem', isset($dataRqt) && !empty($dataRqt) ? $dataRqt['sem'] : 'sem') == 1 ? 'selected' : '' }}>
-                                        >
-                                        <option value="2"
-                                                {{ old('sem', isset($dataRqt) && !empty($dataRqt) ? $dataRqt['sem'] : 'sem') == 2 ? 'selected' : '' }}>
-                                            2</option>
+                                        @isset($modules)
+                                            @forelse($modules as $module)
+                                                <option value="{{'old',$module->code_module}}"
+                                                        {{ old('module', isset($dataRqt) && !empty($dataRqt) ? $dataRqt['module'] : $module->code_module) == $module->code_module? 'selected': '' }}>
+                                                    {{$module->nom_module}}
+                                                </option>
+                                            @empty
+                                                <option>--Aucun-</option>
+
+                                            @endforelse
+                                        @endisset
                                     </select>
-                                    @include('alerts.feedback', ['field' => 'sem'])
+                                    @include('alerts.feedback', ['field' => 'module'])
                                 </div>
 
                                 <div class="form-group{{ $errors->has('date') ? ' has-danger' : '' }} col-md-2 mb-3 ">
@@ -117,9 +131,6 @@ if (isset($getclassModuleProf)) {
                                 </div>
 
                                 <input name="annee" value="2021/2022" type="hidden">
-
-
-
                             </div>
                         </div>
                     </form>
@@ -156,14 +167,17 @@ if (isset($getclassModuleProf)) {
 
 
                             <tr>
+                                <th scope="col"></th>
                                 <th scope="col">{{ __('Noms') }}</th>
-                                <th scope="col">{{ __('Adresse Act.') }}</th>
-                                <th scope="col">{{ __('Nationalité') }}</th>
-                                <th scope="col">{{ __('Ville') }}</th>
-                                <th scope="col">{{ __('Date de nais.') }}</th>
-                                <th scope="col">{{ __('Tél personel') }}</th>
+                                <th scope="col">{{ __('CC1') }}</th>
+                                <th scope="col">{{ __('CC2') }}</th>
+                                <th scope="col">{{ __('CC3') }}</th>
+                                <th scope="col">{{ __('CC4') }}</th>
+                                <th scope="col">{{ __('Efmt') }}</th>
+                                <th scope="col">{{ __('EfmP') }}</th>
+                                <th scope="col">{{ __('Moyenne') }}</th>
 
-                                <th scope="col">{{ __('Action') }}</th>
+                                <th scope="col"> </th>
 
                             </tr>
 

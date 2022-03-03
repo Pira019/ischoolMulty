@@ -40,6 +40,29 @@
                         </div>
 
                         <div class="row mb-3">
+                            <label for="annee" class="col-md-4 col-form-label text-md-end">{{ __('Année academique') }}</label>
+
+                            <div class="col-md-6">
+                                <select  id="annee" class="form-control @error('annee') is-invalid @enderror" name="annee" >
+
+                                    @isset($annee)
+                                        @foreach($annee as $annee)
+                                            <option value="{{$annee->annee_scolaire}}"
+                                            {{old('annee',$annee->annee_scolaire) == $annee->annee_scolaire ? 'selected' : ''}}>
+                                                {{$annee->annee_scolaire}}</option>
+                                          @endforeach
+                                    @endisset
+                                </select>
+
+                                @error('annee')
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
                             <div class="col-md-6 offset-md-4">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>

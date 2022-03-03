@@ -49,8 +49,7 @@
                 <li class="dropdown nav-item">
                     <div>
                         <select id="annee" name="annee" class="form-control " title="{{ __('Année') }}">
-                            <option>2021/2022</option>
-                            <option>2022/2023</option>
+                            <option value="{{config('config.annee')}}">{{config('config.annee')}}</option>
                         </select>
 
                     </div>

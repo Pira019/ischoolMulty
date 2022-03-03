@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Pedagogie\SearchEvalutionRqt;
 use App\Repositories\Padagogie\EvaluationRepository;
 use Illuminate\Http\Request;
+use League\Flysystem\Config;
+
 
 class ModuleController extends Controller
 {
@@ -20,6 +22,7 @@ class ModuleController extends Controller
 
     public function __construct(EvaluationRepository $evaluationRepository)
     {
+        $this->middleware('auth');
 
         $this->evaluationRepository = $evaluationRepository;
 
@@ -48,18 +51,28 @@ class ModuleController extends Controller
     public function create(SearchEvalutionRqt $evaluationRqt)
     {
 
-        $getClasses = $this->evaluationRepository->getClasses(['code_Filiere'=>$evaluationRqt['fil']]);
+         $getClasses = $this->evaluationRepository->getClasses(['code_Filiere'=>$evaluationRqt['fil']]);
 
-          return view('profile.index',[
+         return \config('config.ann');
+
+
+      /*  return view('profile.index',[
             'title' => $this->title,
             'module' => true,
             'dataRqt' => $evaluationRqt->all(),
             'getclassModuleProf' => $this->fillieres->orderBy('codeFiliere')->get(),
             'getClasses' => $getClasses,
             'profs' => $this->evaluationRepository->getProf(
-                ["codeClasse" => $evaluationRqt['']
-                ])
-        ]);
+                ["codeClasse" => $evaluationRqt['cls']
+                ]),
+
+             'modules' => $this->evaluationRepository->getModulesByProfAndClass([
+                 'codeClasse' =>$evaluationRqt['cls'],
+                 'codeProfesseur' => $evaluationRqt['prof']
+
+             ]),
+             'students' => null,
+        ]);*/
     }
 
     /**

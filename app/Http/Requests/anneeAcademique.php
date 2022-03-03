@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Pedagogie;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SearchEvalutionRqt extends FormRequest
+class anneeAcademique extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class SearchEvalutionRqt extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return false;
     }
 
     /**
@@ -24,9 +24,7 @@ class SearchEvalutionRqt extends FormRequest
     public function rules()
     {
         return [
-           'fil' => 'required',
-          // 'cls' => 'required',
-
+            //
         ];
     }
 }

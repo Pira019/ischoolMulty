@@ -7,21 +7,21 @@ insert into annee(annee_scolaire, remarques, nbr_management, nbr_informatique, p
 
 /*classe*/
 
-insert into classe (code_classe, nom_classe, salle_principale, code_Filiere, niveauClasse, MasseHoraireAnnuelle) values ('68712-042', 'Faustine Holligan', 1, 'MU', 1, 78);
-insert into classe (code_classe, nom_classe, salle_principale, code_Filiere, niveauClasse, MasseHoraireAnnuelle) values ('64893-801', 'Ivy Dudding', 2, 'CO', 2, 76);
-insert into classe (code_classe, nom_classe, salle_principale, code_Filiere, niveauClasse, MasseHoraireAnnuelle) values ('11086-037', 'Janeva Detoc', 3, 'RU', 3, 93);
-insert into classe (code_classe, nom_classe, salle_principale, code_Filiere, niveauClasse, MasseHoraireAnnuelle) values ('49288-0147', 'Orella Beetles', 4, 'US', 4, 2);
+insert into classe (code_classe, nom_classe, salle_principale, code_Filiere, niveauClasse, MasseHoraireAnnuelle) values ('68712-042', 'Faustine Holligan', 1, 'Manag', 1, 78);
+insert into classe (code_classe, nom_classe, salle_principale, code_Filiere, niveauClasse, MasseHoraireAnnuelle) values ('64893-801', 'Ivy Dudding', 2, 'Manag', 2, 76);
+insert into classe (code_classe, nom_classe, salle_principale, code_Filiere, niveauClasse, MasseHoraireAnnuelle) values ('11086-037', 'Janeva Detoc', 3, 'Info', 3, 93);
+insert into classe (code_classe, nom_classe, salle_principale, code_Filiere, niveauClasse, MasseHoraireAnnuelle) values ('49288-0147', 'Orella Beetles', 4, 'Info', 4, 2);
 insert into classe (code_classe, nom_classe, salle_principale, code_Filiere, niveauClasse, MasseHoraireAnnuelle) values ('49288-0682', 'Erin McGoon', 5, 'BJ', 5, 26);
 
 
-insert into class_mod_prof (codeclasse, codeModule, codeProfesseur, codeFiliere, dureeHeures, semestre, anneeScolaire, nbControles) values ('68712-042', 1, 1, 'TD', 1, 1, '2020/2021', 2);
-insert into class_mod_prof (codeclasse, codeModule, codeProfesseur, codeFiliere, dureeHeures, semestre, anneeScolaire, nbControles) values ('64893-801', 2, 2, 'CN', 2, 2, '2020/2021', 2);
-insert into class_mod_prof (codeclasse, codeModule, codeProfesseur, codeFiliere, dureeHeures, semestre, anneeScolaire, nbControles) values ('49288-0147', 3, 3, 'FR', 1, 1, '2021/2022', 2);
+insert into class_mod_prof (codeclasse, codeModule, codeProfesseur, codeFiliere, dureeHeures, semestre, anneeScolaire, nbControles) values ('68712-042', 1, 1, 'Manag', 1, 1, '2020/2021', 2);
+insert into class_mod_prof (codeclasse, codeModule, codeProfesseur, codeFiliere, dureeHeures, semestre, anneeScolaire, nbControles) values ('64893-801', 2, 2, 'Manag', 2, 2, '2020/2021', 2);
+insert into class_mod_prof (codeclasse, codeModule, codeProfesseur, codeFiliere, dureeHeures, semestre, anneeScolaire, nbControles) values ('49288-0147', 3, 3, 'Info', 1, 1, '2021/2022', 2);
 
 
 
-insert into filiere (code_filiere, Nom_filiere, nbAnneeFormation) values ('MU', 'Ituran Location and Control Ltd.', 3);
-insert into filiere (code_filiere, Nom_filiere, nbAnneeFormation) values ('CO', 'Bank of Nova Scotia (The)',  4);
+insert into filiere (code_filiere, Nom_filiere, nbAnneeFormation) values ('Manag', 'Ituran Location and Control Ltd.', 3);
+insert into filiere (code_filiere, Nom_filiere, nbAnneeFormation) values ('info', 'Bank of Nova Scotia (The)',  4);
 insert into filiere (code_filiere, Nom_filiere, nbAnneeFormation) values ('US', 'Quest Resource Holding Corporation.',  5);
 insert into filiere (code_filiere, Nom_filiere, nbAnneeFormation) values ('RU', 'Bridgeline Digital, Inc.',  5);
 insert into filiere (code_filiere, Nom_filiere, nbAnneeFormation) values ('BJ', 'DineEquity, Inc',  4);

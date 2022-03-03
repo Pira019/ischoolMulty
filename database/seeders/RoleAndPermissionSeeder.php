@@ -21,7 +21,7 @@ class RoleAndPermissionSeeder extends Seeder
         foreach($roles as $role){
 
             try{
-            $role =  Role::create(['name' => $role]);
+           $rolesList =   Role::create(['name' => $role]);
             }catch (QueryException $e){
 
             }
