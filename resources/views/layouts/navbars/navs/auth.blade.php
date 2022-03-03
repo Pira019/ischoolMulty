@@ -49,7 +49,7 @@
                 <li class="dropdown nav-item">
                     <div>
                         <select id="annee" name="annee" class="form-control " title="{{ __('Année') }}">
-                            <option value="{{config('config.annee')}}">{{config('config.annee')}}</option>
+                            <option value="{{config('config.annee')}}">{{\config('config.annee')}}</option>
                         </select>
 
                     </div>
