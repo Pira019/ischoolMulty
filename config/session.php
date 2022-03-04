@@ -18,6 +18,8 @@ return [
     |
     */
 
+    'annee' => null,
+
     'driver' => env('SESSION_DRIVER', 'file'),
 
     /*

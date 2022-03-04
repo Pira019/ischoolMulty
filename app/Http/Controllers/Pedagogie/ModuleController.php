@@ -53,10 +53,7 @@ class ModuleController extends Controller
 
          $getClasses = $this->evaluationRepository->getClasses(['code_Filiere'=>$evaluationRqt['fil']]);
 
-         return \config('config.ann');
-
-
-      /*  return view('profile.index',[
+          return view('profile.index',[
             'title' => $this->title,
             'module' => true,
             'dataRqt' => $evaluationRqt->all(),
@@ -72,7 +69,7 @@ class ModuleController extends Controller
 
              ]),
              'students' => null,
-        ]);*/
+        ]);
     }
 
     /**

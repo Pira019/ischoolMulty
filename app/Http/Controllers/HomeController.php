@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\PersonnelEvent;
+
 class HomeController extends Controller
 {
     /**
@@ -21,6 +23,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+        event(new PersonnelEvent);
         return view('dashboard');
     }
 }

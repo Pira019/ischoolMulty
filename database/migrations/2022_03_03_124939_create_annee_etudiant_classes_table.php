@@ -15,11 +15,11 @@ class CreateAnneeEtudiantClassesTable extends Migration
     {
         Schema::create('anneeClasses', function (Blueprint $table) {
           //  $table->id();
-            $table->integer('code_etudiant');
+            $table->string('code_etudiant');
             $table->string('code_classe',10);
             $table->string('annee_scolaire',10);
 
-            $table->primary(['code_etudiant', 'code_classe', 'annee_scolaire']);
+             $table->primary(['code_etudiant', 'code_classe', 'annee_scolaire']);
 
 
 

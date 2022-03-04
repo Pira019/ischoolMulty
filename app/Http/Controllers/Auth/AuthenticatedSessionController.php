@@ -6,20 +6,12 @@ use App\Events\PersonnelEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
-
-use App\Repositories\AnneeAcademieRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AuthenticatedSessionController extends Controller
 {
 
-    protected $anneeAcademique;
-
-    public function __construct(AnneeAcademieRepository $academiqueRepository)
-    {
-      $this->anneeAcademique= $academiqueRepository;
-    }
 
     /**
      * Display the login view.

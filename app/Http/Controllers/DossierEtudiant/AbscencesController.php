@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\DossierEtudiant;
 
+use App\Events\PersonnelEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Abscence\RechercheAbscentRequest;
 use App\Http\Requests\Abscence\SaveAbscentRequest;
-use App\Http\Requests\Abscence\UpdateAbsentStudentsRequest;
 use App\Repositories\AbscencesRepository;
 use App\Repositories\PersonnelRepository;
 use Illuminate\Http\Request;
-use Symfony\Component\Console\Input\Input;
 
 
 class AbscencesController extends Controller
@@ -33,6 +32,7 @@ class AbscencesController extends Controller
         $this->getclassModuleProf = $this->abscenceRepository->getClassModule();
         $this->personnalRepo = new PersonnelRepository();
 
+        event(new PersonnelEvent);
 
     }
 
@@ -44,25 +44,25 @@ class AbscencesController extends Controller
         //get année scolaire, seance, nbr heure
         $getclassModuleProf = $this->abscenceRepository->getClassModule();
 
-       // return $getclassModuleProf ;
+
        return view('profile.create',
        ['title' => $this->title,'dataRqt' => [],
         'getclassModuleProf' => $this->getclassModuleProf,
          'teachers' => $this->personnalRepo->getTeachers()
     ]
 
-);
+        );
 
 
-    }
+           }
 
 
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+           /**
+            * Show the form for creating a new resource.
+            *
+            * @return \Illuminate\Http\Response
+            */
     public function create(RechercheAbscentRequest $inputs )
     {
         //

@@ -52,6 +52,7 @@ class EtudiantController extends Controller
         $this->title ="Dossier des étudiants";
 
         $this->filliere =  $this->etudiantRepository->getClassFillière();
+        event(new PersonnelEvent);
 
 
     }
@@ -88,6 +89,7 @@ class EtudiantController extends Controller
     public function create(SearchStudentRequest $searchStudent)
     {
 
+        event(new PersonnelEvent);
 
         return view('profile.edit')->with(
            [

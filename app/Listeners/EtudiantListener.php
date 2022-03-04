@@ -4,16 +4,15 @@ namespace App\Listeners;
 
 use App\Events\ClassAnneeEvent;
 use App\Events\EtudiantEvent;
-use App\Events\PersonnelEvent;
-
 use App\Models\AnneeEtudiantClass;
+
 use App\Models\User;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\QueryException;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\DB;
 
-class PersonnelListener
+class EtudiantListener
 {
     /**
      * Create the event listener.
@@ -31,33 +30,38 @@ class PersonnelListener
      * @param  object  $event
      * @return void
      */
-    public function handle(PersonnelEvent $event)
+    public function handle(EtudiantEvent $event)
     {
+        //
+
+         event(new ClassAnneeEvent);
+
+        $listEtudiant = DB::table('etudiants')->whereNotNull('Email')->select('code_etudiant','annee_encours','Nom_etudiant','Email','classe_actuelle')->get();
+        $getRole = DB::table('roles')->where('name', 'etudiant')->first();
 
 
-        event(new ClassAnneeEvent);
-        event(new EtudiantEvent);
+        foreach ($listEtudiant as $list){
 
-            //save prof user
-            $getProf = DB::table('personnel')->where('Professeur', true)->get();
-            $getRole = DB::table('roles')->where('name', 'professeur')->first();
 
-            foreach ($getProf as $listProf){
+            try{
 
-                try{
                 $user = User::create([
-                    'name' => $listProf->NomPersonnel ,
-                    'email' => $listProf->emailPersonnel,
+                    'name' => $list->Nom_etudiant ,
+                    'email' => $list->Email,
                     'password' => bcrypt('secret')
                 ]);
 
                 $user->assignRole([$getRole->id]);
 
-                }catch (QueryException $e){
 
-                }
+
+
+            }catch (QueryException $e){
+
             }
 
+
+        }
 
     }
 }
