@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Pedagogie;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Pedagogie\SaveEvaluationRqt;
 use App\Http\Requests\Pedagogie\SearchEvalutionRqt;
 use App\Repositories\Padagogie\EvaluationRepository;
 use Illuminate\Http\Request;
@@ -53,6 +54,8 @@ class ModuleController extends Controller
 
          $getClasses = $this->evaluationRepository->getClasses(['code_Filiere'=>$evaluationRqt['fil']]);
 
+
+
           return view('profile.index',[
             'title' => $this->title,
             'module' => true,
@@ -68,7 +71,11 @@ class ModuleController extends Controller
                  'codeProfesseur' => $evaluationRqt['prof']
 
              ]),
-             'students' => null,
+
+             'students' =>  $this->evaluationRepository->getStudent([
+                 'code_classe'=>$evaluationRqt['cls'],
+                 'annee_scolaire' => session('annee')
+             ]),
         ]);
     }
 
@@ -78,9 +85,12 @@ class ModuleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+        public function store(SaveEvaluationRqt $request)
     {
-        //
+
+        // $this->evaluationRepository->saveEvalution($request->all());
+
+        return $request['module'];
     }
 
     /**

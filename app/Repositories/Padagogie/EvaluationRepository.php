@@ -9,7 +9,9 @@
 namespace App\Repositories\Padagogie;
 
 
+use App\Models\Evaluation;
 use App\Repositories\ResourceRepository;
+use Illuminate\Database\QueryException;
 
 class EvaluationRepository extends  ResourceRepository
 {
@@ -54,4 +56,31 @@ class EvaluationRepository extends  ResourceRepository
             ->join('modules','class_mod_prof.codeModule','=','modules.code_module')
             ->select('modules.code_module','modules.nom_module')->get();
     }
+
+    public function getStudent(array $data){
+            $this->model = 'anneeclasses';
+
+            return $this->getByFilter($data)
+                ->join('etudiants','anneeclasses.code_etudiant','=','etudiants.code_etudiant')
+                ->leftjoin('evaluation','etudiants.code_etudiant',"=","evaluation.codeEtudiant")->orderBy('etudiants.Nom_etudiant')->get();
+    }
+
+
+    public function saveEvalution(array $data){
+
+
+            $finalArray = array();
+
+        foreach ($data['module'] as $list) {
+
+            Evaluation::create([
+                "codeEvaluation" => time(),
+                "codeEtudiant" => $list['code_etudiant'],
+                "CC1" => $list['cc1']
+            ]);
+
+        }
+
+}
+
 }

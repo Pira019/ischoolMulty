@@ -9,7 +9,8 @@ class Evaluation extends Model
 {
     use HasFactory;
 
-    protected $table = 'evaluations';
+    protected $table = 'evaluation';
+    protected $guarded = [];
 
 
     public function filliere(){

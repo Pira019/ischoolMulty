@@ -32,7 +32,6 @@ class ClassAnneeListenner
 
 
         $listEtudiant = DB::table('etudiants')
-            ->whereNotNull('Email')
             ->select('code_etudiant','annee_encours','Nom_etudiant','Email','classe_actuelle')->get();
 
         foreach ($listEtudiant as $list ){
