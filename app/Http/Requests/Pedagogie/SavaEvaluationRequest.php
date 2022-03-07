@@ -4,7 +4,7 @@ namespace App\Http\Requests\Pedagogie;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SaveEvaluationRqt extends FormRequest
+class SavaEvaluationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,8 @@ class SaveEvaluationRqt extends FormRequest
     public function rules()
     {
         return [
-            'code_etudiant' => 'array',
-            'cc1' => 'nullable|array'
+            //
+
         ];
     }
 }

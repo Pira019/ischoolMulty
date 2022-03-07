@@ -11,6 +11,8 @@ class Evaluation extends Model
 
     protected $table = 'evaluation';
     protected $guarded = [];
+    protected $primaryKey = 'codeEvaluation';
+    public $incrementing = true;
 
 
     public function filliere(){

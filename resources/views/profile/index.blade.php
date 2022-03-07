@@ -106,16 +106,17 @@ if (isset($getclassModuleProf)) {
 
                                 <div class="form-group{{ $errors->has('module') ? ' has-danger' : '' }} col-md-2 mb-3 ">
                                     <label for="module">{{ __('Module') }}</label>
-                                    <select id="module" name="module"
-                                            class="form-control{{ $errors->has('sem') ? ' is-invalid' : '' }}">
+                                    <select id="module" name="module" onchange="javascript:this.form.submit()"
+                                            class="form-control{{ $errors->has('module') ? ' is-invalid' : '' }}">
+                                        <option value="">{{__('Choisissez module')}}</option>
                                         @isset($modules)
                                             @forelse($modules as $module)
-                                                <option value="{{'old',$module->code_module}}"
+                                                <option value="{{old('module',$module->code_module)}}"
                                                         {{ old('module', isset($dataRqt) && !empty($dataRqt) ? $dataRqt['module'] : $module->code_module) == $module->code_module? 'selected': '' }}>
                                                     {{$module->nom_module}}
                                                 </option>
                                             @empty
-                                                <option>--Aucun-</option>
+                                                <option value="">--Aucun-</option>
 
                                             @endforelse
                                         @endisset
@@ -130,8 +131,6 @@ if (isset($getclassModuleProf)) {
                                            placeholder="{{ __('date') }}" value="<?php echo e(old('date', isset($dataRqt) && !empty($dataRqt) ? date('Y-m-d', strtotime($dataRqt['date'])) : date('Y-m-d'))); ?>">
                                     @include('alerts.feedback', ['field' => 'date'])
                                 </div>
-
-                                <input name="annee" value="2021/2022" type="hidden">
                             </div>
                         </div>
                     </form>
@@ -192,6 +191,7 @@ if (isset($getclassModuleProf)) {
                                     @method('post')
 
                                     @include('alerts.success')
+                                    @include('alerts.feedback', ['field' => 'module'])
                                     <script>
                                         function changeAction(val) {
                                             document.forms[0].action = val;
@@ -203,7 +203,9 @@ if (isset($getclassModuleProf)) {
                                         <div class="row">
                                             <div class="center">
                                             <button type="reset" class="btn btn-fill btn-primary " value="update" >Vider</button>
-                                            <button formaction="{{route('evaluation.store')}}" type="submit"   class="btn btn-fill btn-primary"  name="submit">{{__('Enregister')}}</button>
+                                                @if(isset($dataRqt['module']) && !empty($dataRqt['module']) ? $dataRqt['module'] : '')
+                                                    <button formaction="{{route('evaluation.store')}}" type="submit"   class="btn btn-fill btn-primary"  name="submit">{{__('Enregister')}}</button>
+                                                @endif
 
                                             </div>
                                         </div>
@@ -213,38 +215,45 @@ if (isset($getclassModuleProf)) {
 
                                 @foreach ($students as  $student)
 
-                                    <input type="hidden" name="module[code_etudiant][]" value="{{$student->code_etudiant}}">
+                                    <input type="hidden" name="code_etudiant[]" value="{{$student->code_etudiant}}">
                                     <input type="hidden" name="code_filliere" value="{{ isset($dataRqt) && !empty($dataRqt) ? $dataRqt['fil'] : ''}}">
+                                    <input type="hidden" name="code_Evaluation[]" value="{{ $student->codeEvaluation}}">
+                                    <input type="hidden" name="annee_Universitaire[]" value="{{session('annee')}}">
+                                    <input type="hidden" name="cls" value=" {{isset($dataRqt) && !empty($dataRqt) ? $dataRqt['cls'] : ''}}">
+                                    <input type="hidden" name="prof" value="{{isset($dataRqt) && !empty($dataRqt) ? $dataRqt['prof'] : ''}}">
+                                    <input type="hidden" name="date" value="{{isset($dataRqt) && !empty($dataRqt) ? $dataRqt['date'] : ''}}">
+                                    <input type="hidden" name="module" value="{{isset($dataRqt) && !empty($dataRqt) ? $dataRqt['module'] : ''}}">
+
                                     <tr>
 
                                         <td> {!! strtoupper($student->Nom_etudiant) !!} {!! ucfirst(strtolower( $student->prenom_etudiant)) !!}  </td>
-                                        <td>  <input type="text" name="module[cc1][]" id="cc1"
+                                        <td>  <input type="text" name="cc1[]" id="cc1"
                                                      class="form-control{{ $errors->has('cc1') ? ' is-invalid' : '' }}"
                                                      placeholder="{{ __('CC1') }}"
-                                                     value="{{ old('cc1',$student->CC1) }}">
+                                                     value="{{ old('cc1', $student->CC1) }}">
                                             @include('alerts.feedback', ['field' => 'cc1'])
                                         </td>
                                         <td>
-                                            <input type="text" name="cc2" id="cc2"
+                                            <input type="text" name="cc2[]" id="cc2"
                                                    class="form-control{{ $errors->has('cc2') ? ' is-invalid' : '' }}"
                                                    placeholder="{{ __('CC2') }}"
                                                    value="{{ old('cc2', $student->CC2) }}">
                                             @include('alerts.feedback', ['field' => 'cc2'])
                                         </td>
-                                        <td><input type="text" name="cc2" id="cc3"
+                                        <td><input type="text" name="cc3[]" id="cc3"
                                                    class="form-control{{ $errors->has('cc3') ? ' is-invalid' : '' }}"
                                                    placeholder="{{ __('CC3') }}"
                                                    value="{{ old('cc3', $student->CC3) }}">
                                             @include('alerts.feedback', ['field' => 'cc3'])
                                         </td>
-                                        <td><input type="text" name="cc4" id="cc4"
+                                        <td><input type="text" name="cc4[]" id="cc4"
                                                    class="form-control{{ $errors->has('cc4') ? ' is-invalid' : '' }}"
                                                    placeholder="{{ __('CC4') }}"
                                                    value="{{ old('cc4', $student->CC4) }}">
                                             @include('alerts.feedback', ['field' => 'cc4'])
                                         </td>
                                         <td>
-                                            <input type="text" name="efmt" id="efmt"
+                                            <input type="text" name="efmt[]" id="efmt"
                                                    class="form-control{{ $errors->has('efmt') ? ' is-invalid' : '' }}"
                                                    placeholder="{{ __('Efmt') }}"
                                                    value="{{ old('efmt', $student->Efm) }}">
@@ -252,7 +261,7 @@ if (isset($getclassModuleProf)) {
                                         </td>
 
                                         <td>
-                                            <input type="text" name="efmp" id="efmp"
+                                            <input type="text" name="efmp[]" id="efmp"
                                                    class="form-control{{ $errors->has('efmp') ? ' is-invalid' : '' }}"
                                                    placeholder="{{ __('Efmp') }}"
                                                    value="{{ old('efmt', $student->Efm) }}">

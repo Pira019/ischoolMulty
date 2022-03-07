@@ -25,7 +25,7 @@ class SearchEvalutionRqt extends FormRequest
     {
         return [
            'fil' => 'required',
-          // 'cls' => 'required',
+
 
         ];
     }

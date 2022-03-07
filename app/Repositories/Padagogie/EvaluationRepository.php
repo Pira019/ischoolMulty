@@ -8,10 +8,10 @@
 
 namespace App\Repositories\Padagogie;
 
-
 use App\Models\Evaluation;
 use App\Repositories\ResourceRepository;
-use Illuminate\Database\QueryException;
+
+use Illuminate\Support\Facades\DB;
 
 class EvaluationRepository extends  ResourceRepository
 {
@@ -60,26 +60,51 @@ class EvaluationRepository extends  ResourceRepository
     public function getStudent(array $data){
             $this->model = 'anneeclasses';
 
+
             return $this->getByFilter($data)
                 ->join('etudiants','anneeclasses.code_etudiant','=','etudiants.code_etudiant')
-                ->leftjoin('evaluation','etudiants.code_etudiant',"=","evaluation.codeEtudiant")->orderBy('etudiants.Nom_etudiant')->get();
+                ->leftjoin('evaluation','etudiants.code_etudiant',"=","evaluation.codeEtudiant")
+                ->orWhere('evaluation.codeModule','=', $data['codeModule'])
+                ->orderBy('etudiants.Nom_etudiant')->get();
     }
 
 
     public function saveEvalution(array $data){
 
 
-            $finalArray = array();
+            if ($data['code_etudiant']){
 
-        foreach ($data['module'] as $list) {
+            foreach ($data['code_etudiant'] as $key => $insert)
+            {
 
-            Evaluation::create([
-                "codeEvaluation" => time(),
-                "codeEtudiant" => $list['code_etudiant'],
-                "CC1" => $list['cc1']
-            ]);
+                $dataSave = [
+                    'codeEvaluation' => $data['code_Evaluation'][$key],
+                    'codeEtudiant' => $insert,
+                    'CC1'=> doubleval($data['cc1'][$key]),
+                    'anneeUniversitaire'=> $data['annee_Universitaire'][$key],
+                    'CC2'=> doubleval($data['cc2'][$key]),
+                    'CC3'=> doubleval($data['cc3'][$key]),
+                    'CC4'=> doubleval($data['cc4'][$key]),
+                    'Efm'=> doubleval($data['efmt'][$key]),
+                    'Efm2'=> doubleval($data['efmp'][$key]),
+                    'codeFiliere'=>  $data['code_filliere'],
+                    'codeModule'=>  intval($data['module']),
+                    'codeProf'=>  $data['prof'],
+                    'Codeclasse'=>  $data['cls'],
+                    'dateSaisie'=>  $data['date'],
+                    'remarques' => ' ',
+                ];
 
-        }
+                Evaluation::upsert(
+                    $dataSave, ['codeEvaluation'],
+                    ['codeModule','dateSaisie','Codeclasse','codeProf','codeFiliere','Efm','CC4','CC3','CC2','CC1','anneeUniversitaire']
+                );
+
+                //   DB::table('evaluation')->insert(array_filter($dataSave));
+            }
+            }
+
+
 
 }
 
