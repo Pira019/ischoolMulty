@@ -60,11 +60,11 @@ class EvaluationRepository extends  ResourceRepository
     public function getStudent(array $data){
             $this->model = 'anneeclasses';
 
-
+                unset($data['codeModule']);
             return $this->getByFilter($data)
                 ->join('etudiants','anneeclasses.code_etudiant','=','etudiants.code_etudiant')
                 ->leftjoin('evaluation','etudiants.code_etudiant',"=","evaluation.codeEtudiant")
-                ->orWhere('evaluation.codeModule','=', $data['codeModule'])
+
                 ->orderBy('etudiants.Nom_etudiant')->get();
     }
 
