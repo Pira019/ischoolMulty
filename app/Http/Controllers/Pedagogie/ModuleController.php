@@ -54,6 +54,9 @@ class ModuleController extends Controller
 
          $getClasses = $this->evaluationRepository->getClasses(['code_Filiere'=>$evaluationRqt['fil']]);
 
+         if ($evaluationRqt['codeModule']){
+             $this->evaluationRepository->getModule($evaluationRqt['codeModule']);
+         }
 
 
           return view('profile.index',[
@@ -73,10 +76,12 @@ class ModuleController extends Controller
              ]),
 
              'students' =>  $this->evaluationRepository->getStudent([
-                 'code_classe'=>$evaluationRqt['cls'],
-                 'annee_scolaire' => session('annee'),
-                 'codeModule' => $evaluationRqt['module']
-             ]),
+                 'codeModule'=>$evaluationRqt['module'],
+                 'Codeclasse'=>$evaluationRqt['cls'],
+                 'anneeUniversitaire' => session('annee'),
+
+
+             ] ,   $evaluationRqt['module']),
         ]);
     }
 

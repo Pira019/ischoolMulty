@@ -57,16 +57,21 @@ class EvaluationRepository extends  ResourceRepository
             ->select('modules.code_module','modules.nom_module')->get();
     }
 
-    public function getStudent(array $data){
-            $this->model = 'anneeclasses';
+    public function getStudent(array $data,$codeModule){
+            $this->model = 'evaluation';
 
-                unset($data['codeModule']);
             return $this->getByFilter($data)
+                ->join('anneeclasses','evaluation.codeEtudiant','=','anneeclasses.code_etudiant')
                 ->join('etudiants','anneeclasses.code_etudiant','=','etudiants.code_etudiant')
-                ->leftjoin('evaluation','etudiants.code_etudiant',"=","evaluation.codeEtudiant")
-
-                ->orderBy('etudiants.Nom_etudiant')->get();
+                ->orderBy('etudiants.Nom_etudiant')
+                ->get();
     }
+
+  public function getModule($module){
+
+            return $module;
+  }
+
 
 
     public function saveEvalution(array $data){
@@ -79,6 +84,7 @@ class EvaluationRepository extends  ResourceRepository
 
                 $dataSave = [
                     'codeEvaluation' => $data['code_Evaluation'][$key],
+                    'nomPrenom' => $data['name'][$key],
                     'codeEtudiant' => $insert,
                     'CC1'=> doubleval($data['cc1'][$key]),
                     'anneeUniversitaire'=> $data['annee_Universitaire'][$key],
@@ -96,8 +102,8 @@ class EvaluationRepository extends  ResourceRepository
                 ];
 
                 Evaluation::upsert(
-                    $dataSave, ['codeEvaluation'],
-                    ['codeModule','dateSaisie','Codeclasse','codeProf','codeFiliere','Efm','CC4','CC3','CC2','CC1','anneeUniversitaire']
+                    array_filter($dataSave), ['codeEvaluation','codeModule'],
+                    ['dateSaisie','codeFiliere','Efm','CC4','CC3','CC2','CC1']
                 );
 
                 //   DB::table('evaluation')->insert(array_filter($dataSave));
