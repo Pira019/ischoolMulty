@@ -28,6 +28,7 @@ Route::middleware('tenant')->group(function() {
     Route::resource('assiduite', AbscencesController::class);
     Route::resource('evaluation',\App\Http\Controllers\Pedagogie\ModuleController::class);
     Route::resource('annee',\App\Http\Controllers\AnneeAcademiqueController::class);
+    Route::resource('document',\App\Http\Controllers\DocumentController::class);
 
 
     Route::get('/dashboard', function () {

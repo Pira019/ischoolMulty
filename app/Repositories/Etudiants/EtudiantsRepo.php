@@ -29,7 +29,7 @@ class EtudiantsRepo implements IEtudiantRepository
         $this->etudiants = $etudiants;
     }
 
-    public function save()
+    public function save($data)
     {
 
     }

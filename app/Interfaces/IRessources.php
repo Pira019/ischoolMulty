@@ -12,5 +12,5 @@ namespace App\Interfaces;
 interface IRessources
 {
 
-    public function save();
+    public function save($data);
 }

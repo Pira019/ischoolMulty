@@ -5,12 +5,17 @@
             <a href="#" class="simple-text logo-normal">{{ __('ISCHOOL') }}</a>
         </div>
         <ul class="nav">
+
+            @hasanyrole('super_admin|admin')
+
           <li @if ($pageSlug == 'dashboard') class="active " @endif>
                 <a href="{{ route('home') }}">
                     <i class="tim-icons icon-chart-pie-36"></i>
                     <p>{{ __('Dashboard') }}</p>
                 </a>
             </li>
+
+            @endhasanyrole
          <!--      <li>
               <a data-toggle="collapse" href="#laravel-examples" aria-expanded="true">
                     <i class="fab fa-laravel" ></i>
@@ -21,13 +26,17 @@
                 <div class="collapse show" id="laravel-examples">
                     <ul class="nav pl-4">!-->
 
+            @hasanyrole('admin')
             <li @if ($pageSlug == 'profile') class="active " @endif>
                 <a href="{{ route('etudiant.index',["#dossier"] ) }}"  >
                     <i class="tim-icons icon-single-02"></i>
                     <p>{{ __('Dosier étudiants') }}</p>
                 </a>
             </li>
-            
+
+            @endhasanyrole
+
+            @hasanyrole('admin|professeur')
 
             <li @if ($pageSlug == 'assiduite') class="active " @endif>
                 <a href="{{ route('assiduite.index') }}">
@@ -35,25 +44,48 @@
                     <p>{{ __('Assiduité') }}</p>
                 </a>
             </li>
+            @endhasanyrole
 
-            <li @if ($pageSlug == 'Pedagogie') class="active " @endif>
+
 
                 @hasanyrole('super_admin|admin')
+            <li @if ($pageSlug == 'dashboard') class="active " @endif>
                 <a href="{{ route('evaluation.index') }}">
                     <i class="tim-icons icon-bank"></i>
                     <p>{{ __('Gestion Documents') }}</p>
                 </a>
+            </li>
                @endhasanyrole
 
                 @hasanyrole('parent|etudiant')
-                <a href="{{ route('evaluation.index') }}">
+
+            <li @if ($pageSlug == 'document') class="active " @endif>
+                <a href="{{ route('document.index') }}">
                     <i class="tim-icons icon-bank"></i>
                     <p>{{ __('Mes demandes') }}</p>
                 </a>
+            </li>
                 @endhasanyrole
 
+
+
+            <li @if ($pageSlug == 'assiduite') class="active " @endif>
+                <a href="{{ route('assiduite.index') }}">
+                    <i class="tim-icons icon-bullet-list-67"></i>
+                    <p>{{ __('Profil') }}</p>
+                </a>
             </li>
 
+            @hasanyrole('super_admin|admin')
+
+            <li @if ($pageSlug == 'dashboard') class="active " @endif>
+                <a href="{{ route('home') }}">
+                    <i class="tim-icons icon-chart-pie-36"></i>
+                    <p>{{ __('Parametre') }}</p>
+                </a>
+            </li>
+
+            @endhasanyrole
 
 
 

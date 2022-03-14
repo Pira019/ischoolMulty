@@ -1,4 +1,4 @@
-@extends('layouts.app', ['page' => __('User Profile'), 'pageSlug' => 'Pedagogie|document'])
+@extends('layouts.app', ['page' => __('User Profile'), 'pageSlug' => 'document'])
 
 @php
 $data = false;
@@ -19,122 +19,45 @@ if (isset($getclassModuleProf)) {
      <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">
+              <div class="card-header">
                     <div class="row">
                         <div class="col-8">
                             <h4 class="card-title">{{ __($title) }}</h4>
                         </div>
                     </div>
 
-
-                    <form method="get" action="{{ route('evaluation.create') }}" autocomplete="off">
+   @if(isset($create) && $create == true)
+                    <form method="post" action="{{ route('document.store') }}" autocomplete="off">
                         <div class="card-body">
                             @csrf
-                            @method('get')
+                            @method('post')
 
 
                             <div class="form-row">
-                                <div class="form-group{{ $errors->has('fil') ? ' has-danger' : '' }} col-md-2 mb-3 ">
-                                    <label for="fil">{{ __('Fillière') }}</label>
-                                    <select id="fil" name="fil" onchange="javascript:this.form.submit()"
-                                        class="form-control{{ $errors->has('fil') ? ' is-invalid' : '' }}">
-                                        <option value="" selected >{{__('Selection filière')}}</option>
-                                        @if ($data)
-                                            @foreach ($getclassModuleProf->unique('codeFiliere') as $codeFiliere)
-                                                <option value="{{ $codeFiliere->codeFiliere }}"
-                                                    {{ old('fil', isset($dataRqt) && !empty($dataRqt) ? $dataRqt['fil'] : '') ==$codeFiliere->codeFiliere? 'selected': '' }}>
-                                                    {{ ucfirst($codeFiliere->codeFiliere) }}
-                                                </option>
-                                            @endforeach
-                                        @endif
-                                    </select>
 
-                                    @include('alerts.feedback', ['field' => 'fil'])
+                                <div class="form-check{{ $errors->has('doc') ? ' has-danger' : '' }} col-md-12   ">
+                                    @foreach($documents as $list)
+                                        <section class="mt-2">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input {{ $errors->has('doc') ? ' has-danger' : '' }}" type="checkbox" name="doc[]"
+                                                   value="{{old('doc',$list->id)}}">
+
+                                            <span class="form-check-sign"> <span class="check"></span>
+                                                         {{__($list->name)}}
+                                          </span>
+                                        </label>
+
+                                        </section>
+                                        @endforeach
                                 </div>
-
-
-
-                                <div class="form-group{{ $errors->has('cls') ? ' has-danger' : '' }} col-md-2 mb-3 ">
-                                    <label for="cls">{{ __('Classe') }}</label>
-                                  <select id="cls" name="cls" onchange="javascript:this.form.submit()" title="Niveau classe"
-                                        class="form-control{{ $errors->has('cls') ? ' is-invalid' : '' }}">
-                                      <option value="">{{__('Choisissez une classe')}}</option>
-                                      @isset($getClasses)
-                                      @forelse($getClasses as  $classStudent)
-                                          <option value="{{old('cls',$classStudent->code_classe)}}" {{ old('cls', isset($dataRqt) && !empty($dataRqt) ? $dataRqt['cls'] : '') == $classStudent->code_classe? 'selected': '' }}>
-                                               {{$classStudent->niveauClasse}}</option>
-                                          @empty
-                                              <option value="">Aucune classe</option>
-                                       @endforelse
-                                      @endisset
-                                    </select>
-
-                                    @include('alerts.feedback', ['field' => 'cls'])
-                                </div>
-
-
-                                <div class="form-group{{ $errors->has('grp') ? ' has-danger' : '' }} col-md-2 mb-3 ">
-                                    <label for="grp">{{ __('Groupe') }}</label>
-                                    <select id="grp" name="grp"
-                                        class="form-control{{ $errors->has('grp') ? ' is-invalid' : '' }}">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                    </select>
-                                    @include('alerts.feedback', ['field' => 'grp'])
-                                </div>
-
-                                <div class="form-group{{ $errors->has('prof') ? ' has-danger' : '' }} col-md-2 mb-3 ">
-                                    <label for="prof">{{ __('Professeur') }}</label>
-                                    <select id="prof" name="prof" onchange="javascript:this.form.submit()"
-                                            class="form-control{{ $errors->has('prof') ? ' is-invalid' : '' }}">
-                                        <option value="">{{__('Choisissez le professeur')}}</option>
-                                        @isset($profs)
-                                           @forelse($profs->unique('CodePersonnel') as $prof)
-                                        <option value="{{old('prof',$prof->CodePersonnel)}}"
-                                                    {{ old('prof', isset($dataRqt) && !empty($dataRqt) ? $dataRqt['prof'] : $prof->CodePersonnel) == $prof->CodePersonnel? 'selected': '' }}>
-
-                                            {{$prof->NomPersonnel.' '.$prof->PrenomPersonnel}}
-                                        </option>
-                                        @empty
-                                               <option>--Vide-</option>
-                                            @endforelse
-                                        @endisset
-
-                                    </select>
-                                    @include('alerts.feedback', ['field' => 'prof'])
-                                </div>
-
-                                <div class="form-group{{ $errors->has('module') ? ' has-danger' : '' }} col-md-2 mb-3 ">
-                                    <label for="module">{{ __('Module') }}</label>
-                                    <select id="module" name="module" onchange="javascript:this.form.submit()"
-                                            class="form-control{{ $errors->has('module') ? ' is-invalid' : '' }}">
-                                        <option value="">{{__('Choisissez module')}}</option>
-                                        @isset($modules)
-                                            @forelse($modules as $module)
-                                                <option value="{{old('module',$module->code_module)}}"
-                                                        {{ old('module', isset($dataRqt) && !empty($dataRqt) ? $dataRqt['module'] : $module->code_module) == $module->code_module? 'selected': '' }}>
-                                                    {{$module->nom_module}}
-                                                </option>
-                                            @empty
-                                                <option value="">--Aucun-</option>
-
-                                            @endforelse
-                                        @endisset
-                                    </select>
-                                    @include('alerts.feedback', ['field' => 'module'])
-                                </div>
-
-                                <div class="form-group{{ $errors->has('date') ? ' has-danger' : '' }} col-md-2 mb-3 ">
-                                    <label>{{ __('Date') }}</label>
-                                    <input type="date" id="date" name="date"
-                                           class="form-control{{ $errors->has('date') ? ' is-invalid' : '' }}"
-                                           placeholder="{{ __('date') }}" value="<?php echo e(old('date', isset($dataRqt) && !empty($dataRqt) ? date('Y-m-d', strtotime($dataRqt['date'])) : date('Y-m-d'))); ?>">
-                                    @include('alerts.feedback', ['field' => 'date'])
-                                </div>
+                                @include('alerts.feedback', ['field' => 'doc'])
+                        </div>
+                            <div class="mt-3">
+                                <button class="btn btn-success">{{__('Validé')}}</button>
                             </div>
                         </div>
                     </form>
-
+@endisset
 
 
             </div>
@@ -161,6 +84,16 @@ if (isset($getclassModuleProf)) {
                             display: block;
                         }
                     </style>
+
+                    <div class="row">
+                        <div class="col-8">
+                            <h4 class="card-title">
+                                <a href="{{route('document.create')}}" class="btn btn-primary">{{ __('Nouvelle demande +') }}</a>
+                            </h4>
+
+                        </div>
+                    </div>
+
                     <div class="table-wrapper-scroll-y my-custom-scrollbar">
                         <table class="table table-bordered table-striped mb-0" id="" style="overflow: auto; max-height: 400px;">
                             <thead class=" text-primary">
@@ -168,14 +101,12 @@ if (isset($getclassModuleProf)) {
 
                             <tr>
 
-                                <th scope="col">{{ __('Noms') }}</th>
-                                <th scope="col">{{ __('CC1') }}</th>
-                                <th scope="col">{{ __('CC2') }}</th>
-                                <th scope="col">{{ __('CC3') }}</th>
-                                <th scope="col">{{ __('CC4') }}</th>
-                                <th scope="col">{{ __('Efmt') }}</th>
-                                <th scope="col">{{ __('EfmP') }}</th>
-                                <th scope="col">{{ __('Moyenne') }}</th>
+                                <th scope="col">{{ __('Titre') }}</th>
+                                <th scope="col">{{ __('Année') }}</th>
+                                <th scope="col">{{ __('Date demande') }}</th>
+                                <th scope="col">{{ __('Date Traitement') }}</th>
+                                <th scope="col">{{ __('Statut') }}</th>
+
 
                                 <th scope="col"> </th>
 

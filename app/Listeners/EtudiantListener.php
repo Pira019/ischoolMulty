@@ -42,7 +42,7 @@ class EtudiantListener
 
        //  event(new ClassAnneeEvent);
 
-        session(['photoIcone' => $this->repoEtudiant->getProfil()]);
+         session(['photoIcone' => $this->repoEtudiant->getProfil()]);
          $this->repoEtudiant->saveEtudiantAsUser();
 
        //$getRole = DB::table('roles')->where('name', 'etudiant')->first();
