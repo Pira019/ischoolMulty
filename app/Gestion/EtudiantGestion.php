@@ -1,0 +1,7 @@
+
+
+
+class EtudiantGestion implements EtudiantGestionInterface
+{
+
+}
