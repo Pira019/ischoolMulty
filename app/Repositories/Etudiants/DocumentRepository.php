@@ -21,7 +21,8 @@ class DocumentRepository implements IDocumentRepository
         $getUserAuth = DB::table('users')->where('id',Auth::id())->first();
         $getStudent = DB::table('etudiants')->where('Email',$getUserAuth->email)->select('code_etudiant')->first();
 
-        return DB::table('documents')->where('code_etudiant',$getStudent->code_etudiant);
+        return DB::table('documents')->where('code_etudiant',$getStudent->code_etudiant)
+            ->where('anneeAccademique',session('annee'))->get();
         // TODO: Implement getDocumentByUser() method.
     }
 
