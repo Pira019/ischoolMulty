@@ -9,5 +9,12 @@ class Document extends Model
 {
     use HasFactory;
 
+    protected $table = "documents";
+
     protected $guarded = [];
+
+    public function demandeDocuments(){
+
+        return $this->belongsTo(DemandeDocument::class,'document_id');
+    }
 }

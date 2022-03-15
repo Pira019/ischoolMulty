@@ -57,6 +57,16 @@
             </li>
                @endhasanyrole
 
+            @hasanyrole('super_admin|admin|professeur')
+            <li @if ($pageSlug == 'document') class="active " @endif>
+                <a href="{{ route('evaluation.index') }}">
+                    <i class="tim-icons icon-bank"></i>
+                    <p>{{ __('Evaluation') }}</p>
+                </a>
+            </li>
+            @endhasanyrole
+
+
                 @hasanyrole('parent|etudiant')
 
             <li @if ($pageSlug == 'document') class="active " @endif>
@@ -68,10 +78,21 @@
                 @endhasanyrole
 
 
+            @hasanyrole('parent|etudiant')
+
+            <li @if ($pageSlug == 'notes') class="active " @endif>
+                <a href="{{ route('document.index') }}">
+                    <i class="tim-icons icon-notes"></i>
+                    <p>{{ __('Mes notes') }}</p>
+                </a>
+            </li>
+            @endhasanyrole
+
+
 
             <li @if ($pageSlug == 'assiduite') class="active " @endif>
-                <a href="{{ route('assiduite.index') }}">
-                    <i class="tim-icons icon-bullet-list-67"></i>
+                <a href="#" disabled="true">
+                    <i class="tim-icons icon-single-02"></i>
                     <p>{{ __('Profil') }}</p>
                 </a>
             </li>

@@ -36,7 +36,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        event(new PersonnelEvent);
+        //event(new PersonnelEvent);
         $this->middleware('guest')->except('logout');
     }
 }

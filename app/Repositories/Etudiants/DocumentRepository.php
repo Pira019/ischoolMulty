@@ -10,6 +10,7 @@ namespace App\Repositories\Etudiants;
 
 
 use App\Interfaces\Etudiant\IDocumentRepository;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -21,9 +22,10 @@ class DocumentRepository implements IDocumentRepository
         $getUserAuth = DB::table('users')->where('id',Auth::id())->first();
         $getStudent = DB::table('etudiants')->where('Email',$getUserAuth->email)->select('code_etudiant')->first();
 
-        return DB::table('documents')->where('code_etudiant',$getStudent->code_etudiant)
-            ->where('anneeAccademique',session('annee'))->get();
-        // TODO: Implement getDocumentByUser() method.
+        return DB::table('demande_documents')->where('etudiant_id',$getStudent->code_etudiant)
+            ->join('documents','demande_documents.document_id','=','documents.id')->orderBy('created_at','asc')->get();
+
+
     }
 
     public function save($data)
@@ -35,12 +37,24 @@ class DocumentRepository implements IDocumentRepository
 
         foreach ($data['doc'] as $list){
 
-            DB::table('demande_documents')->insert([
-                'etudiant_id' => $getStudent->code_etudiant,
-                'document_id' => $list,
-                'anneeAccademique' => session('annee'),
-                'status' => 'En cours',
-            ]);
+            try{
+
+                DB::table('demande_documents')->insert([
+                    'etudiant_id' => $getStudent->code_etudiant,
+                    'document_id' => $list,
+                    'annee' => empty(session('annee')) ? '2021/2022' :  session('annee'),
+                    'status' => 'En cours',
+                ]);
+
+                return true;
+
+            }catch (QueryException $e){
+
+                return false;
+
+            }
+
+
         }
 
     }

@@ -15,15 +15,14 @@ class DemandDocuments extends Migration
     {
         Schema::create('Demande_Documents', function (Blueprint $table) {
 
-            $table->id();
+
             $table->unsignedInteger('etudiant_id');
-            $table->foreign('etudiant_id')->references('code_etudiant')->on('etudiants')->onDelete('restrict');
-
             $table->unsignedInteger('document_id');
-
-
-            $table->string('anneeAccademique')->nullable();
+            $table->string('annee')->nullable();
+            $table->string('autre')->nullable();
             $table->string('status')->nullable();
+
+            $table->primary(['etudiant_id', 'document_id', 'annee','status']);
 
 
 

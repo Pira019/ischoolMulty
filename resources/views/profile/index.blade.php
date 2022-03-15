@@ -1,4 +1,4 @@
-@extends('layouts.app', ['page' => __('User Profile'), 'pageSlug' => 'Pedagogie|document'])
+@extends('layouts.app', ['page' => __('User Profile'), 'pageSlug' => 'document'])
 
 @php
 $data = false;

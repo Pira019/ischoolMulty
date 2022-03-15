@@ -30,10 +30,13 @@
                         <p class="d-lg-none"> {{ __('Menu') }} </p>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right dropdown-navbar">
+                        @hasanyrole('super_admin|admin')
                         <li class="nav-link">
                             <a href="{{ route('etudiant.index') }}"
                                 class="nav-item dropdown-item">{{ __('Dashbord') }}</a>
                         </li>
+                        @endhasanyrole
+
                         <li class="nav-link">
                             <a href="{{ route('etudiant.index') }}"
                                 class="nav-item dropdown-item">{{ __('Dossier étudiant') }}</a>

@@ -12,18 +12,21 @@ class DocumentController extends Controller
 {
 
     private $repoEtudiant;
-    private  $doccumentRep;
+    private  $documentRep;
+    private $retournMsg;
 
-    public function __construct(IEtudiantRepository $etudiantRepository, IDocumentRepository $repository)
+    public function __construct(IEtudiantRepository $etudiantRepository, IDocumentRepository $IDocumentRepository)
     {
 
-        $this->repoEtudiant = $etudiantRepository;
-        $this->doccumentRep = $repository;
 
         $this->middleware('auth');
         $this->middleware(['role:etudiant|parent']);
 
         session(['photoIcone' => $etudiantRepository->getProfil()]);
+
+        $this->repoEtudiant = $etudiantRepository;
+        $this->documentRep = $IDocumentRepository;
+
     }
 
     /**
@@ -33,8 +36,9 @@ class DocumentController extends Controller
      */
     public function index()
     {
-     return  view('profile.document.index',[
-         'title' => 'Document'
+      return  view('profile.document.index',[
+         'title' => 'Document',
+          'documents_rqt' =>   $this->documentRep->getDocumentByUser()
      ]);
     }
 
@@ -49,7 +53,8 @@ class DocumentController extends Controller
         return  view('profile.document.index',[
             'title' => 'Document',
             'create' => true,
-            'documents' => $this->doccumentRep->getAllDocuments()
+             'documents' => $this->documentRep->getAllDocuments(),
+            'documents_rqt' =>   $this->documentRep->getDocumentByUser()
         ]);
 
     }
@@ -62,8 +67,21 @@ class DocumentController extends Controller
      */
     public function store(SaveDocumentRqt $request)
     {
+        $this->retournMsg = "Demande validée. Merci";
 
-            $this->doccumentRep->save(array_filter($request->all()));
+        if ( $this->documentRep->save(array_filter($request->all())) == false )  {
+
+                $this->retournMsg = "La demande est en cours";
+
+        } ;
+
+
+        return back()->with(
+            [
+            'status' => $this->retournMsg
+        ]);
+
+
 
 
 
