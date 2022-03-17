@@ -107,7 +107,8 @@ if (isset($getclassModuleProf)) {
                             <tr>
 
                                 <th scope="col">{{ __('Titre') }}</th>
-                                <th scope="col">{{ __('Année') }}</th>
+                                <th scope="col" title="annee academique">{{ __('Année') }}</th>
+                                <th scope="col" title="commentaire">{{ __('Autre') }}</th>
                                 <th scope="col">{{ __('Date demande') }}</th>
                                 <th scope="col">{{ __('Date Traitement') }}</th>
                                 <th scope="col">{{ __('Statut') }}</th>
@@ -128,6 +129,7 @@ if (isset($getclassModuleProf)) {
 
                                         <td>{{__( $list->name)}}</td>
                                         <td>{{__( $list->annee)}}</td>
+                                        <td>{{__( $list->autre)}}</td>
                                         <td>{{ isset($list->created_at) ? date('d-m-Y',strtotime($list->created_at)) : ''}}</td>
                                         <td>{{ isset($list->created_at) ? date('d-m-Y',strtotime($list->created_at)) : ''}}</td>
                                         <td>{{ $list->status}}</td>
@@ -139,7 +141,7 @@ if (isset($getclassModuleProf)) {
 
                                     @empty
                                     <tr>
-                                        <td colspan="5">
+                                        <td colspan="7">
                                             <p class="text-center">{{__('Aucune demande '.session('annee') )}}</p>
                                         </td>
                                     </tr>

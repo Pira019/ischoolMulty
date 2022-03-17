@@ -24,9 +24,11 @@ class EtudiantsRepo implements IEtudiantRepository
     protected $role = 'etudiant';
 
 
-    public function __construct(Etudiants $etudiants)
+
+
+    public function __construct()
     {
-        $this->etudiants = $etudiants;
+
     }
 
     public function save($data)
@@ -62,11 +64,16 @@ class EtudiantsRepo implements IEtudiantRepository
     {
         $user =DB::table('users')->where('id',Auth::id())->first();
 
-        if ($user)
-        {
+
+        if (!empty($user)){
+
             $etudiant = DB::table('etudiants')->where('Email',$user->email)->select('photo_etudiant')->first();
 
             return $etudiant->photo_etudiant;
+
         }
+
+
+
     }
 }

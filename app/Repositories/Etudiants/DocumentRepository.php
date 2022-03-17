@@ -23,7 +23,7 @@ class DocumentRepository implements IDocumentRepository
         $getStudent = DB::table('etudiants')->where('Email',$getUserAuth->email)->select('code_etudiant')->first();
 
         return DB::table('demande_documents')->where('etudiant_id',$getStudent->code_etudiant)
-            ->join('documents','demande_documents.document_id','=','documents.id')->orderBy('created_at','asc')->get();
+            ->join('documents','demande_documents.document_id','=','documents.id')->orderBy('created_at','desc')->get();
 
 
     }

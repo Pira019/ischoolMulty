@@ -25,6 +25,8 @@ class ModuleController extends Controller
     {
         $this->middleware('auth');
 
+        $this->middleware(['role:super_admin|admin|professeur']);
+
         $this->evaluationRepository = $evaluationRepository;
 
         $this->fillieres = $this->evaluationRepository->getFillière([]);

@@ -25,9 +25,15 @@ if (isset($getclassModuleProf)) {
                             <h4 class="card-title">{{ __($title) }}</h4>
                         </div>
                     </div>
-
-
+                    @hasanyrole('super_admin|admin')
                     <form method="get" action="{{ route('evaluation.create') }}" autocomplete="off">
+                        @endhasanyrole
+
+                        @hasanyrole('professeur')
+                        <form method="get" action="{{ route('pedagogie.create') }}" autocomplete="off">
+                            @endhasanyrole
+
+
                         <div class="card-body">
                             @csrf
                             @method('get')
@@ -83,24 +89,35 @@ if (isset($getclassModuleProf)) {
                                     @include('alerts.feedback', ['field' => 'grp'])
                                 </div>
 
+
+
                                 <div class="form-group{{ $errors->has('prof') ? ' has-danger' : '' }} col-md-2 mb-3 ">
                                     <label for="prof">{{ __('Professeur') }}</label>
+
                                     <select id="prof" name="prof" onchange="javascript:this.form.submit()"
                                             class="form-control{{ $errors->has('prof') ? ' is-invalid' : '' }}">
+
                                         <option value="">{{__('Choisissez le professeur')}}</option>
                                         @isset($profs)
+
                                            @forelse($profs->unique('CodePersonnel') as $prof)
                                         <option value="{{old('prof',$prof->CodePersonnel)}}"
                                                     {{ old('prof', isset($dataRqt) && !empty($dataRqt) ? $dataRqt['prof'] : $prof->CodePersonnel) == $prof->CodePersonnel? 'selected': '' }}>
 
                                             {{$prof->NomPersonnel.' '.$prof->PrenomPersonnel}}
                                         </option>
+
                                         @empty
                                                <option>--Vide-</option>
                                             @endforelse
                                         @endisset
 
+
+
                                     </select>
+
+
+
                                     @include('alerts.feedback', ['field' => 'prof'])
                                 </div>
 
@@ -222,13 +239,13 @@ if (isset($getclassModuleProf)) {
                                 @foreach ($students->unique('code_etudiant') as  $student)
 
                                     <input type="hidden" name="code_etudiant[]" value="{{$student->code_etudiant}}">
-                                    <input type="hidden" name="code_filliere" value="{{ isset($dataRqt) && !empty($dataRqt) ? $dataRqt['fil'] : ''}}">
+                                    <input type="hidden" name="code_filliere" value="{{ isset($dataRqt) ? $dataRqt['fil'] : ''}}">
                                     <input type="hidden" name="code_Evaluation[]" value="{{ $student->codeEvaluation}}">
                                     <input type="hidden" name="annee_Universitaire[]" value="{{session('annee')}}">
-                                    <input type="hidden" name="cls" value=" {{isset($dataRqt) && !empty($dataRqt) ? $dataRqt['cls'] : ''}}">
-                                    <input type="hidden" name="prof" value="{{isset($dataRqt) && !empty($dataRqt) ? $dataRqt['prof'] : ''}}">
-                                    <input type="hidden" name="date" value="{{isset($dataRqt) && !empty($dataRqt) ? $dataRqt['date'] : ''}}">
-                                    <input type="hidden" name="module" value="{{isset($dataRqt) && !empty($dataRqt) ? $dataRqt['module'] : ''}}">
+                                    <input type="hidden" name="cls" value=" {{isset($dataRqt)  ? $dataRqt['cls'] : ''}}">
+                                    <input type="hidden" name="prof" value="{{isset($dataRqt)  ? $dataRqt['prof'] : ''}}">
+                                    <input type="hidden" name="date" value="{{isset($dataRqt) ? $dataRqt['date'] : ''}}">
+                                    <input type="hidden" name="module" value="{{isset($dataRqt)  ? $dataRqt['module'] : ''}}">
                                     <input type="hidden" name="name[]" value="{{strtoupper($student->Nom_etudiant)}}">
 
 

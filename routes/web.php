@@ -30,6 +30,9 @@ Route::middleware('tenant')->group(function() {
     Route::resource('annee',\App\Http\Controllers\AnneeAcademiqueController::class);
     Route::resource('document',\App\Http\Controllers\DocumentController::class);
 
+    //controller Prof
+    Route::resource('pedagogie',\App\Http\Controllers\Prof\ProfController::class);
+
 
     Route::get('/dashboard', function () {
         return view('dashboard');

@@ -26,7 +26,7 @@
                 <div class="collapse show" id="laravel-examples">
                     <ul class="nav pl-4">!-->
 
-            @hasanyrole('admin')
+            @hasanyrole('super_admin|admin')
             <li @if ($pageSlug == 'profile') class="active " @endif>
                 <a href="{{ route('etudiant.index',["#dossier"] ) }}"  >
                     <i class="tim-icons icon-single-02"></i>
@@ -57,9 +57,19 @@
             </li>
                @endhasanyrole
 
-            @hasanyrole('super_admin|admin|professeur')
+            @hasanyrole('super_admin|admin')
             <li @if ($pageSlug == 'document') class="active " @endif>
                 <a href="{{ route('evaluation.index') }}">
+                    <i class="tim-icons icon-bank"></i>
+                    <p>{{ __('Evaluation') }}</p>
+                </a>
+            </li>
+            @endhasanyrole
+
+
+            @hasanyrole('professeur')
+            <li @if ($pageSlug == 'document') class="active " @endif>
+                <a href="{{ route('pedagogie.index') }}">
                     <i class="tim-icons icon-bank"></i>
                     <p>{{ __('Evaluation') }}</p>
                 </a>

@@ -49,7 +49,7 @@ class EvaluationRepository extends  ResourceRepository
     public function getModulesByProfAndClass(array $data){
         $this->model = 'class_mod_prof';
 
-        /* Data egal
+        /* Data equal
         get codeClass field && prof && year academic from class_mod_prof table
          * */
         return $this->getByFilter($data)
@@ -98,7 +98,7 @@ class EvaluationRepository extends  ResourceRepository
                 ];
 
                 Evaluation::upsert(
-                    array_filter($dataSave), ['codeEvaluation','codeModule'],
+                    array_filter($dataSave), ['codeEvaluation' => $data['code_Evaluation'][$key] ,'codeModule' => intval($data['module'])],
                     ['dateSaisie','codeFiliere','Efm','CC4','CC3','CC2','CC1']
                 );
 

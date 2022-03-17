@@ -19,7 +19,7 @@ class DemandDocuments extends Migration
             $table->unsignedInteger('etudiant_id');
             $table->unsignedInteger('document_id');
             $table->string('annee')->nullable();
-            $table->string('autre')->nullable();
+            $table->text('autre')->nullable();
             $table->string('status')->nullable();
 
             $table->primary(['etudiant_id', 'document_id', 'annee','status']);

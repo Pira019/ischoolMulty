@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app', ['page' => __('User Profile'), 'pageSlug' => '403'])
 
 @section('content')
     <div class="row">
@@ -13,10 +13,10 @@
                             <div class="col-sm-offset-4 col-sm-4">
                                 <div class="panel panel-danger">
                                     <div class="panel-heading">
-                                        <h3 class="panel-title">Il y a un problème !</h3>
+                                        <h3 class="panel-title">{{__('Opps... Il y a un problème ! ' )}}</h3>
                                     </div>
                                     <div class="panel-body">
-                                        <p>Nous sommes désolés mais la page que vous désirez n'existe pas...</p>
+                                        <p>{{__('Nous sommes désolés mais la page que vous désirez n\'existe pas...')}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -27,10 +27,7 @@
 
                         </nav>
                     </div>
-                </div> </div>
                 </div>
-
-    </div>
 
 
             @endsection

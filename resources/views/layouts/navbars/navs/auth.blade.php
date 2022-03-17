@@ -37,14 +37,64 @@
                         </li>
                         @endhasanyrole
 
+                        @hasanyrole('super_admin|admin')
                         <li class="nav-link">
                             <a href="{{ route('etudiant.index') }}"
                                 class="nav-item dropdown-item">{{ __('Dossier étudiant') }}</a>
                         </li>
+                        @endhasanyrole
+
+                        @hasanyrole('admin|professeur')
                         <li class="nav-link">
                             <a href="{{ route('assiduite.index') }}"
                                 class="nav-item dropdown-item">{{ __('Assiduité') }}</a>
                         </li>
+                        @endhasanyrole
+
+                        @hasanyrole('super_admin|admin')
+                        <li class="nav-link">
+                            <a href="{{ route('evaluation.index') }}"
+                               class="nav-item dropdown-item">{{ __('Gestion Documents') }}</a>
+                        </li>
+                        @endhasanyrole
+
+                        @hasanyrole('super_admin|admin')
+                        <li class="nav-link">
+                            <a href="{{ route('evaluation.index') }}"
+                               class="nav-item dropdown-item">{{ __('Evaluation') }}</a>
+                        </li>
+                        @endhasanyrole
+
+                        @hasanyrole('professeur')
+                        <li class="nav-link">
+                            <a href="{{ route('pedagogie.index') }}"
+                               class="nav-item dropdown-item">{{ __('Evaluation') }}</a>
+                        </li>
+                        @endhasanyrole
+
+                        @hasanyrole('parent|etudiant')
+                        <li class="nav-link">
+                            <a href="{{ route('document.index') }}"
+                               class="nav-item dropdown-item">{{ __('Mes demandes') }}</a>
+                        </li>
+                        @endhasanyrole
+
+
+                        @hasanyrole('parent|etudiant')
+                        <li class="nav-link">
+                            <a href="{{ route('document.index') }}"
+                               class="nav-item dropdown-item">{{ __('Mes notes') }}</a>
+                        </li>
+                        @endhasanyrole
+
+                        @hasanyrole('super_admin|admin')
+                        <li class="nav-link">
+                            <a href="{{ route('home') }}"
+                               class="nav-item dropdown-item">{{ __('Parametre') }}</a>
+                        </li>
+                        @endhasanyrole
+
+
 
                     </ul>
                 </li>
@@ -93,8 +143,14 @@
                                 class="nav-item dropdown-item">{{ __('Profile') }}</a>
                         </li>
                         <li class="nav-link">
+                            <a href="{{ route('profile.edit') }}"
+                               class="nav-item dropdown-item">{{session('photoIcone')}}</a>
+                        </li>
+                        @hasanyrole('super_admin|admin')
+                        <li class="nav-link">
                             <a href="#" class="nav-item dropdown-item">{{ __('Parametre') }}</a>
                         </li>
+                        @endhasanyrole
                         <li class="dropdown-divider"></li>
                         <li class="nav-link">
                             <a href="{{ route('logout') }}" class="nav-item dropdown-item"
